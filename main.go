@@ -15,7 +15,7 @@ func calculateMiles(t Transaction, current float64) {
 	fmt.Println(c.cardName)
 	fmt.Println("Trx amount:", t.currency, float64(t.amount)/100)
 	if t.currency != "SGD" {
-		calculateFCY(t)
+		calculateFCY(t, c)
 	} else {
 		r, m := calculateLocal(t, c, current)
 		fmt.Println(c.rewardCurrency, ":", r, " Miles:", m)
@@ -125,6 +125,33 @@ func calculateLocal(t Transaction, c Card, current float64) (float64, float64) {
 	return calculateBaseLocal(t, c)
 }
 
-func calculateFCY(t Transaction) {
+func calculateBonusFCY(t Transaction, c Card, current float64) (float64, float64) {
+	return 0, 0
+}
 
+func calculateBaseFCY(t Transaction, c Card) (float64, float64) {
+	var (
+		amount     float64
+		baseReward float64
+		baseMiles  float64
+	)
+
+	amount = float64(t.amount) / 100 / c.amountBlock
+
+	switch c.rounding {
+	case ROUNDING_ROUND_DOWN:
+		baseReward = math.Floor(amount) * float64(c.fcyBaseReward)
+		break
+	case ROUNDING_ROUND:
+		baseReward = math.Round(amount) * float64(c.fcyBaseReward)
+		break
+	}
+
+	baseMiles = baseReward * c.fcyBaseMiles
+
+	return baseReward, baseMiles
+}
+
+func calculateFCY(t Transaction, c Card) (float64, float64) {
+	return calculateFCY(t, c)
 }

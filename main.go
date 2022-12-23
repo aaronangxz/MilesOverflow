@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"math"
 )
 
 func main() {
@@ -10,17 +10,22 @@ func main() {
 }
 
 func calculateMiles(t Transaction) {
+	c := mockCard()[t.cardId-1]
+	fmt.Println(c.cardName)
 	fmt.Println("Trx amount:", t.currency, float64(t.amount)/100)
 	if t.currency != "SGD" {
 		calculateFCY(t)
 	} else {
-		r, m := calculateLocal(t)
-		fmt.Println("Rewards:", r, " Miles:", m)
+		r, m := calculateLocal(t, c)
+		fmt.Println(c.rewardCurrency, ":", r, " Miles:", m)
 	}
 }
 
 func isEligibleCategory(c Card, cat int64) bool {
-	eligibleCats := c.localBonusCategories
+	if cat == -1 {
+		return false
+	}
+	eligibleCats := c.localBonusWhitelistCategories
 	for _, eligibleCat := range eligibleCats {
 		if eligibleCat == cat {
 			return true
@@ -30,7 +35,7 @@ func isEligibleCategory(c Card, cat int64) bool {
 }
 
 func isEligiblePaymentType(c Card, paymentType int64) bool {
-	eligiblePaymentTypes := c.localBonusPaymentTypes
+	eligiblePaymentTypes := c.localBonusWhitelistPaymentTypes
 	for _, eligiblePaymentType := range eligiblePaymentTypes {
 		if eligiblePaymentType == paymentType {
 			return true
@@ -43,101 +48,60 @@ func isWithinCap(c Card, amount float64) bool {
 	return true
 }
 
-func processLocalCategory(c Card, cat int64) bool {
-	if !isEligibleCategory(c, cat) {
-		return false
+func calculateBonusLocal(t Transaction, c Card) (float64, float64) {
+	var (
+		baseReward  float64
+		bonusReward float64
+		amount      float64
+		miles       float64
+	)
+
+	baseReward, _ = calculateBaseLocal(t, c)
+	amount = float64(t.amount) / 100 / c.amountBlock
+
+	switch c.cardIssuer {
+	case "UOB":
+		bonusReward = math.Floor(amount) * float64(c.localBonusReward)
+		break
+	default:
+		bonusReward = math.Floor(amount * float64(c.localBonusReward))
 	}
-	return true
+
+	miles = (baseReward + bonusReward) * c.localBaseMiles * c.amountBlock
+
+	return baseReward + bonusReward, math.Round(miles*100) / 100
 }
 
-func processLocalPaymentType(c Card, paymentType int64) bool {
-	if !isEligiblePaymentType(c, paymentType) {
-		return false
+func calculateBaseLocal(t Transaction, c Card) (float64, float64) {
+	var (
+		amount     float64
+		baseReward float64
+		baseMiles  float64
+	)
+
+	amount = float64(t.amount) / 100 / c.amountBlock
+
+	switch c.rounding {
+	case ROUNDING_ROUND_DOWN:
+		baseReward = math.Floor(amount) * float64(c.localBaseReward)
+		break
+	case ROUNDING_ROUND:
+		baseReward = math.Round(amount) * float64(c.localBaseReward)
+		break
 	}
-	return true
-}
 
-func processCap(c Card, amount int64) bool {
-	if !isWithinCap(c, float64(amount)/100) {
-		return false
-	}
-	return true
-}
-
-func calculateBonusLocal(t Transaction, c Card) (int64, float64) {
-	amount := float64(t.amount) / 100
-	baseReward := amount * float64(c.localBaseReward)
-	baseMiles := amount * c.localBaseMiles
-
-	bonusReward := amount * float64(c.localBonusReward)
-	bonusMiles := amount * c.localBonusMiles
-
-	return int64(baseReward + bonusReward), baseMiles + bonusMiles
-}
-
-func calculateBaseLocal(t Transaction, c Card) (int64, float64) {
-	amount := float64(t.amount) / 100
-	baseReward := int64(amount) * c.localBaseReward
-	baseMiles := amount * c.localBaseMiles
+	baseMiles = baseReward * c.localBaseMiles
 
 	return baseReward, baseMiles
 }
 
-func calculateLocal(t Transaction) (int64, float64) {
-	c := mockCard()
-	if t.category != -1 {
-		if processLocalCategory(c, t.category) {
-			if processLocalPaymentType(c, t.paymentType) {
-				if processCap(c, t.amount) {
-					return calculateBonusLocal(t, c)
-				} else {
-				}
-			}
-		}
+func calculateLocal(t Transaction, c Card) (float64, float64) {
+	if isEligibleCategory(c, t.category) && isEligiblePaymentType(c, t.paymentType) && isWithinCap(c, float64(t.amount)/100) {
+		return calculateBonusLocal(t, c)
 	}
 	return calculateBaseLocal(t, c)
 }
 
 func calculateFCY(t Transaction) {
 
-}
-
-func mockCard() Card {
-	return Card{
-		cardId:                 1,
-		cardName:               "HSBC Revolution",
-		shortCardName:          "HRV",
-		cardType:               0,
-		cardImage:              "",
-		cardIssuer:             "HSBC",
-		localBaseReward:        1,
-		localBaseMiles:         0.4,
-		localBonusCategories:   []int64{CATEGORY_ONLINE, CATEGORY_SHOPPING, CATEGORY_DINING},
-		localBonusReward:       9,
-		localBonusMiles:        3.6,
-		localBonusPaymentTypes: []int64{PAYMENT_TYPE_CONTACTLESS},
-		fcyBaseReward:          1,
-		fcyBaseMiles:           0.4,
-		fcyBonusCategories:     nil,
-		fcyBonusReward:         0,
-		fcyBonusMiles:          0,
-		fcyBonusPaymentTypes:   nil,
-		rounding:               0,
-		amountBlock:            1,
-		rewardCurrency:         "HSBC Reward Points",
-		capType:                0,
-		cap:                    0,
-	}
-}
-
-func mockTransaction() Transaction {
-	return Transaction{
-		description: "Mock Trx",
-		category:    CATEGORY_ONLINE,
-		paymentType: PAYMENT_TYPE_CONTACTLESS,
-		amount:      999,
-		currency:    "SGD",
-		time:        time.Now().Unix(),
-		cardId:      1,
-	}
 }

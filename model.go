@@ -73,5 +73,5 @@ type Card struct {
 	amountBlock                     float64
 	rewardCurrency                  string
 	capType                         int64
-	cap                             int64
+	cap                             float64
 }

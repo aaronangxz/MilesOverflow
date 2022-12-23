@@ -6,17 +6,18 @@ import (
 )
 
 func main() {
-	calculateMiles(mockTransaction())
+	currentRewards := float64(1200)
+	calculateMiles(mockTransaction(), currentRewards)
 }
 
-func calculateMiles(t Transaction) {
+func calculateMiles(t Transaction, current float64) {
 	c := mockCard()[t.cardId-1]
 	fmt.Println(c.cardName)
 	fmt.Println("Trx amount:", t.currency, float64(t.amount)/100)
 	if t.currency != "SGD" {
 		calculateFCY(t)
 	} else {
-		r, m := calculateLocal(t, c)
+		r, m := calculateLocal(t, c, current)
 		fmt.Println(c.rewardCurrency, ":", r, " Miles:", m)
 	}
 }
@@ -44,11 +45,25 @@ func isEligiblePaymentType(c Card, paymentType int64) bool {
 	return false
 }
 
-func isWithinCap(c Card, amount float64) bool {
-	return true
+func processCap(c Card, amount float64, current float64) (bool, float64) {
+	//Fully exceeded cap
+	if current >= c.cap {
+		return false, 0
+	}
+
+	//Partially exceeded
+	amountToEarnBonus := c.cap - current
+	return true, min(amountToEarnBonus, amount)
 }
 
-func calculateBonusLocal(t Transaction, c Card) (float64, float64) {
+func min(a, b float64) float64 {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func calculateBonusLocal(t Transaction, c Card, current float64) (float64, float64) {
 	var (
 		baseReward  float64
 		bonusReward float64
@@ -56,15 +71,23 @@ func calculateBonusLocal(t Transaction, c Card) (float64, float64) {
 		miles       float64
 	)
 
+	//earns base regardless
 	baseReward, _ = calculateBaseLocal(t, c)
+
+	//amount is inflated by 100
+	//divided by card amount blocks
 	amount = float64(t.amount) / 100 / c.amountBlock
 
-	switch c.cardIssuer {
-	case "UOB":
-		bonusReward = math.Floor(amount) * float64(c.localBonusReward)
-		break
-	default:
-		bonusReward = math.Floor(amount * float64(c.localBonusReward))
+	//calculate cap
+	if willEarnBonus, amountToEarnBonus := processCap(c, amount, current); willEarnBonus {
+		switch c.cardIssuer {
+		//UOB has $5 block policy
+		case "UOB":
+			bonusReward = math.Floor(amountToEarnBonus) * float64(c.localBonusReward)
+			break
+		default:
+			bonusReward = math.Floor(amountToEarnBonus * float64(c.localBonusReward))
+		}
 	}
 
 	miles = (baseReward + bonusReward) * c.localBaseMiles * c.amountBlock
@@ -95,9 +118,9 @@ func calculateBaseLocal(t Transaction, c Card) (float64, float64) {
 	return baseReward, baseMiles
 }
 
-func calculateLocal(t Transaction, c Card) (float64, float64) {
-	if isEligibleCategory(c, t.category) && isEligiblePaymentType(c, t.paymentType) && isWithinCap(c, float64(t.amount)/100) {
-		return calculateBonusLocal(t, c)
+func calculateLocal(t Transaction, c Card, current float64) (float64, float64) {
+	if isEligibleCategory(c, t.category) && isEligiblePaymentType(c, t.paymentType) {
+		return calculateBonusLocal(t, c, current)
 	}
 	return calculateBaseLocal(t, c)
 }

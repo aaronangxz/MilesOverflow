@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	currentRewards := float64(1200)
+	currentRewards := float64(800)
 	calculateMiles(mockTransaction(), currentRewards)
 }
 

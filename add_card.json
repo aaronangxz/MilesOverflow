@@ -1,0 +1,49 @@
+{
+  "request_meta": {
+    "token": "a"
+  },
+  "card_details": {
+    "card_name": "HSBC Revolution",
+    "short_card_name": "HRV",
+    "card_type": 0,
+    "card_image": "",
+    "card_issuer": "HSBC",
+    "local_base_reward": 1,
+    "local_base_miles": 0.4,
+    "local_base_card_rules": {
+      "whitelist_categories": [3,11,12],
+      "blacklist_categories": [2,4,10,15],
+      "whitelist_payment_types": [1,2,3],
+      "blacklist_payment_types": []
+    },
+    "local_bonus_reward": 9,
+    "local_bonus_miles": 3.6,
+    "local_bonus_card_rules": {
+      "whitelist_categories": [],
+      "blacklist_categories": [],
+      "whitelist_payment_types": [],
+      "blacklist_payment_types": []
+    },
+    "fcy_base_reward": 1,
+    "fcy_base_miles": 0.4,
+    "fcy_base_card_rules": {
+      "whitelist_categories": [],
+      "blacklist_categories": [],
+      "whitelist_payment_types": [],
+      "blacklist_payment_types": []
+    },
+    "fcy_bonus_reward": 0,
+    "fcy_bonus_miles": 0,
+    "fcy_bonus_card_rules": {
+      "whitelist_categories": [],
+      "blacklist_categories": [],
+      "whitelist_payment_types": [],
+      "blacklist_payment_types": []
+    },
+    "rounding": 1,
+    "amount_block": 1.0,
+    "reward_currency": "HSBC Reward Points",
+    "cap_type": 1,
+    "cap": 1000
+  }
+}

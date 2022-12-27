@@ -1,0 +1,122 @@
+syntax = "proto3";
+package rewards_tracker.pb;
+option go_package = "/rewards_tracker";
+
+enum CardCategory{
+  GENERAL_SPENDING = 0;
+  AIR_TICKETS      = 1;
+  DONATIONS        = 2;
+  DINING           = 3;
+  EDUCATION        = 4;
+  FOOD_DELIVERY    = 5;
+  RIDE_HAILING     = 6;
+  GROCERIES        = 7;
+  HOTELS           = 8;
+  HOSPITALS        = 9;
+  INSURANCE        = 10;
+  SHOPPING         = 11;
+  PUBLIC_TRANSPORT = 12;
+  TELCO            = 13;
+  UTILITIES        = 14;
+}
+
+enum CardPaymentType{
+  CHIP        = 0;
+  STRIPE      = 1;
+  CONTACTLESS = 2;
+  ONLINE      = 3;
+}
+
+enum CardRounding{
+  ROUND_DOWN = 0;
+  ROUND      = 1;
+}
+
+enum CardCapType{
+  NO_CAP          = 0;
+  CALENDAR_MONTH  = 1;
+  STATEMENT_MONTH = 2;
+}
+
+message RequestMeta{
+  optional string token = 1;
+}
+
+message ResponseMeta{
+  optional int64 error_code = 1;
+  optional string error_message = 2;
+}
+
+message CardRules{
+  repeated int64 whitelist_categories = 1;
+  repeated int64 blacklist_categories = 2;
+  repeated int64 whitelist_payment_types = 3;
+  repeated int64 blacklist_payment_types = 4;
+}
+
+message Card{
+  optional int64 card_id = 1;
+  optional string card_name = 2;
+  optional string short_card_name= 3;
+  optional int64 card_type = 4;
+  optional string card_image = 5;
+  optional string card_issuer = 6;
+  optional int64 local_base_reward = 7;
+  optional double local_base_miles = 8;
+  optional CardRules local_base_card_rules = 9;
+  optional int64  local_bonus_reward = 10;
+  optional double local_bonus_miles = 11;
+  optional CardRules local_bonus_card_rules = 12;
+  optional int64 fcy_base_reward = 13;
+  optional double fcy_base_miles = 14;
+  optional CardRules fcy_base_card_rules = 15;
+  optional int64 fcy_bonus_reward = 16;
+  optional double fcy_bonus_miles = 17;
+  optional CardRules fcy_bonus_card_rules = 18;
+  optional int64 rounding = 19;
+  optional double amount_block = 20;
+  optional string reward_currency = 21;
+  optional int64 cap_type = 22;
+  optional double cap = 23;
+}
+
+message Transaction{
+  optional string description = 1;
+  optional int64 category = 2;
+  optional int64 payment_type = 3;
+  optional int64 amount = 4;
+  optional string currency = 5;
+  optional int64 time = 6;
+  optional int64 cardId = 7;
+}
+
+message AddTransactionRequest{
+  optional RequestMeta request_meta = 1;
+  optional int64 user_id = 2;
+  optional Transaction transaction_details = 3;
+}
+
+message AddTransactionResponse{
+  optional ResponseMeta response_meta = 1;
+}
+
+message PairUserCardRequest{
+  optional RequestMeta request_meta = 1;
+  optional int64 user_id = 2;
+  optional Card card_details = 3;
+}
+
+message PairUserCardResponse{
+  repeated Card cards_list = 1;
+  optional ResponseMeta response_meta = 2;
+}
+
+message AddCardRequest{
+  optional RequestMeta request_meta = 1;
+  optional Card card_details = 2;
+}
+
+message AddCardResponse{
+  optional int64 card_id = 1;
+  optional ResponseMeta response_meta = 2;
+}

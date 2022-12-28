@@ -54,6 +54,38 @@ message CardRules{
   repeated int64 blacklist_payment_types = 4;
 }
 
+message CardDb{
+  optional int64 card_id = 1;
+  optional string card_name = 2;
+  optional string short_card_name= 3;
+  optional int64 card_type = 4;
+  optional string card_image = 5;
+  optional string card_issuer = 6;
+  optional int64 local_base_rewards = 7;
+  optional double local_base_miles = 8;
+  optional bytes local_base_whitelist_category = 9;
+  optional bytes local_base_blacklist_category = 10;
+  optional int64  local_bonus_rewards = 11;
+  optional double local_bonus_miles = 12;
+  optional bytes local_bonus_whitelist_category = 13;
+  optional bytes local_bonus_blacklist_category = 14;
+  optional bytes local_bonus_payment_types = 15;
+  optional int64 fcy_base_rewards = 16;
+  optional double fcy_base_miles = 17;
+  optional bytes fcy_base_whitelist_category = 18;
+  optional bytes fcy_base_blacklist_category = 19;
+  optional int64 fcy_bonus_rewards = 20;
+  optional double fcy_bonus_miles = 21;
+  optional bytes fcy_bonus_whitelist_category = 22;
+  optional bytes fcy_bonus_blacklist_category = 23;
+  optional bytes fcy_bonus_payment_types = 24;
+  optional int64 rounding = 25;
+  optional double amount_block = 26;
+  optional string reward_currency = 27;
+  optional int64 cap_type = 28;
+  optional double cap = 29;
+}
+
 message Card{
   optional int64 card_id = 1;
   optional string card_name = 2;
@@ -61,16 +93,16 @@ message Card{
   optional int64 card_type = 4;
   optional string card_image = 5;
   optional string card_issuer = 6;
-  optional int64 local_base_reward = 7;
+  optional int64 local_base_rewards = 7;
   optional double local_base_miles = 8;
   optional CardRules local_base_card_rules = 9;
-  optional int64  local_bonus_reward = 10;
+  optional int64  local_bonus_rewards = 10;
   optional double local_bonus_miles = 11;
   optional CardRules local_bonus_card_rules = 12;
-  optional int64 fcy_base_reward = 13;
+  optional int64 fcy_base_rewards = 13;
   optional double fcy_base_miles = 14;
   optional CardRules fcy_base_card_rules = 15;
-  optional int64 fcy_bonus_reward = 16;
+  optional int64 fcy_bonus_rewards = 16;
   optional double fcy_bonus_miles = 17;
   optional CardRules fcy_bonus_card_rules = 18;
   optional int64 rounding = 19;

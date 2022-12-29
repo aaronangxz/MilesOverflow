@@ -38,8 +38,24 @@ enum CardCapType{
   STATEMENT_MONTH = 2;
 }
 
+enum CardType{
+  CREDIT_CARD = 0;
+  CHARGE_CARD = 1;
+  DEBIT_CARD = 2;
+}
+
+enum ErrorCode{
+  ERROR_OK = 0;
+  ERROR_PARAMS = 1;
+  ERROR_JSON_BIND = 2;
+}
+
 message RequestMeta{
   optional string token = 1;
+}
+
+message GenericResponse{
+  optional ResponseMeta response_meta = 1;
 }
 
 message ResponseMeta{
@@ -112,6 +128,13 @@ message Card{
   optional double cap = 23;
 }
 
+message UserCard{
+  optional int64 card_id = 1;
+  optional string card_nickname = 2;
+  optional int64 card_expiry = 3;
+  optional int64 is_active = 4;
+}
+
 message Transaction{
   optional string description = 1;
   optional int64 category = 2;
@@ -133,22 +156,46 @@ message AddTransactionResponse{
 }
 
 message PairUserCardRequest{
+  enum ErrorCode{
+    ERROR_SUCCESS = 0;
+    ERROR_CARD_PAIR_EXISTS = 1;
+    ERROR_CARD_NOT_EXISTS = 2;
+    ERROR_FAILED = 3;
+  }
+
   optional RequestMeta request_meta = 1;
   optional int64 user_id = 2;
-  optional Card card_details = 3;
+  optional int64 card_id = 3;
+  optional string card_nickname = 4;
+  optional int64 card_expiry = 5;
 }
 
 message PairUserCardResponse{
-  repeated Card cards_list = 1;
-  optional ResponseMeta response_meta = 2;
+  optional ResponseMeta response_meta = 1;
+  repeated UserCard user_cards_list = 2;
+}
+
+message GetAllUserCardsRequest{
+  optional RequestMeta request_meta = 1;
+  optional int64 user_id = 2;
+}
+
+message GetAllUserCardsResponse{
+  optional ResponseMeta response_meta = 1;
+  repeated UserCard user_cards_list = 2;
 }
 
 message AddCardRequest{
+  enum ErrorCode{
+    ERROR_SUCCESS = 0;
+    ERROR_CARD_EXISTS = 1;
+    ERROR_FAILED = 2;
+  }
   optional RequestMeta request_meta = 1;
   optional Card card_details = 2;
 }
 
 message AddCardResponse{
-  optional int64 card_id = 1;
-  optional ResponseMeta response_meta = 2;
+  optional ResponseMeta response_meta = 1;
+  optional int64 card_id = 2;
 }

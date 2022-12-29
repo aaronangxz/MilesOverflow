@@ -12,6 +12,10 @@ import (
 	"time"
 )
 
+const (
+	CardTable = "milestracker_db.card_table"
+)
+
 var (
 	db        *gorm.DB
 	newLogger = logger.New(

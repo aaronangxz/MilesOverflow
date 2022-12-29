@@ -14,6 +14,7 @@ func main() {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 	e.POST("add_card", processors.AddCard)
+	e.POST("pair_user_card", processors.PairUserCard)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

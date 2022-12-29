@@ -4,60 +4,69 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/aaronangxz/RewardTracker/orm"
-	"github.com/aaronangxz/RewardTracker/rewards_tracker.pb/rewards_tracker"
+	"github.com/aaronangxz/RewardTracker/resp"
+	pb "github.com/aaronangxz/RewardTracker/rewards_tracker.pb/rewards_tracker"
 	"github.com/labstack/echo/v4"
-	"google.golang.org/protobuf/proto"
-	"net/http"
 )
 
 func AddCard(c echo.Context) error {
-	req := new(rewards_tracker.AddCardRequest)
+	req := new(pb.AddCardRequest)
 	if err := c.Bind(req); err != nil {
-		return err
+		return resp.JSONResp(c, int64(pb.ErrorCode_ERROR_JSON_BIND), err)
+	}
+
+	if err := verifyFields(req.GetCardDetails()); err != nil {
+		return resp.JSONResp(c, int64(pb.ErrorCode_ERROR_PARAMS), err)
 	}
 
 	if isExists, err := isCardExists(req.GetCardDetails()); err != nil {
-		return c.JSON(http.StatusOK, rewards_tracker.AddCardResponse{
-			ResponseMeta: &rewards_tracker.ResponseMeta{
-				ErrorCode:    proto.Int64(0),
-				ErrorMessage: proto.String(err.Error()),
-			},
-		})
+		return resp.JSONResp(c, int64(pb.AddCardRequest_ERROR_SUCCESS), err)
 	} else if isExists {
-		return c.JSON(http.StatusOK, rewards_tracker.AddCardResponse{
-			ResponseMeta: &rewards_tracker.ResponseMeta{
-				ErrorCode:    proto.Int64(0),
-				ErrorMessage: proto.String("card exists"),
-			},
-		})
+		return resp.JSONResp(c, int64(pb.AddCardRequest_ERROR_CARD_EXISTS), err)
 	}
 
 	if idx, err := createCard(req.GetCardDetails()); err != nil {
-		return c.JSON(http.StatusOK, rewards_tracker.AddCardResponse{
-			ResponseMeta: &rewards_tracker.ResponseMeta{
-				ErrorCode:    proto.Int64(0),
-				ErrorMessage: proto.String(err.Error()),
-			},
-		})
+		return resp.JSONResp(c, int64(pb.AddCardRequest_ERROR_FAILED), err)
 	} else {
-		return c.JSON(http.StatusOK, rewards_tracker.AddCardResponse{
-			CardId: proto.Int64(idx),
-			ResponseMeta: &rewards_tracker.ResponseMeta{
-				ErrorCode:    proto.Int64(0),
-				ErrorMessage: proto.String("ok"),
-			},
-		})
+		return resp.AddCardResponseJSON(c, idx)
 	}
 }
 
-func verifyFields(c *rewards_tracker.Card) error {
+func verifyFields(c *pb.Card) error {
+	if len(c.GetCardName()) > 50 {
+		return errors.New("card name must not exceed 50 characters")
+	}
 
-	return errors.New("")
+	if len(c.GetShortCardName()) > len(c.GetCardName()) {
+		return errors.New("card short name must not be longer than card name")
+	}
+
+	if _, ok := pb.CardType_name[int32(c.GetCardType())]; !ok {
+		return errors.New("invalid card type")
+	}
+
+	if len(c.GetCardIssuer()) > 50 {
+		return errors.New("card issuer must not exceed 50 characters")
+	}
+
+	if c.GetLocalBaseRewards() < 0 || c.GetLocalBonusRewards() < 0 || c.GetFcyBaseRewards() < 0 || c.GetFcyBonusRewards() < 0 ||
+		c.GetLocalBaseMiles() < 0 || c.GetLocalBonusMiles() < 0 || c.GetFcyBaseMiles() < 0 || c.GetFcyBonusMiles() < 0 {
+		return errors.New("miles and rewards cannot be negative")
+	}
+
+	if _, ok := pb.CardRounding_name[int32(c.GetRounding())]; !ok {
+		return errors.New("invalid rounding type")
+	}
+
+	if _, ok := pb.CardPaymentType_name[int32(c.GetCapType())]; !ok {
+		return errors.New("invalid cap type")
+	}
+	return nil
 }
 
-func isCardExists(c *rewards_tracker.Card) (bool, error) {
+func isCardExists(c *pb.Card) (bool, error) {
 	var (
-		hold []rewards_tracker.CardDb
+		hold []pb.CardDb
 	)
 
 	if err := orm.DbInstance().Raw("SELECT * FROM milestracker_db.card_table WHERE card_name = ?", c.GetCardName()).Scan(&hold).Error; err != nil {
@@ -66,7 +75,7 @@ func isCardExists(c *rewards_tracker.Card) (bool, error) {
 	return hold != nil, nil
 }
 
-func createCard(c *rewards_tracker.Card) (int64, error) {
+func fillCardToCardDb(c *pb.Card) *pb.CardDb {
 	LocalBaseWhitelistCategory, _ := json.Marshal(c.LocalBaseCardRules.WhitelistCategories)
 	LocalBaseBlacklistCategory, _ := json.Marshal(c.LocalBaseCardRules.BlacklistCategories)
 	LocalBonusWhitelistCategory, _ := json.Marshal(c.LocalBonusCardRules.WhitelistCategories)
@@ -79,7 +88,7 @@ func createCard(c *rewards_tracker.Card) (int64, error) {
 	FcyBonusBlacklistCategory, _ := json.Marshal(c.FcyBonusCardRules.BlacklistCategories)
 	FcyBonusPaymentTypes, _ := json.Marshal(c.FcyBonusCardRules.WhitelistPaymentTypes)
 
-	cc := rewards_tracker.CardDb{
+	cc := &pb.CardDb{
 		CardId:                      nil,
 		CardName:                    c.CardName,
 		ShortCardName:               c.ShortCardName,
@@ -110,14 +119,17 @@ func createCard(c *rewards_tracker.Card) (int64, error) {
 		CapType:                     c.CapType,
 		Cap:                         c.Cap,
 	}
+	return cc
+}
 
-	if err := orm.DbInstance().Table("milestracker_db.card_table").Create(&cc).Error; err != nil {
+func createCard(c *pb.Card) (int64, error) {
+	cDb := fillCardToCardDb(c)
+	if err := orm.DbInstance().Table(orm.CardTable).Create(&cDb).Error; err != nil {
 		return -1, err
 	}
 
-	if err := orm.DbInstance().Raw("SELECT * FROM milestracker_db.card_table WHERE card_name = ?", c.GetCardName()).Scan(&cc).Error; err != nil {
+	if err := orm.DbInstance().Raw("SELECT * FROM milestracker_db.card_table WHERE card_name = ?", c.GetCardName()).Scan(&cDb).Error; err != nil {
 		return -1, err
 	}
-
-	return cc.GetCardId(), nil
+	return cDb.GetCardId(), nil
 }

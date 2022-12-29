@@ -63,6 +63,16 @@ message ResponseMeta{
   optional string error_message = 2;
 }
 
+message User{
+  enum ErrorCode{
+    ERROR_OK = 0;
+    ERROR_USER_NOT_EXISTS = 1;
+  }
+  optional int64 user_id = 1;
+  optional string user_name = 2;
+  optional int64 timestamp = 3;
+}
+
 message CardRules{
   repeated int64 whitelist_categories = 1;
   repeated int64 blacklist_categories = 2;
@@ -129,10 +139,18 @@ message Card{
 }
 
 message UserCard{
-  optional int64 card_id = 1;
-  optional string card_nickname = 2;
-  optional int64 card_expiry = 3;
-  optional int64 is_active = 4;
+  enum CardStatus{
+    CARD_ACTIVE = 0;
+    CARD_INACTIVE = 1;
+    CARD_UNKNOWN = 3;
+  }
+  optional int64 user_id = 1;
+  optional int64 card_id = 2;
+  optional string card_nickname = 3;
+  optional int64 card_status = 4;
+  optional int64 card_expiry = 5;
+  optional int64 added_timestamp = 6;
+  optional int64 updated_timestamp = 7;
 }
 
 message Transaction{

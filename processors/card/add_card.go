@@ -1,4 +1,4 @@
-package processors
+package card
 
 import (
 	"encoding/json"
@@ -12,27 +12,27 @@ import (
 func AddCard(c echo.Context) error {
 	req := new(pb.AddCardRequest)
 	if err := c.Bind(req); err != nil {
-		return resp.JSONResp(c, int64(pb.ErrorCode_ERROR_JSON_BIND), err)
+		return resp.JSONResp(c, int64(pb.ErrorCode_ERROR_JSON_BIND), err.Error())
 	}
 
-	if err := verifyFields(req.GetCardDetails()); err != nil {
-		return resp.JSONResp(c, int64(pb.ErrorCode_ERROR_PARAMS), err)
+	if err := verifyAddCardFields(req.GetCardDetails()); err != nil {
+		return resp.JSONResp(c, int64(pb.ErrorCode_ERROR_PARAMS), err.Error())
 	}
 
-	if isExists, err := isCardExists(req.GetCardDetails()); err != nil {
-		return resp.JSONResp(c, int64(pb.AddCardRequest_ERROR_SUCCESS), err)
+	if isExists, err := isCardNameExists(req.GetCardDetails().GetCardName()); err != nil {
+		return resp.JSONResp(c, int64(pb.AddCardRequest_ERROR_FAILED), err.Error())
 	} else if isExists {
-		return resp.JSONResp(c, int64(pb.AddCardRequest_ERROR_CARD_EXISTS), err)
+		return resp.JSONResp(c, int64(pb.AddCardRequest_ERROR_CARD_EXISTS), err.Error())
 	}
 
 	if idx, err := createCard(req.GetCardDetails()); err != nil {
-		return resp.JSONResp(c, int64(pb.AddCardRequest_ERROR_FAILED), err)
+		return resp.JSONResp(c, int64(pb.AddCardRequest_ERROR_FAILED), err.Error())
 	} else {
 		return resp.AddCardResponseJSON(c, idx)
 	}
 }
 
-func verifyFields(c *pb.Card) error {
+func verifyAddCardFields(c *pb.Card) error {
 	if len(c.GetCardName()) > 50 {
 		return errors.New("card name must not exceed 50 characters")
 	}
@@ -62,17 +62,6 @@ func verifyFields(c *pb.Card) error {
 		return errors.New("invalid cap type")
 	}
 	return nil
-}
-
-func isCardExists(c *pb.Card) (bool, error) {
-	var (
-		hold []pb.CardDb
-	)
-
-	if err := orm.DbInstance().Raw("SELECT * FROM milestracker_db.card_table WHERE card_name = ?", c.GetCardName()).Scan(&hold).Error; err != nil {
-		return false, err
-	}
-	return hold != nil, nil
 }
 
 func fillCardToCardDb(c *pb.Card) *pb.CardDb {

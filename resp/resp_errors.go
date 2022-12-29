@@ -8,8 +8,8 @@ import (
 	"net/http"
 )
 
-func JSONResp(c echo.Context, code int64, err error) error {
-	return c.JSON(http.StatusOK, response(code, err.Error()))
+func JSONResp(c echo.Context, code int64, msg string) error {
+	return c.JSON(http.StatusOK, response(code, msg))
 }
 
 func response(code int64, msg string) rewards_tracker.GenericResponse {

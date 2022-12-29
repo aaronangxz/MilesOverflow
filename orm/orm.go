@@ -13,7 +13,9 @@ import (
 )
 
 const (
-	CardTable = "milestracker_db.card_table"
+	CardTable     = "milestracker_db.card_table"
+	UserTable     = "milestracker_db.user_table"
+	UserCardTable = "milestracker_db.user_card_table"
 )
 
 var (

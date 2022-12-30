@@ -1,7 +1,6 @@
 package transaction
 
 import (
-	"encoding/json"
 	"errors"
 	"github.com/aaronangxz/RewardTracker/processors/card"
 	"github.com/aaronangxz/RewardTracker/processors/user"
@@ -9,6 +8,7 @@ import (
 	pb "github.com/aaronangxz/RewardTracker/rewards_tracker.pb/rewards_tracker"
 	"github.com/aaronangxz/RewardTracker/utils"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/gommon/log"
 	"google.golang.org/protobuf/proto"
 	"math"
 )
@@ -90,7 +90,6 @@ func verifyCalculateTransactionFields(req *pb.CalculateTransactionRequest) error
 
 func calculate(c *pb.CalculateTransactionRequest) (*pb.CalculatedTransaction, error) {
 	var (
-		calculated  *pb.CalculatedTransaction
 		spending    *pb.CurrentSpending
 		cardDetails *pb.CardDb
 		err         error
@@ -100,17 +99,19 @@ func calculate(c *pb.CalculateTransactionRequest) (*pb.CalculatedTransaction, er
 		return nil, err
 	}
 
+	log.Infof("GetCurrentSpendingByCard: %v", spending.GetTotalSpending())
+
 	if cardDetails, err = card.GetCardDetails(c.GetTransactionDetails().GetCardId()); err != nil {
 		return nil, err
 	}
 
+	log.Infof("GetCardDetails: %v", cardDetails)
+
 	if c.GetTransactionDetails().GetCurrency() != "SGD" {
-		calculateFCY(c.GetTransactionDetails(), cardDetails)
+		return calculateFCY(c.GetTransactionDetails(), cardDetails), nil
 	} else {
 		return calculateLocal(c.GetTransactionDetails(), cardDetails, spending), nil
 	}
-
-	return calculated, nil
 }
 
 func calculateLocal(t *pb.Transaction, c *pb.CardDb, spending *pb.CurrentSpending) *pb.CalculatedTransaction {
@@ -120,7 +121,7 @@ func calculateLocal(t *pb.Transaction, c *pb.CardDb, spending *pb.CurrentSpendin
 	return calculateBaseLocal(t, c)
 }
 
-func calculateFCY(t *pb.Transaction, c *pb.CardDb) (float64, float64) {
+func calculateFCY(t *pb.Transaction, c *pb.CardDb) *pb.CalculatedTransaction {
 	return calculateBaseFCY(t, c)
 }
 
@@ -129,34 +130,41 @@ func isEligibleCategory(c *pb.CardDb, cat int64) bool {
 		return false
 	}
 
-	var localBonusWhitelistCategories *pb.CardRules
+	var localBonusWhitelistCategories pb.Lists
 
-	if err := json.Unmarshal(c.GetLocalBonusWhitelistCategory(), &localBonusWhitelistCategories); err != nil {
-
+	if err := proto.Unmarshal(c.GetLocalBonusWhitelistCategory(), &localBonusWhitelistCategories); err != nil {
+		log.Error(err)
 	}
 
-	eligibleCats := localBonusWhitelistCategories.GetWhitelistCategories()
+	log.Info(localBonusWhitelistCategories.GetList())
+
+	eligibleCats := localBonusWhitelistCategories.GetList()
 	for _, eligibleCat := range eligibleCats {
 		if eligibleCat == cat {
+			log.Infof("isEligibleCategory: %v", eligibleCat)
 			return true
 		}
 	}
+	log.Info("isEligibleCategory: false")
 	return false
 }
 
 func isEligiblePaymentType(c *pb.CardDb, paymentType int64) bool {
-	var localBonusWhitelistPaymentTypes *pb.CardRules
+	var localBonusWhitelistPaymentTypes pb.Lists
 
-	if err := json.Unmarshal(c.GetLocalBonusPaymentTypes(), &localBonusWhitelistPaymentTypes); err != nil {
-
+	if err := proto.Unmarshal(c.GetLocalBonusPaymentTypes(), &localBonusWhitelistPaymentTypes); err != nil {
+		log.Error(err)
 	}
+	log.Info(localBonusWhitelistPaymentTypes.GetList())
 
-	eligiblePaymentTypes := localBonusWhitelistPaymentTypes.GetWhitelistPaymentTypes()
+	eligiblePaymentTypes := localBonusWhitelistPaymentTypes.GetList()
 	for _, eligiblePaymentType := range eligiblePaymentTypes {
 		if eligiblePaymentType == paymentType {
+			log.Infof("isEligiblePaymentType: %v", eligiblePaymentType)
 			return true
 		}
 	}
+	log.Info("isEligiblePaymentType: false")
 	return false
 }
 
@@ -166,25 +174,29 @@ func calculateBaseLocal(t *pb.Transaction, c *pb.CardDb) *pb.CalculatedTransacti
 		baseReward float64
 		baseMiles  float64
 	)
+	log.Info("start calculateBaseLocal")
 
 	amount = float64(t.GetAmount()) / 100 / c.GetAmountBlock()
+	log.Infof("amount: %v", amount)
 
 	switch c.GetRounding() {
 	case int64(pb.CardRounding_ROUND_DOWN):
 		baseReward = math.Floor(amount) * float64(c.GetLocalBaseRewards())
 		break
 	case int64(pb.CardRounding_ROUND):
-		baseReward = math.Round(amount) * float64(c.GetLocalBonusRewards())
+		baseReward = math.Round(amount) * float64(c.GetLocalBaseRewards())
 		break
 	}
 
 	baseMiles = baseReward * c.GetLocalBaseMiles()
 
+	log.Info(baseMiles, baseReward)
+
 	return &pb.CalculatedTransaction{
-		BaseMilesEarned:    proto.Int64(int64(baseMiles * 100)),
-		BonusMilesEarned:   proto.Int64(0),
-		BaseRewardsEarned:  proto.Int64(int64(baseReward * 100)),
-		BonusRewardsEarned: proto.Int64(0),
+		BaseMilesEarned:    proto.Float64(baseMiles),
+		BonusMilesEarned:   proto.Float64(0),
+		BaseRewardsEarned:  proto.Float64(baseReward),
+		BonusRewardsEarned: proto.Float64(0),
 	}
 }
 
@@ -196,9 +208,12 @@ func calculateBonusLocal(t *pb.Transaction, c *pb.CardDb, current *pb.CurrentSpe
 		miles       float64
 	)
 
+	log.Info("start calculateBonusLocal")
 	//earns base regardless
 	base := calculateBaseLocal(t, c)
-	baseReward = float64(base.GetBaseRewardsEarned() / 100)
+	log.Infof("calculateBaseLocal: %v", base)
+
+	baseReward = base.GetBaseRewardsEarned()
 
 	//amount is inflated by 100
 	//divided by card amount blocks
@@ -219,14 +234,14 @@ func calculateBonusLocal(t *pb.Transaction, c *pb.CardDb, current *pb.CurrentSpe
 	miles = bonusReward * c.GetLocalBaseMiles() * c.GetAmountBlock()
 
 	return &pb.CalculatedTransaction{
-		BaseMilesEarned:    proto.Int64(base.GetBaseMilesEarned() * 100),
-		BonusMilesEarned:   proto.Int64(int64(math.Round(miles*100) / 100)),
-		BaseRewardsEarned:  proto.Int64(int64(baseReward * 100)),
-		BonusRewardsEarned: proto.Int64(int64(bonusReward * 100)),
+		BaseMilesEarned:    proto.Float64(base.GetBaseMilesEarned()),
+		BonusMilesEarned:   proto.Float64(math.Round(miles*100) / 100),
+		BaseRewardsEarned:  proto.Float64(baseReward),
+		BonusRewardsEarned: proto.Float64(bonusReward),
 	}
 }
 
-func calculateBaseFCY(t *pb.Transaction, c *pb.CardDb) (float64, float64) {
+func calculateBaseFCY(t *pb.Transaction, c *pb.CardDb) *pb.CalculatedTransaction {
 	var (
 		amount     float64
 		baseReward float64
@@ -246,16 +261,26 @@ func calculateBaseFCY(t *pb.Transaction, c *pb.CardDb) (float64, float64) {
 
 	baseMiles = baseReward * c.GetFcyBaseMiles()
 
-	return baseReward, baseMiles
+	return &pb.CalculatedTransaction{
+		BaseMilesEarned:    proto.Float64(baseMiles),
+		BonusMilesEarned:   nil,
+		BaseRewardsEarned:  proto.Float64(baseReward),
+		BonusRewardsEarned: nil,
+	}
 }
 
 func processCap(c *pb.CardDb, amount float64, current float64) (bool, float64) {
 	//Fully exceeded cap
 	if current >= c.GetCap() {
+		log.Info("processCap: Fully exceeded cap")
 		return false, 0
 	}
 
 	//Partially exceeded
 	amountToEarnBonus := c.GetCap() - current
-	return true, utils.Min(amountToEarnBonus, amount)
+
+	finalAmount := utils.Min(amountToEarnBonus, amount)
+
+	log.Infof("processCap: Not exceeded cap, %v", finalAmount)
+	return true, finalAmount
 }

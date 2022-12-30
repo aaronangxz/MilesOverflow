@@ -78,11 +78,15 @@ message User{
   optional int64 timestamp = 3;
 }
 
+message Lists{
+  repeated int64 list = 1;
+}
+
 message CardRules{
-  repeated int64 whitelist_categories = 1;
-  repeated int64 blacklist_categories = 2;
-  repeated int64 whitelist_payment_types = 3;
-  repeated int64 blacklist_payment_types = 4;
+  optional Lists whitelist_categories = 1;
+  optional Lists blacklist_categories = 2;
+  optional Lists whitelist_payment_types = 3;
+  optional Lists blacklist_payment_types = 4;
 }
 
 message CardDb{
@@ -197,10 +201,10 @@ message CurrentSpending{
 }
 
 message CalculatedTransaction{
-  optional int64 base_miles_earned = 1;
-  optional int64 bonus_miles_earned = 2;
-  optional int64 base_rewards_earned = 3;
-  optional int64 bonus_rewards_earned = 4;
+  optional double base_miles_earned = 1;
+  optional double bonus_miles_earned = 2;
+  optional double base_rewards_earned = 3;
+  optional double bonus_rewards_earned = 4;
   optional bool is_promotion = 5;
   optional int64 promotion_id = 6;
   optional int64 promotion_miles_earned = 7;

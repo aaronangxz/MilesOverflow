@@ -1,12 +1,12 @@
 package card
 
 import (
-	"encoding/json"
 	"errors"
 	"github.com/aaronangxz/RewardTracker/orm"
 	"github.com/aaronangxz/RewardTracker/resp"
 	pb "github.com/aaronangxz/RewardTracker/rewards_tracker.pb/rewards_tracker"
 	"github.com/labstack/echo/v4"
+	"google.golang.org/protobuf/proto"
 )
 
 func AddCard(c echo.Context) error {
@@ -65,17 +65,17 @@ func verifyAddCardFields(c *pb.Card) error {
 }
 
 func fillCardToCardDb(c *pb.Card) *pb.CardDb {
-	LocalBaseWhitelistCategory, _ := json.Marshal(c.LocalBaseCardRules.WhitelistCategories)
-	LocalBaseBlacklistCategory, _ := json.Marshal(c.LocalBaseCardRules.BlacklistCategories)
-	LocalBonusWhitelistCategory, _ := json.Marshal(c.LocalBonusCardRules.WhitelistCategories)
-	LocalBonusBlacklistCategory, _ := json.Marshal(c.LocalBonusCardRules.BlacklistCategories)
-	LocalBonusPaymentTypes, _ := json.Marshal(c.LocalBonusCardRules.WhitelistPaymentTypes)
+	LocalBaseWhitelistCategory, _ := proto.Marshal(c.LocalBaseCardRules.WhitelistCategories)
+	LocalBaseBlacklistCategory, _ := proto.Marshal(c.LocalBaseCardRules.BlacklistCategories)
+	LocalBonusWhitelistCategory, _ := proto.Marshal(c.LocalBonusCardRules.WhitelistCategories)
+	LocalBonusBlacklistCategory, _ := proto.Marshal(c.LocalBonusCardRules.BlacklistCategories)
+	LocalBonusPaymentTypes, _ := proto.Marshal(c.LocalBonusCardRules.WhitelistPaymentTypes)
 
-	FcyBaseWhitelistCategory, _ := json.Marshal(c.FcyBaseCardRules.WhitelistCategories)
-	FcyBaseBlacklistCategory, _ := json.Marshal(c.FcyBaseCardRules.BlacklistCategories)
-	FcyBonusWhitelistCategory, _ := json.Marshal(c.FcyBonusCardRules.WhitelistCategories)
-	FcyBonusBlacklistCategory, _ := json.Marshal(c.FcyBonusCardRules.BlacklistCategories)
-	FcyBonusPaymentTypes, _ := json.Marshal(c.FcyBonusCardRules.WhitelistPaymentTypes)
+	FcyBaseWhitelistCategory, _ := proto.Marshal(c.FcyBaseCardRules.WhitelistCategories)
+	FcyBaseBlacklistCategory, _ := proto.Marshal(c.FcyBaseCardRules.BlacklistCategories)
+	FcyBonusWhitelistCategory, _ := proto.Marshal(c.FcyBonusCardRules.WhitelistCategories)
+	FcyBonusBlacklistCategory, _ := proto.Marshal(c.FcyBonusCardRules.BlacklistCategories)
+	FcyBonusPaymentTypes, _ := proto.Marshal(c.FcyBonusCardRules.WhitelistPaymentTypes)
 
 	cc := &pb.CardDb{
 		CardId:                      nil,

@@ -158,6 +158,29 @@ message UserCard{
   optional int64 updated_timestamp = 7;
 }
 
+message TransactionDb{
+  optional int64 user_id = 1;
+  optional string description = 2;
+  optional int64 category = 3;
+  optional int64 payment_type = 4;
+  optional int64 amount = 5;
+  optional int64 amount_converted = 6;
+  optional string currency = 7;
+  optional int64 transaction_timestamp = 8;
+  optional int64 create_timestamp = 9;
+  optional int64 update_timestamp = 10;
+  optional int64 card_id = 11;
+  optional int64 is_cancel = 12;
+  optional int64 base_miles_earned = 13;
+  optional int64 bonus_miles_earned = 14;
+  optional int64 base_rewards_earned = 15;
+  optional int64 bonus_rewards_earned = 16;
+  optional int64 is_promotion = 17;
+  optional int64 promotion_id = 18;
+  optional int64 promotion_miles_earned = 19;
+  optional int64 promotion_rewards_earned = 20;
+}
+
 message Transaction{
   optional string description = 1;
   optional int64 category = 2;
@@ -165,7 +188,12 @@ message Transaction{
   optional int64 amount = 4;
   optional string currency = 5;
   optional int64 time = 6;
-  optional int64 cardId = 7;
+  optional int64 card_id = 7;
+}
+
+message CurrentSpending{
+  optional int64 total_spending = 1;
+  optional int64 transaction_count = 2;
 }
 
 message CalculatedTransaction{
@@ -190,6 +218,10 @@ message AddTransactionResponse{
 }
 
 message CalculateTransactionRequest{
+  enum ErrorCode{
+    ERROR_SUCCESS = 0;
+    ERROR_FAILED = 1;
+  }
   optional RequestMeta request_meta = 1;
   optional int64 user_id = 2;
   optional Transaction transaction_details = 3;

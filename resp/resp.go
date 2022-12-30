@@ -48,3 +48,17 @@ func getUserCardsResponse(cards []*pb.UserCard) pb.GetUserCardsResponse {
 		UserCardsList: cards,
 	}
 }
+
+func GetCalculateTransactionResponseJSON(c echo.Context, trx *pb.CalculatedTransaction) error {
+	return c.JSON(http.StatusOK, getCalculateTransactionResponse(trx))
+}
+
+func getCalculateTransactionResponse(trx *pb.CalculatedTransaction) pb.CalculateTransactionResponse {
+	return pb.CalculateTransactionResponse{
+		ResponseMeta: &pb.ResponseMeta{
+			ErrorCode:    proto.Int64(int64(pb.CalculateTransactionRequest_ERROR_SUCCESS)),
+			ErrorMessage: proto.String("successfully calculated transaction."),
+		},
+		CalculatedTransaction: trx,
+	}
+}

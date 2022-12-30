@@ -148,5 +148,5 @@ func calculateBaseFCY(t Transaction, c Card) (float64, float64) {
 }
 
 func calculateFCY(t Transaction, c Card) (float64, float64) {
-	return calculateFCY(t, c)
+	return calculateBaseFCY(t, c)
 }

@@ -34,3 +34,17 @@ func pairUserCardResponse(cards []*pb.UserCard) pb.PairUserCardResponse {
 		UserCardsList: cards,
 	}
 }
+
+func GetUserCardsResponseJSON(c echo.Context, cards []*pb.UserCard) error {
+	return c.JSON(http.StatusOK, getUserCardsResponse(cards))
+}
+
+func getUserCardsResponse(cards []*pb.UserCard) pb.GetUserCardsResponse {
+	return pb.GetUserCardsResponse{
+		ResponseMeta: &pb.ResponseMeta{
+			ErrorCode:    proto.Int64(int64(pb.GetUserCardsRequest_ERROR_SUCCESS)),
+			ErrorMessage: proto.String("successfully retrieved cards."),
+		},
+		UserCardsList: cards,
+	}
+}

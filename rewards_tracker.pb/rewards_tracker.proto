@@ -44,6 +44,11 @@ enum CardType{
   DEBIT_CARD = 2;
 }
 
+enum OrderBy{
+  ASC = 0;
+  DESC = 1;
+}
+
 enum ErrorCode{
   ERROR_OK = 0;
   ERROR_PARAMS = 1;
@@ -163,6 +168,17 @@ message Transaction{
   optional int64 cardId = 7;
 }
 
+message CalculatedTransaction{
+  optional int64 base_miles_earned = 1;
+  optional int64 bonus_miles_earned = 2;
+  optional int64 base_rewards_earned = 3;
+  optional int64 bonus_rewards_earned = 4;
+  optional bool is_promotion = 5;
+  optional int64 promotion_id = 6;
+  optional int64 promotion_miles_earned = 7;
+  optional int64 promotion_rewards_earned = 8;
+}
+
 message AddTransactionRequest{
   optional RequestMeta request_meta = 1;
   optional int64 user_id = 2;
@@ -171,6 +187,17 @@ message AddTransactionRequest{
 
 message AddTransactionResponse{
   optional ResponseMeta response_meta = 1;
+}
+
+message CalculateTransactionRequest{
+  optional RequestMeta request_meta = 1;
+  optional int64 user_id = 2;
+  optional Transaction transaction_details = 3;
+}
+
+message CalculateTransactionResponse{
+  optional ResponseMeta response_meta = 1;
+  optional CalculatedTransaction calculated_transaction = 2;
 }
 
 message PairUserCardRequest{
@@ -193,12 +220,31 @@ message PairUserCardResponse{
   repeated UserCard user_cards_list = 2;
 }
 
-message GetAllUserCardsRequest{
-  optional RequestMeta request_meta = 1;
-  optional int64 user_id = 2;
+message GetUserCardsFilter{
+  repeated int64 card_statuses = 2;
+  optional bool is_expired = 4;
 }
 
-message GetAllUserCardsResponse{
+message GetUserCardsRequest{
+  enum ErrorCode{
+    ERROR_SUCCESS = 0;
+    ERROR_FAILED = 1;
+  }
+
+  enum OrderByField{
+    USER_CARD_ADDED_TIME = 0;
+    USER_CARD_EXPIRY = 1;
+    USER_CARD_NICKNAME = 2;
+  }
+
+  optional RequestMeta request_meta = 1;
+  optional int64 user_id = 2;
+  optional int64 order_by = 3;
+  optional int64 direction = 4;
+  optional GetUserCardsFilter filter = 5;
+}
+
+message GetUserCardsResponse{
   optional ResponseMeta response_meta = 1;
   repeated UserCard user_cards_list = 2;
 }

@@ -301,6 +301,52 @@ func (CardType) EnumDescriptor() ([]byte, []int) {
 	return file_rewards_tracker_proto_rawDescGZIP(), []int{4}
 }
 
+type OrderBy int32
+
+const (
+	OrderBy_ASC  OrderBy = 0
+	OrderBy_DESC OrderBy = 1
+)
+
+// Enum value maps for OrderBy.
+var (
+	OrderBy_name = map[int32]string{
+		0: "ASC",
+		1: "DESC",
+	}
+	OrderBy_value = map[string]int32{
+		"ASC":  0,
+		"DESC": 1,
+	}
+)
+
+func (x OrderBy) Enum() *OrderBy {
+	p := new(OrderBy)
+	*p = x
+	return p
+}
+
+func (x OrderBy) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OrderBy) Descriptor() protoreflect.EnumDescriptor {
+	return file_rewards_tracker_proto_enumTypes[5].Descriptor()
+}
+
+func (OrderBy) Type() protoreflect.EnumType {
+	return &file_rewards_tracker_proto_enumTypes[5]
+}
+
+func (x OrderBy) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OrderBy.Descriptor instead.
+func (OrderBy) EnumDescriptor() ([]byte, []int) {
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{5}
+}
+
 type ErrorCode int32
 
 const (
@@ -334,11 +380,11 @@ func (x ErrorCode) String() string {
 }
 
 func (ErrorCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_rewards_tracker_proto_enumTypes[5].Descriptor()
+	return file_rewards_tracker_proto_enumTypes[6].Descriptor()
 }
 
 func (ErrorCode) Type() protoreflect.EnumType {
-	return &file_rewards_tracker_proto_enumTypes[5]
+	return &file_rewards_tracker_proto_enumTypes[6]
 }
 
 func (x ErrorCode) Number() protoreflect.EnumNumber {
@@ -347,7 +393,7 @@ func (x ErrorCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ErrorCode.Descriptor instead.
 func (ErrorCode) EnumDescriptor() ([]byte, []int) {
-	return file_rewards_tracker_proto_rawDescGZIP(), []int{5}
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{6}
 }
 
 type User_ErrorCode int32
@@ -380,11 +426,11 @@ func (x User_ErrorCode) String() string {
 }
 
 func (User_ErrorCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_rewards_tracker_proto_enumTypes[6].Descriptor()
+	return file_rewards_tracker_proto_enumTypes[7].Descriptor()
 }
 
 func (User_ErrorCode) Type() protoreflect.EnumType {
-	return &file_rewards_tracker_proto_enumTypes[6]
+	return &file_rewards_tracker_proto_enumTypes[7]
 }
 
 func (x User_ErrorCode) Number() protoreflect.EnumNumber {
@@ -429,11 +475,11 @@ func (x UserCard_CardStatus) String() string {
 }
 
 func (UserCard_CardStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_rewards_tracker_proto_enumTypes[7].Descriptor()
+	return file_rewards_tracker_proto_enumTypes[8].Descriptor()
 }
 
 func (UserCard_CardStatus) Type() protoreflect.EnumType {
-	return &file_rewards_tracker_proto_enumTypes[7]
+	return &file_rewards_tracker_proto_enumTypes[8]
 }
 
 func (x UserCard_CardStatus) Number() protoreflect.EnumNumber {
@@ -481,11 +527,11 @@ func (x PairUserCardRequest_ErrorCode) String() string {
 }
 
 func (PairUserCardRequest_ErrorCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_rewards_tracker_proto_enumTypes[8].Descriptor()
+	return file_rewards_tracker_proto_enumTypes[9].Descriptor()
 }
 
 func (PairUserCardRequest_ErrorCode) Type() protoreflect.EnumType {
-	return &file_rewards_tracker_proto_enumTypes[8]
+	return &file_rewards_tracker_proto_enumTypes[9]
 }
 
 func (x PairUserCardRequest_ErrorCode) Number() protoreflect.EnumNumber {
@@ -494,7 +540,102 @@ func (x PairUserCardRequest_ErrorCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use PairUserCardRequest_ErrorCode.Descriptor instead.
 func (PairUserCardRequest_ErrorCode) EnumDescriptor() ([]byte, []int) {
-	return file_rewards_tracker_proto_rawDescGZIP(), []int{11, 0}
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{14, 0}
+}
+
+type GetUserCardsRequest_ErrorCode int32
+
+const (
+	GetUserCardsRequest_ERROR_SUCCESS GetUserCardsRequest_ErrorCode = 0
+	GetUserCardsRequest_ERROR_FAILED  GetUserCardsRequest_ErrorCode = 1
+)
+
+// Enum value maps for GetUserCardsRequest_ErrorCode.
+var (
+	GetUserCardsRequest_ErrorCode_name = map[int32]string{
+		0: "ERROR_SUCCESS",
+		1: "ERROR_FAILED",
+	}
+	GetUserCardsRequest_ErrorCode_value = map[string]int32{
+		"ERROR_SUCCESS": 0,
+		"ERROR_FAILED":  1,
+	}
+)
+
+func (x GetUserCardsRequest_ErrorCode) Enum() *GetUserCardsRequest_ErrorCode {
+	p := new(GetUserCardsRequest_ErrorCode)
+	*p = x
+	return p
+}
+
+func (x GetUserCardsRequest_ErrorCode) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (GetUserCardsRequest_ErrorCode) Descriptor() protoreflect.EnumDescriptor {
+	return file_rewards_tracker_proto_enumTypes[10].Descriptor()
+}
+
+func (GetUserCardsRequest_ErrorCode) Type() protoreflect.EnumType {
+	return &file_rewards_tracker_proto_enumTypes[10]
+}
+
+func (x GetUserCardsRequest_ErrorCode) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use GetUserCardsRequest_ErrorCode.Descriptor instead.
+func (GetUserCardsRequest_ErrorCode) EnumDescriptor() ([]byte, []int) {
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{17, 0}
+}
+
+type GetUserCardsRequest_OrderByField int32
+
+const (
+	GetUserCardsRequest_USER_CARD_ADDED_TIME GetUserCardsRequest_OrderByField = 0
+	GetUserCardsRequest_USER_CARD_EXPIRY     GetUserCardsRequest_OrderByField = 1
+	GetUserCardsRequest_USER_CARD_NICKNAME   GetUserCardsRequest_OrderByField = 2
+)
+
+// Enum value maps for GetUserCardsRequest_OrderByField.
+var (
+	GetUserCardsRequest_OrderByField_name = map[int32]string{
+		0: "USER_CARD_ADDED_TIME",
+		1: "USER_CARD_EXPIRY",
+		2: "USER_CARD_NICKNAME",
+	}
+	GetUserCardsRequest_OrderByField_value = map[string]int32{
+		"USER_CARD_ADDED_TIME": 0,
+		"USER_CARD_EXPIRY":     1,
+		"USER_CARD_NICKNAME":   2,
+	}
+)
+
+func (x GetUserCardsRequest_OrderByField) Enum() *GetUserCardsRequest_OrderByField {
+	p := new(GetUserCardsRequest_OrderByField)
+	*p = x
+	return p
+}
+
+func (x GetUserCardsRequest_OrderByField) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (GetUserCardsRequest_OrderByField) Descriptor() protoreflect.EnumDescriptor {
+	return file_rewards_tracker_proto_enumTypes[11].Descriptor()
+}
+
+func (GetUserCardsRequest_OrderByField) Type() protoreflect.EnumType {
+	return &file_rewards_tracker_proto_enumTypes[11]
+}
+
+func (x GetUserCardsRequest_OrderByField) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use GetUserCardsRequest_OrderByField.Descriptor instead.
+func (GetUserCardsRequest_OrderByField) EnumDescriptor() ([]byte, []int) {
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{17, 1}
 }
 
 type AddCardRequest_ErrorCode int32
@@ -530,11 +671,11 @@ func (x AddCardRequest_ErrorCode) String() string {
 }
 
 func (AddCardRequest_ErrorCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_rewards_tracker_proto_enumTypes[9].Descriptor()
+	return file_rewards_tracker_proto_enumTypes[12].Descriptor()
 }
 
 func (AddCardRequest_ErrorCode) Type() protoreflect.EnumType {
-	return &file_rewards_tracker_proto_enumTypes[9]
+	return &file_rewards_tracker_proto_enumTypes[12]
 }
 
 func (x AddCardRequest_ErrorCode) Number() protoreflect.EnumNumber {
@@ -543,7 +684,7 @@ func (x AddCardRequest_ErrorCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AddCardRequest_ErrorCode.Descriptor instead.
 func (AddCardRequest_ErrorCode) EnumDescriptor() ([]byte, []int) {
-	return file_rewards_tracker_proto_rawDescGZIP(), []int{15, 0}
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{19, 0}
 }
 
 type RequestMeta struct {
@@ -1513,6 +1654,109 @@ func (x *Transaction) GetCardId() int64 {
 	return 0
 }
 
+type CalculatedTransaction struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	BaseMilesEarned        *int64 `protobuf:"varint,1,opt,name=base_miles_earned,json=baseMilesEarned,proto3,oneof" json:"base_miles_earned,omitempty"`
+	BonusMilesEarned       *int64 `protobuf:"varint,2,opt,name=bonus_miles_earned,json=bonusMilesEarned,proto3,oneof" json:"bonus_miles_earned,omitempty"`
+	BaseRewardsEarned      *int64 `protobuf:"varint,3,opt,name=base_rewards_earned,json=baseRewardsEarned,proto3,oneof" json:"base_rewards_earned,omitempty"`
+	BonusRewardsEarned     *int64 `protobuf:"varint,4,opt,name=bonus_rewards_earned,json=bonusRewardsEarned,proto3,oneof" json:"bonus_rewards_earned,omitempty"`
+	IsPromotion            *bool  `protobuf:"varint,5,opt,name=is_promotion,json=isPromotion,proto3,oneof" json:"is_promotion,omitempty"`
+	PromotionId            *int64 `protobuf:"varint,6,opt,name=promotion_id,json=promotionId,proto3,oneof" json:"promotion_id,omitempty"`
+	PromotionMilesEarned   *int64 `protobuf:"varint,7,opt,name=promotion_miles_earned,json=promotionMilesEarned,proto3,oneof" json:"promotion_miles_earned,omitempty"`
+	PromotionRewardsEarned *int64 `protobuf:"varint,8,opt,name=promotion_rewards_earned,json=promotionRewardsEarned,proto3,oneof" json:"promotion_rewards_earned,omitempty"`
+}
+
+func (x *CalculatedTransaction) Reset() {
+	*x = CalculatedTransaction{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rewards_tracker_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CalculatedTransaction) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CalculatedTransaction) ProtoMessage() {}
+
+func (x *CalculatedTransaction) ProtoReflect() protoreflect.Message {
+	mi := &file_rewards_tracker_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CalculatedTransaction.ProtoReflect.Descriptor instead.
+func (*CalculatedTransaction) Descriptor() ([]byte, []int) {
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *CalculatedTransaction) GetBaseMilesEarned() int64 {
+	if x != nil && x.BaseMilesEarned != nil {
+		return *x.BaseMilesEarned
+	}
+	return 0
+}
+
+func (x *CalculatedTransaction) GetBonusMilesEarned() int64 {
+	if x != nil && x.BonusMilesEarned != nil {
+		return *x.BonusMilesEarned
+	}
+	return 0
+}
+
+func (x *CalculatedTransaction) GetBaseRewardsEarned() int64 {
+	if x != nil && x.BaseRewardsEarned != nil {
+		return *x.BaseRewardsEarned
+	}
+	return 0
+}
+
+func (x *CalculatedTransaction) GetBonusRewardsEarned() int64 {
+	if x != nil && x.BonusRewardsEarned != nil {
+		return *x.BonusRewardsEarned
+	}
+	return 0
+}
+
+func (x *CalculatedTransaction) GetIsPromotion() bool {
+	if x != nil && x.IsPromotion != nil {
+		return *x.IsPromotion
+	}
+	return false
+}
+
+func (x *CalculatedTransaction) GetPromotionId() int64 {
+	if x != nil && x.PromotionId != nil {
+		return *x.PromotionId
+	}
+	return 0
+}
+
+func (x *CalculatedTransaction) GetPromotionMilesEarned() int64 {
+	if x != nil && x.PromotionMilesEarned != nil {
+		return *x.PromotionMilesEarned
+	}
+	return 0
+}
+
+func (x *CalculatedTransaction) GetPromotionRewardsEarned() int64 {
+	if x != nil && x.PromotionRewardsEarned != nil {
+		return *x.PromotionRewardsEarned
+	}
+	return 0
+}
+
 type AddTransactionRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1526,7 +1770,7 @@ type AddTransactionRequest struct {
 func (x *AddTransactionRequest) Reset() {
 	*x = AddTransactionRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rewards_tracker_proto_msgTypes[9]
+		mi := &file_rewards_tracker_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1539,7 +1783,7 @@ func (x *AddTransactionRequest) String() string {
 func (*AddTransactionRequest) ProtoMessage() {}
 
 func (x *AddTransactionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rewards_tracker_proto_msgTypes[9]
+	mi := &file_rewards_tracker_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1552,7 +1796,7 @@ func (x *AddTransactionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddTransactionRequest.ProtoReflect.Descriptor instead.
 func (*AddTransactionRequest) Descriptor() ([]byte, []int) {
-	return file_rewards_tracker_proto_rawDescGZIP(), []int{9}
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *AddTransactionRequest) GetRequestMeta() *RequestMeta {
@@ -1587,7 +1831,7 @@ type AddTransactionResponse struct {
 func (x *AddTransactionResponse) Reset() {
 	*x = AddTransactionResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rewards_tracker_proto_msgTypes[10]
+		mi := &file_rewards_tracker_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1600,7 +1844,7 @@ func (x *AddTransactionResponse) String() string {
 func (*AddTransactionResponse) ProtoMessage() {}
 
 func (x *AddTransactionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_rewards_tracker_proto_msgTypes[10]
+	mi := &file_rewards_tracker_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1613,12 +1857,130 @@ func (x *AddTransactionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddTransactionResponse.ProtoReflect.Descriptor instead.
 func (*AddTransactionResponse) Descriptor() ([]byte, []int) {
-	return file_rewards_tracker_proto_rawDescGZIP(), []int{10}
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *AddTransactionResponse) GetResponseMeta() *ResponseMeta {
 	if x != nil {
 		return x.ResponseMeta
+	}
+	return nil
+}
+
+type CalculateTransactionRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	RequestMeta        *RequestMeta `protobuf:"bytes,1,opt,name=request_meta,json=requestMeta,proto3,oneof" json:"request_meta,omitempty"`
+	UserId             *int64       `protobuf:"varint,2,opt,name=user_id,json=userId,proto3,oneof" json:"user_id,omitempty"`
+	TransactionDetails *Transaction `protobuf:"bytes,3,opt,name=transaction_details,json=transactionDetails,proto3,oneof" json:"transaction_details,omitempty"`
+}
+
+func (x *CalculateTransactionRequest) Reset() {
+	*x = CalculateTransactionRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rewards_tracker_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CalculateTransactionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CalculateTransactionRequest) ProtoMessage() {}
+
+func (x *CalculateTransactionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_rewards_tracker_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CalculateTransactionRequest.ProtoReflect.Descriptor instead.
+func (*CalculateTransactionRequest) Descriptor() ([]byte, []int) {
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *CalculateTransactionRequest) GetRequestMeta() *RequestMeta {
+	if x != nil {
+		return x.RequestMeta
+	}
+	return nil
+}
+
+func (x *CalculateTransactionRequest) GetUserId() int64 {
+	if x != nil && x.UserId != nil {
+		return *x.UserId
+	}
+	return 0
+}
+
+func (x *CalculateTransactionRequest) GetTransactionDetails() *Transaction {
+	if x != nil {
+		return x.TransactionDetails
+	}
+	return nil
+}
+
+type CalculateTransactionResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ResponseMeta          *ResponseMeta          `protobuf:"bytes,1,opt,name=response_meta,json=responseMeta,proto3,oneof" json:"response_meta,omitempty"`
+	CalculatedTransaction *CalculatedTransaction `protobuf:"bytes,2,opt,name=calculated_transaction,json=calculatedTransaction,proto3,oneof" json:"calculated_transaction,omitempty"`
+}
+
+func (x *CalculateTransactionResponse) Reset() {
+	*x = CalculateTransactionResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rewards_tracker_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CalculateTransactionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CalculateTransactionResponse) ProtoMessage() {}
+
+func (x *CalculateTransactionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_rewards_tracker_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CalculateTransactionResponse.ProtoReflect.Descriptor instead.
+func (*CalculateTransactionResponse) Descriptor() ([]byte, []int) {
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *CalculateTransactionResponse) GetResponseMeta() *ResponseMeta {
+	if x != nil {
+		return x.ResponseMeta
+	}
+	return nil
+}
+
+func (x *CalculateTransactionResponse) GetCalculatedTransaction() *CalculatedTransaction {
+	if x != nil {
+		return x.CalculatedTransaction
 	}
 	return nil
 }
@@ -1638,7 +2000,7 @@ type PairUserCardRequest struct {
 func (x *PairUserCardRequest) Reset() {
 	*x = PairUserCardRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rewards_tracker_proto_msgTypes[11]
+		mi := &file_rewards_tracker_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1651,7 +2013,7 @@ func (x *PairUserCardRequest) String() string {
 func (*PairUserCardRequest) ProtoMessage() {}
 
 func (x *PairUserCardRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rewards_tracker_proto_msgTypes[11]
+	mi := &file_rewards_tracker_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1664,7 +2026,7 @@ func (x *PairUserCardRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PairUserCardRequest.ProtoReflect.Descriptor instead.
 func (*PairUserCardRequest) Descriptor() ([]byte, []int) {
-	return file_rewards_tracker_proto_rawDescGZIP(), []int{11}
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *PairUserCardRequest) GetRequestMeta() *RequestMeta {
@@ -1714,7 +2076,7 @@ type PairUserCardResponse struct {
 func (x *PairUserCardResponse) Reset() {
 	*x = PairUserCardResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rewards_tracker_proto_msgTypes[12]
+		mi := &file_rewards_tracker_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1727,7 +2089,7 @@ func (x *PairUserCardResponse) String() string {
 func (*PairUserCardResponse) ProtoMessage() {}
 
 func (x *PairUserCardResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_rewards_tracker_proto_msgTypes[12]
+	mi := &file_rewards_tracker_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1740,7 +2102,7 @@ func (x *PairUserCardResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PairUserCardResponse.ProtoReflect.Descriptor instead.
 func (*PairUserCardResponse) Descriptor() ([]byte, []int) {
-	return file_rewards_tracker_proto_rawDescGZIP(), []int{12}
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *PairUserCardResponse) GetResponseMeta() *ResponseMeta {
@@ -1757,32 +2119,32 @@ func (x *PairUserCardResponse) GetUserCardsList() []*UserCard {
 	return nil
 }
 
-type GetAllUserCardsRequest struct {
+type GetUserCardsFilter struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	RequestMeta *RequestMeta `protobuf:"bytes,1,opt,name=request_meta,json=requestMeta,proto3,oneof" json:"request_meta,omitempty"`
-	UserId      *int64       `protobuf:"varint,2,opt,name=user_id,json=userId,proto3,oneof" json:"user_id,omitempty"`
+	CardStatuses []int64 `protobuf:"varint,2,rep,packed,name=card_statuses,json=cardStatuses,proto3" json:"card_statuses,omitempty"`
+	IsExpired    *bool   `protobuf:"varint,4,opt,name=is_expired,json=isExpired,proto3,oneof" json:"is_expired,omitempty"`
 }
 
-func (x *GetAllUserCardsRequest) Reset() {
-	*x = GetAllUserCardsRequest{}
+func (x *GetUserCardsFilter) Reset() {
+	*x = GetUserCardsFilter{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rewards_tracker_proto_msgTypes[13]
+		mi := &file_rewards_tracker_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
 }
 
-func (x *GetAllUserCardsRequest) String() string {
+func (x *GetUserCardsFilter) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetAllUserCardsRequest) ProtoMessage() {}
+func (*GetUserCardsFilter) ProtoMessage() {}
 
-func (x *GetAllUserCardsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rewards_tracker_proto_msgTypes[13]
+func (x *GetUserCardsFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_rewards_tracker_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1793,26 +2155,105 @@ func (x *GetAllUserCardsRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetAllUserCardsRequest.ProtoReflect.Descriptor instead.
-func (*GetAllUserCardsRequest) Descriptor() ([]byte, []int) {
-	return file_rewards_tracker_proto_rawDescGZIP(), []int{13}
+// Deprecated: Use GetUserCardsFilter.ProtoReflect.Descriptor instead.
+func (*GetUserCardsFilter) Descriptor() ([]byte, []int) {
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{16}
 }
 
-func (x *GetAllUserCardsRequest) GetRequestMeta() *RequestMeta {
+func (x *GetUserCardsFilter) GetCardStatuses() []int64 {
+	if x != nil {
+		return x.CardStatuses
+	}
+	return nil
+}
+
+func (x *GetUserCardsFilter) GetIsExpired() bool {
+	if x != nil && x.IsExpired != nil {
+		return *x.IsExpired
+	}
+	return false
+}
+
+type GetUserCardsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	RequestMeta *RequestMeta        `protobuf:"bytes,1,opt,name=request_meta,json=requestMeta,proto3,oneof" json:"request_meta,omitempty"`
+	UserId      *int64              `protobuf:"varint,2,opt,name=user_id,json=userId,proto3,oneof" json:"user_id,omitempty"`
+	OrderBy     *int64              `protobuf:"varint,3,opt,name=order_by,json=orderBy,proto3,oneof" json:"order_by,omitempty"`
+	Direction   *int64              `protobuf:"varint,4,opt,name=direction,proto3,oneof" json:"direction,omitempty"`
+	Filter      *GetUserCardsFilter `protobuf:"bytes,5,opt,name=filter,proto3,oneof" json:"filter,omitempty"`
+}
+
+func (x *GetUserCardsRequest) Reset() {
+	*x = GetUserCardsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rewards_tracker_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetUserCardsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUserCardsRequest) ProtoMessage() {}
+
+func (x *GetUserCardsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_rewards_tracker_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUserCardsRequest.ProtoReflect.Descriptor instead.
+func (*GetUserCardsRequest) Descriptor() ([]byte, []int) {
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *GetUserCardsRequest) GetRequestMeta() *RequestMeta {
 	if x != nil {
 		return x.RequestMeta
 	}
 	return nil
 }
 
-func (x *GetAllUserCardsRequest) GetUserId() int64 {
+func (x *GetUserCardsRequest) GetUserId() int64 {
 	if x != nil && x.UserId != nil {
 		return *x.UserId
 	}
 	return 0
 }
 
-type GetAllUserCardsResponse struct {
+func (x *GetUserCardsRequest) GetOrderBy() int64 {
+	if x != nil && x.OrderBy != nil {
+		return *x.OrderBy
+	}
+	return 0
+}
+
+func (x *GetUserCardsRequest) GetDirection() int64 {
+	if x != nil && x.Direction != nil {
+		return *x.Direction
+	}
+	return 0
+}
+
+func (x *GetUserCardsRequest) GetFilter() *GetUserCardsFilter {
+	if x != nil {
+		return x.Filter
+	}
+	return nil
+}
+
+type GetUserCardsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -1821,23 +2262,23 @@ type GetAllUserCardsResponse struct {
 	UserCardsList []*UserCard   `protobuf:"bytes,2,rep,name=user_cards_list,json=userCardsList,proto3" json:"user_cards_list,omitempty"`
 }
 
-func (x *GetAllUserCardsResponse) Reset() {
-	*x = GetAllUserCardsResponse{}
+func (x *GetUserCardsResponse) Reset() {
+	*x = GetUserCardsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rewards_tracker_proto_msgTypes[14]
+		mi := &file_rewards_tracker_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
 }
 
-func (x *GetAllUserCardsResponse) String() string {
+func (x *GetUserCardsResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetAllUserCardsResponse) ProtoMessage() {}
+func (*GetUserCardsResponse) ProtoMessage() {}
 
-func (x *GetAllUserCardsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_rewards_tracker_proto_msgTypes[14]
+func (x *GetUserCardsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_rewards_tracker_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1848,19 +2289,19 @@ func (x *GetAllUserCardsResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetAllUserCardsResponse.ProtoReflect.Descriptor instead.
-func (*GetAllUserCardsResponse) Descriptor() ([]byte, []int) {
-	return file_rewards_tracker_proto_rawDescGZIP(), []int{14}
+// Deprecated: Use GetUserCardsResponse.ProtoReflect.Descriptor instead.
+func (*GetUserCardsResponse) Descriptor() ([]byte, []int) {
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{18}
 }
 
-func (x *GetAllUserCardsResponse) GetResponseMeta() *ResponseMeta {
+func (x *GetUserCardsResponse) GetResponseMeta() *ResponseMeta {
 	if x != nil {
 		return x.ResponseMeta
 	}
 	return nil
 }
 
-func (x *GetAllUserCardsResponse) GetUserCardsList() []*UserCard {
+func (x *GetUserCardsResponse) GetUserCardsList() []*UserCard {
 	if x != nil {
 		return x.UserCardsList
 	}
@@ -1879,7 +2320,7 @@ type AddCardRequest struct {
 func (x *AddCardRequest) Reset() {
 	*x = AddCardRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rewards_tracker_proto_msgTypes[15]
+		mi := &file_rewards_tracker_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1892,7 +2333,7 @@ func (x *AddCardRequest) String() string {
 func (*AddCardRequest) ProtoMessage() {}
 
 func (x *AddCardRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rewards_tracker_proto_msgTypes[15]
+	mi := &file_rewards_tracker_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1905,7 +2346,7 @@ func (x *AddCardRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddCardRequest.ProtoReflect.Descriptor instead.
 func (*AddCardRequest) Descriptor() ([]byte, []int) {
-	return file_rewards_tracker_proto_rawDescGZIP(), []int{15}
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *AddCardRequest) GetRequestMeta() *RequestMeta {
@@ -1934,7 +2375,7 @@ type AddCardResponse struct {
 func (x *AddCardResponse) Reset() {
 	*x = AddCardResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rewards_tracker_proto_msgTypes[16]
+		mi := &file_rewards_tracker_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1947,7 +2388,7 @@ func (x *AddCardResponse) String() string {
 func (*AddCardResponse) ProtoMessage() {}
 
 func (x *AddCardResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_rewards_tracker_proto_msgTypes[16]
+	mi := &file_rewards_tracker_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1960,7 +2401,7 @@ func (x *AddCardResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddCardResponse.ProtoReflect.Descriptor instead.
 func (*AddCardResponse) Descriptor() ([]byte, []int) {
-	return file_rewards_tracker_proto_rawDescGZIP(), []int{16}
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *AddCardResponse) GetResponseMeta() *ResponseMeta {
@@ -2309,31 +2750,103 @@ var file_rewards_tracker_proto_rawDesc = []byte{
 	0x70, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x42, 0x09, 0x0a, 0x07,
 	0x5f, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x42, 0x0b, 0x0a, 0x09, 0x5f, 0x63, 0x75, 0x72, 0x72,
 	0x65, 0x6e, 0x63, 0x79, 0x42, 0x07, 0x0a, 0x05, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x42, 0x09, 0x0a,
-	0x07, 0x5f, 0x63, 0x61, 0x72, 0x64, 0x49, 0x64, 0x22, 0x8a, 0x02, 0x0a, 0x15, 0x41, 0x64, 0x64,
-	0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x12, 0x47, 0x0a, 0x0c, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x6d, 0x65,
-	0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x72, 0x65, 0x77, 0x61, 0x72,
-	0x64, 0x73, 0x5f, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x2e, 0x70, 0x62, 0x2e, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x4d, 0x65, 0x74, 0x61, 0x48, 0x00, 0x52, 0x0b, 0x72, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x4d, 0x65, 0x74, 0x61, 0x88, 0x01, 0x01, 0x12, 0x1c, 0x0a, 0x07, 0x75,
-	0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x48, 0x01, 0x52, 0x06,
-	0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x88, 0x01, 0x01, 0x12, 0x55, 0x0a, 0x13, 0x74, 0x72, 0x61,
-	0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73,
-	0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73,
-	0x5f, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x2e, 0x70, 0x62, 0x2e, 0x54, 0x72, 0x61, 0x6e,
-	0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x48, 0x02, 0x52, 0x12, 0x74, 0x72, 0x61, 0x6e, 0x73,
-	0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x88, 0x01, 0x01,
-	0x42, 0x0f, 0x0a, 0x0d, 0x5f, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x6d, 0x65, 0x74,
-	0x61, 0x42, 0x0a, 0x0a, 0x08, 0x5f, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x42, 0x16, 0x0a,
-	0x14, 0x5f, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x64, 0x65,
-	0x74, 0x61, 0x69, 0x6c, 0x73, 0x22, 0x76, 0x0a, 0x16, 0x41, 0x64, 0x64, 0x54, 0x72, 0x61, 0x6e,
-	0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
-	0x4a, 0x0a, 0x0d, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x5f, 0x6d, 0x65, 0x74, 0x61,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73,
-	0x5f, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x2e, 0x70, 0x62, 0x2e, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x48, 0x00, 0x52, 0x0c, 0x72, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x88, 0x01, 0x01, 0x42, 0x10, 0x0a, 0x0e, 0x5f,
-	0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x5f, 0x6d, 0x65, 0x74, 0x61, 0x22, 0x9e, 0x03,
+	0x07, 0x5f, 0x63, 0x61, 0x72, 0x64, 0x49, 0x64, 0x22, 0xe9, 0x04, 0x0a, 0x15, 0x43, 0x61, 0x6c,
+	0x63, 0x75, 0x6c, 0x61, 0x74, 0x65, 0x64, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x12, 0x2f, 0x0a, 0x11, 0x62, 0x61, 0x73, 0x65, 0x5f, 0x6d, 0x69, 0x6c, 0x65, 0x73,
+	0x5f, 0x65, 0x61, 0x72, 0x6e, 0x65, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x48, 0x00, 0x52,
+	0x0f, 0x62, 0x61, 0x73, 0x65, 0x4d, 0x69, 0x6c, 0x65, 0x73, 0x45, 0x61, 0x72, 0x6e, 0x65, 0x64,
+	0x88, 0x01, 0x01, 0x12, 0x31, 0x0a, 0x12, 0x62, 0x6f, 0x6e, 0x75, 0x73, 0x5f, 0x6d, 0x69, 0x6c,
+	0x65, 0x73, 0x5f, 0x65, 0x61, 0x72, 0x6e, 0x65, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x48,
+	0x01, 0x52, 0x10, 0x62, 0x6f, 0x6e, 0x75, 0x73, 0x4d, 0x69, 0x6c, 0x65, 0x73, 0x45, 0x61, 0x72,
+	0x6e, 0x65, 0x64, 0x88, 0x01, 0x01, 0x12, 0x33, 0x0a, 0x13, 0x62, 0x61, 0x73, 0x65, 0x5f, 0x72,
+	0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5f, 0x65, 0x61, 0x72, 0x6e, 0x65, 0x64, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x03, 0x48, 0x02, 0x52, 0x11, 0x62, 0x61, 0x73, 0x65, 0x52, 0x65, 0x77, 0x61, 0x72,
+	0x64, 0x73, 0x45, 0x61, 0x72, 0x6e, 0x65, 0x64, 0x88, 0x01, 0x01, 0x12, 0x35, 0x0a, 0x14, 0x62,
+	0x6f, 0x6e, 0x75, 0x73, 0x5f, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5f, 0x65, 0x61, 0x72,
+	0x6e, 0x65, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x48, 0x03, 0x52, 0x12, 0x62, 0x6f, 0x6e,
+	0x75, 0x73, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x45, 0x61, 0x72, 0x6e, 0x65, 0x64, 0x88,
+	0x01, 0x01, 0x12, 0x26, 0x0a, 0x0c, 0x69, 0x73, 0x5f, 0x70, 0x72, 0x6f, 0x6d, 0x6f, 0x74, 0x69,
+	0x6f, 0x6e, 0x18, 0x05, 0x20, 0x01, 0x28, 0x08, 0x48, 0x04, 0x52, 0x0b, 0x69, 0x73, 0x50, 0x72,
+	0x6f, 0x6d, 0x6f, 0x74, 0x69, 0x6f, 0x6e, 0x88, 0x01, 0x01, 0x12, 0x26, 0x0a, 0x0c, 0x70, 0x72,
+	0x6f, 0x6d, 0x6f, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03,
+	0x48, 0x05, 0x52, 0x0b, 0x70, 0x72, 0x6f, 0x6d, 0x6f, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x88,
+	0x01, 0x01, 0x12, 0x39, 0x0a, 0x16, 0x70, 0x72, 0x6f, 0x6d, 0x6f, 0x74, 0x69, 0x6f, 0x6e, 0x5f,
+	0x6d, 0x69, 0x6c, 0x65, 0x73, 0x5f, 0x65, 0x61, 0x72, 0x6e, 0x65, 0x64, 0x18, 0x07, 0x20, 0x01,
+	0x28, 0x03, 0x48, 0x06, 0x52, 0x14, 0x70, 0x72, 0x6f, 0x6d, 0x6f, 0x74, 0x69, 0x6f, 0x6e, 0x4d,
+	0x69, 0x6c, 0x65, 0x73, 0x45, 0x61, 0x72, 0x6e, 0x65, 0x64, 0x88, 0x01, 0x01, 0x12, 0x3d, 0x0a,
+	0x18, 0x70, 0x72, 0x6f, 0x6d, 0x6f, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x72, 0x65, 0x77, 0x61, 0x72,
+	0x64, 0x73, 0x5f, 0x65, 0x61, 0x72, 0x6e, 0x65, 0x64, 0x18, 0x08, 0x20, 0x01, 0x28, 0x03, 0x48,
+	0x07, 0x52, 0x16, 0x70, 0x72, 0x6f, 0x6d, 0x6f, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x77, 0x61,
+	0x72, 0x64, 0x73, 0x45, 0x61, 0x72, 0x6e, 0x65, 0x64, 0x88, 0x01, 0x01, 0x42, 0x14, 0x0a, 0x12,
+	0x5f, 0x62, 0x61, 0x73, 0x65, 0x5f, 0x6d, 0x69, 0x6c, 0x65, 0x73, 0x5f, 0x65, 0x61, 0x72, 0x6e,
+	0x65, 0x64, 0x42, 0x15, 0x0a, 0x13, 0x5f, 0x62, 0x6f, 0x6e, 0x75, 0x73, 0x5f, 0x6d, 0x69, 0x6c,
+	0x65, 0x73, 0x5f, 0x65, 0x61, 0x72, 0x6e, 0x65, 0x64, 0x42, 0x16, 0x0a, 0x14, 0x5f, 0x62, 0x61,
+	0x73, 0x65, 0x5f, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5f, 0x65, 0x61, 0x72, 0x6e, 0x65,
+	0x64, 0x42, 0x17, 0x0a, 0x15, 0x5f, 0x62, 0x6f, 0x6e, 0x75, 0x73, 0x5f, 0x72, 0x65, 0x77, 0x61,
+	0x72, 0x64, 0x73, 0x5f, 0x65, 0x61, 0x72, 0x6e, 0x65, 0x64, 0x42, 0x0f, 0x0a, 0x0d, 0x5f, 0x69,
+	0x73, 0x5f, 0x70, 0x72, 0x6f, 0x6d, 0x6f, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x0f, 0x0a, 0x0d, 0x5f,
+	0x70, 0x72, 0x6f, 0x6d, 0x6f, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x42, 0x19, 0x0a, 0x17,
+	0x5f, 0x70, 0x72, 0x6f, 0x6d, 0x6f, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x6d, 0x69, 0x6c, 0x65, 0x73,
+	0x5f, 0x65, 0x61, 0x72, 0x6e, 0x65, 0x64, 0x42, 0x1b, 0x0a, 0x19, 0x5f, 0x70, 0x72, 0x6f, 0x6d,
+	0x6f, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5f, 0x65, 0x61,
+	0x72, 0x6e, 0x65, 0x64, 0x22, 0x8a, 0x02, 0x0a, 0x15, 0x41, 0x64, 0x64, 0x54, 0x72, 0x61, 0x6e,
+	0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x47,
+	0x0a, 0x0c, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x6d, 0x65, 0x74, 0x61, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5f, 0x74,
+	0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x2e, 0x70, 0x62, 0x2e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x4d, 0x65, 0x74, 0x61, 0x48, 0x00, 0x52, 0x0b, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x4d, 0x65, 0x74, 0x61, 0x88, 0x01, 0x01, 0x12, 0x1c, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f,
+	0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x48, 0x01, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72,
+	0x49, 0x64, 0x88, 0x01, 0x01, 0x12, 0x55, 0x0a, 0x13, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5f, 0x74, 0x72, 0x61,
+	0x63, 0x6b, 0x65, 0x72, 0x2e, 0x70, 0x62, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x48, 0x02, 0x52, 0x12, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x88, 0x01, 0x01, 0x42, 0x0f, 0x0a, 0x0d,
+	0x5f, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x6d, 0x65, 0x74, 0x61, 0x42, 0x0a, 0x0a,
+	0x08, 0x5f, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x42, 0x16, 0x0a, 0x14, 0x5f, 0x74, 0x72,
+	0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c,
+	0x73, 0x22, 0x76, 0x0a, 0x16, 0x41, 0x64, 0x64, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x4a, 0x0a, 0x0d, 0x72,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x5f, 0x6d, 0x65, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x20, 0x2e, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5f, 0x74, 0x72, 0x61,
+	0x63, 0x6b, 0x65, 0x72, 0x2e, 0x70, 0x62, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x4d, 0x65, 0x74, 0x61, 0x48, 0x00, 0x52, 0x0c, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x4d, 0x65, 0x74, 0x61, 0x88, 0x01, 0x01, 0x42, 0x10, 0x0a, 0x0e, 0x5f, 0x72, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x5f, 0x6d, 0x65, 0x74, 0x61, 0x22, 0x90, 0x02, 0x0a, 0x1b, 0x43, 0x61,
+	0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x65, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x47, 0x0a, 0x0c, 0x72, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x5f, 0x6d, 0x65, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x1f, 0x2e, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5f, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65,
+	0x72, 0x2e, 0x70, 0x62, 0x2e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x4d, 0x65, 0x74, 0x61,
+	0x48, 0x00, 0x52, 0x0b, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x4d, 0x65, 0x74, 0x61, 0x88,
+	0x01, 0x01, 0x12, 0x1c, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x03, 0x48, 0x01, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x88, 0x01, 0x01,
+	0x12, 0x55, 0x0a, 0x13, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f,
+	0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e,
+	0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5f, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x2e,
+	0x70, 0x62, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x48, 0x02,
+	0x52, 0x12, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x44, 0x65, 0x74,
+	0x61, 0x69, 0x6c, 0x73, 0x88, 0x01, 0x01, 0x42, 0x0f, 0x0a, 0x0d, 0x5f, 0x72, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x5f, 0x6d, 0x65, 0x74, 0x61, 0x42, 0x0a, 0x0a, 0x08, 0x5f, 0x75, 0x73, 0x65,
+	0x72, 0x5f, 0x69, 0x64, 0x42, 0x16, 0x0a, 0x14, 0x5f, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x22, 0xfe, 0x01, 0x0a,
+	0x1c, 0x43, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x65, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61,
+	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x4a, 0x0a,
+	0x0d, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x5f, 0x6d, 0x65, 0x74, 0x61, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5f, 0x74,
+	0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x2e, 0x70, 0x62, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x48, 0x00, 0x52, 0x0c, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x88, 0x01, 0x01, 0x12, 0x65, 0x0a, 0x16, 0x63, 0x61, 0x6c,
+	0x63, 0x75, 0x6c, 0x61, 0x74, 0x65, 0x64, 0x5f, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x29, 0x2e, 0x72, 0x65, 0x77, 0x61,
+	0x72, 0x64, 0x73, 0x5f, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x2e, 0x70, 0x62, 0x2e, 0x43,
+	0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x65, 0x64, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x48, 0x01, 0x52, 0x15, 0x63, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74,
+	0x65, 0x64, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x88, 0x01, 0x01,
+	0x42, 0x10, 0x0a, 0x0e, 0x5f, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x5f, 0x6d, 0x65,
+	0x74, 0x61, 0x42, 0x19, 0x0a, 0x17, 0x5f, 0x63, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x65,
+	0x64, 0x5f, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x9e, 0x03,
 	0x0a, 0x13, 0x50, 0x61, 0x69, 0x72, 0x55, 0x73, 0x65, 0x72, 0x43, 0x61, 0x72, 0x64, 0x52, 0x65,
 	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x47, 0x0a, 0x0c, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
 	0x5f, 0x6d, 0x65, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x72, 0x65,
@@ -2371,18 +2884,44 @@ var file_rewards_tracker_proto_rawDesc = []byte{
 	0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5f, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x2e, 0x70,
 	0x62, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x43, 0x61, 0x72, 0x64, 0x52, 0x0d, 0x75, 0x73, 0x65, 0x72,
 	0x43, 0x61, 0x72, 0x64, 0x73, 0x4c, 0x69, 0x73, 0x74, 0x42, 0x10, 0x0a, 0x0e, 0x5f, 0x72, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x5f, 0x6d, 0x65, 0x74, 0x61, 0x22, 0x9c, 0x01, 0x0a, 0x16,
-	0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x55, 0x73, 0x65, 0x72, 0x43, 0x61, 0x72, 0x64, 0x73, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x47, 0x0a, 0x0c, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x5f, 0x6d, 0x65, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x72,
-	0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5f, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x2e, 0x70,
-	0x62, 0x2e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x4d, 0x65, 0x74, 0x61, 0x48, 0x00, 0x52,
-	0x0b, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x4d, 0x65, 0x74, 0x61, 0x88, 0x01, 0x01, 0x12,
-	0x1c, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03,
-	0x48, 0x01, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x88, 0x01, 0x01, 0x42, 0x0f, 0x0a,
-	0x0d, 0x5f, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x6d, 0x65, 0x74, 0x61, 0x42, 0x0a,
-	0x0a, 0x08, 0x5f, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x22, 0xbd, 0x01, 0x0a, 0x17, 0x47,
-	0x65, 0x74, 0x41, 0x6c, 0x6c, 0x55, 0x73, 0x65, 0x72, 0x43, 0x61, 0x72, 0x64, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x5f, 0x6d, 0x65, 0x74, 0x61, 0x22, 0x6c, 0x0a, 0x12, 0x47,
+	0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x43, 0x61, 0x72, 0x64, 0x73, 0x46, 0x69, 0x6c, 0x74, 0x65,
+	0x72, 0x12, 0x23, 0x0a, 0x0d, 0x63, 0x61, 0x72, 0x64, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73,
+	0x65, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x03, 0x52, 0x0c, 0x63, 0x61, 0x72, 0x64, 0x53, 0x74,
+	0x61, 0x74, 0x75, 0x73, 0x65, 0x73, 0x12, 0x22, 0x0a, 0x0a, 0x69, 0x73, 0x5f, 0x65, 0x78, 0x70,
+	0x69, 0x72, 0x65, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x08, 0x48, 0x00, 0x52, 0x09, 0x69, 0x73,
+	0x45, 0x78, 0x70, 0x69, 0x72, 0x65, 0x64, 0x88, 0x01, 0x01, 0x42, 0x0d, 0x0a, 0x0b, 0x5f, 0x69,
+	0x73, 0x5f, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x64, 0x22, 0xd1, 0x03, 0x0a, 0x13, 0x47, 0x65,
+	0x74, 0x55, 0x73, 0x65, 0x72, 0x43, 0x61, 0x72, 0x64, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x47, 0x0a, 0x0c, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x6d, 0x65, 0x74,
+	0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64,
+	0x73, 0x5f, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x2e, 0x70, 0x62, 0x2e, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x4d, 0x65, 0x74, 0x61, 0x48, 0x00, 0x52, 0x0b, 0x72, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x4d, 0x65, 0x74, 0x61, 0x88, 0x01, 0x01, 0x12, 0x1c, 0x0a, 0x07, 0x75, 0x73,
+	0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x48, 0x01, 0x52, 0x06, 0x75,
+	0x73, 0x65, 0x72, 0x49, 0x64, 0x88, 0x01, 0x01, 0x12, 0x1e, 0x0a, 0x08, 0x6f, 0x72, 0x64, 0x65,
+	0x72, 0x5f, 0x62, 0x79, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x48, 0x02, 0x52, 0x07, 0x6f, 0x72,
+	0x64, 0x65, 0x72, 0x42, 0x79, 0x88, 0x01, 0x01, 0x12, 0x21, 0x0a, 0x09, 0x64, 0x69, 0x72, 0x65,
+	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x48, 0x03, 0x52, 0x09, 0x64,
+	0x69, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x88, 0x01, 0x01, 0x12, 0x43, 0x0a, 0x06, 0x66,
+	0x69, 0x6c, 0x74, 0x65, 0x72, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x26, 0x2e, 0x72, 0x65,
+	0x77, 0x61, 0x72, 0x64, 0x73, 0x5f, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x2e, 0x70, 0x62,
+	0x2e, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x43, 0x61, 0x72, 0x64, 0x73, 0x46, 0x69, 0x6c,
+	0x74, 0x65, 0x72, 0x48, 0x04, 0x52, 0x06, 0x66, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x88, 0x01, 0x01,
+	0x22, 0x30, 0x0a, 0x09, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x11, 0x0a,
+	0x0d, 0x45, 0x52, 0x52, 0x4f, 0x52, 0x5f, 0x53, 0x55, 0x43, 0x43, 0x45, 0x53, 0x53, 0x10, 0x00,
+	0x12, 0x10, 0x0a, 0x0c, 0x45, 0x52, 0x52, 0x4f, 0x52, 0x5f, 0x46, 0x41, 0x49, 0x4c, 0x45, 0x44,
+	0x10, 0x01, 0x22, 0x56, 0x0a, 0x0c, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x42, 0x79, 0x46, 0x69, 0x65,
+	0x6c, 0x64, 0x12, 0x18, 0x0a, 0x14, 0x55, 0x53, 0x45, 0x52, 0x5f, 0x43, 0x41, 0x52, 0x44, 0x5f,
+	0x41, 0x44, 0x44, 0x45, 0x44, 0x5f, 0x54, 0x49, 0x4d, 0x45, 0x10, 0x00, 0x12, 0x14, 0x0a, 0x10,
+	0x55, 0x53, 0x45, 0x52, 0x5f, 0x43, 0x41, 0x52, 0x44, 0x5f, 0x45, 0x58, 0x50, 0x49, 0x52, 0x59,
+	0x10, 0x01, 0x12, 0x16, 0x0a, 0x12, 0x55, 0x53, 0x45, 0x52, 0x5f, 0x43, 0x41, 0x52, 0x44, 0x5f,
+	0x4e, 0x49, 0x43, 0x4b, 0x4e, 0x41, 0x4d, 0x45, 0x10, 0x02, 0x42, 0x0f, 0x0a, 0x0d, 0x5f, 0x72,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x6d, 0x65, 0x74, 0x61, 0x42, 0x0a, 0x0a, 0x08, 0x5f,
+	0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x42, 0x0b, 0x0a, 0x09, 0x5f, 0x6f, 0x72, 0x64, 0x65,
+	0x72, 0x5f, 0x62, 0x79, 0x42, 0x0c, 0x0a, 0x0a, 0x5f, 0x64, 0x69, 0x72, 0x65, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x42, 0x09, 0x0a, 0x07, 0x5f, 0x66, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x22, 0xba, 0x01,
+	0x0a, 0x14, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x43, 0x61, 0x72, 0x64, 0x73, 0x52, 0x65,
 	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x4a, 0x0a, 0x0d, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e,
 	0x73, 0x65, 0x5f, 0x6d, 0x65, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e,
 	0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5f, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x2e,
@@ -2451,12 +2990,14 @@ var file_rewards_tracker_proto_rawDesc = []byte{
 	0x0a, 0x0b, 0x43, 0x52, 0x45, 0x44, 0x49, 0x54, 0x5f, 0x43, 0x41, 0x52, 0x44, 0x10, 0x00, 0x12,
 	0x0f, 0x0a, 0x0b, 0x43, 0x48, 0x41, 0x52, 0x47, 0x45, 0x5f, 0x43, 0x41, 0x52, 0x44, 0x10, 0x01,
 	0x12, 0x0e, 0x0a, 0x0a, 0x44, 0x45, 0x42, 0x49, 0x54, 0x5f, 0x43, 0x41, 0x52, 0x44, 0x10, 0x02,
-	0x2a, 0x40, 0x0a, 0x09, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x0c, 0x0a,
-	0x08, 0x45, 0x52, 0x52, 0x4f, 0x52, 0x5f, 0x4f, 0x4b, 0x10, 0x00, 0x12, 0x10, 0x0a, 0x0c, 0x45,
-	0x52, 0x52, 0x4f, 0x52, 0x5f, 0x50, 0x41, 0x52, 0x41, 0x4d, 0x53, 0x10, 0x01, 0x12, 0x13, 0x0a,
-	0x0f, 0x45, 0x52, 0x52, 0x4f, 0x52, 0x5f, 0x4a, 0x53, 0x4f, 0x4e, 0x5f, 0x42, 0x49, 0x4e, 0x44,
-	0x10, 0x02, 0x42, 0x12, 0x5a, 0x10, 0x2f, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5f, 0x74,
-	0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x2a, 0x1c, 0x0a, 0x07, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x42, 0x79, 0x12, 0x07, 0x0a, 0x03, 0x41,
+	0x53, 0x43, 0x10, 0x00, 0x12, 0x08, 0x0a, 0x04, 0x44, 0x45, 0x53, 0x43, 0x10, 0x01, 0x2a, 0x40,
+	0x0a, 0x09, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x0c, 0x0a, 0x08, 0x45,
+	0x52, 0x52, 0x4f, 0x52, 0x5f, 0x4f, 0x4b, 0x10, 0x00, 0x12, 0x10, 0x0a, 0x0c, 0x45, 0x52, 0x52,
+	0x4f, 0x52, 0x5f, 0x50, 0x41, 0x52, 0x41, 0x4d, 0x53, 0x10, 0x01, 0x12, 0x13, 0x0a, 0x0f, 0x45,
+	0x52, 0x52, 0x4f, 0x52, 0x5f, 0x4a, 0x53, 0x4f, 0x4e, 0x5f, 0x42, 0x49, 0x4e, 0x44, 0x10, 0x02,
+	0x42, 0x12, 0x5a, 0x10, 0x2f, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5f, 0x74, 0x72, 0x61,
+	0x63, 0x6b, 0x65, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2471,60 +3012,72 @@ func file_rewards_tracker_proto_rawDescGZIP() []byte {
 	return file_rewards_tracker_proto_rawDescData
 }
 
-var file_rewards_tracker_proto_enumTypes = make([]protoimpl.EnumInfo, 10)
-var file_rewards_tracker_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_rewards_tracker_proto_enumTypes = make([]protoimpl.EnumInfo, 13)
+var file_rewards_tracker_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
 var file_rewards_tracker_proto_goTypes = []interface{}{
-	(CardCategory)(0),                  // 0: rewards_tracker.pb.CardCategory
-	(CardPaymentType)(0),               // 1: rewards_tracker.pb.CardPaymentType
-	(CardRounding)(0),                  // 2: rewards_tracker.pb.CardRounding
-	(CardCapType)(0),                   // 3: rewards_tracker.pb.CardCapType
-	(CardType)(0),                      // 4: rewards_tracker.pb.CardType
-	(ErrorCode)(0),                     // 5: rewards_tracker.pb.ErrorCode
-	(User_ErrorCode)(0),                // 6: rewards_tracker.pb.User.ErrorCode
-	(UserCard_CardStatus)(0),           // 7: rewards_tracker.pb.UserCard.CardStatus
-	(PairUserCardRequest_ErrorCode)(0), // 8: rewards_tracker.pb.PairUserCardRequest.ErrorCode
-	(AddCardRequest_ErrorCode)(0),      // 9: rewards_tracker.pb.AddCardRequest.ErrorCode
-	(*RequestMeta)(nil),                // 10: rewards_tracker.pb.RequestMeta
-	(*GenericResponse)(nil),            // 11: rewards_tracker.pb.GenericResponse
-	(*ResponseMeta)(nil),               // 12: rewards_tracker.pb.ResponseMeta
-	(*User)(nil),                       // 13: rewards_tracker.pb.User
-	(*CardRules)(nil),                  // 14: rewards_tracker.pb.CardRules
-	(*CardDb)(nil),                     // 15: rewards_tracker.pb.CardDb
-	(*Card)(nil),                       // 16: rewards_tracker.pb.Card
-	(*UserCard)(nil),                   // 17: rewards_tracker.pb.UserCard
-	(*Transaction)(nil),                // 18: rewards_tracker.pb.Transaction
-	(*AddTransactionRequest)(nil),      // 19: rewards_tracker.pb.AddTransactionRequest
-	(*AddTransactionResponse)(nil),     // 20: rewards_tracker.pb.AddTransactionResponse
-	(*PairUserCardRequest)(nil),        // 21: rewards_tracker.pb.PairUserCardRequest
-	(*PairUserCardResponse)(nil),       // 22: rewards_tracker.pb.PairUserCardResponse
-	(*GetAllUserCardsRequest)(nil),     // 23: rewards_tracker.pb.GetAllUserCardsRequest
-	(*GetAllUserCardsResponse)(nil),    // 24: rewards_tracker.pb.GetAllUserCardsResponse
-	(*AddCardRequest)(nil),             // 25: rewards_tracker.pb.AddCardRequest
-	(*AddCardResponse)(nil),            // 26: rewards_tracker.pb.AddCardResponse
+	(CardCategory)(0),                     // 0: rewards_tracker.pb.CardCategory
+	(CardPaymentType)(0),                  // 1: rewards_tracker.pb.CardPaymentType
+	(CardRounding)(0),                     // 2: rewards_tracker.pb.CardRounding
+	(CardCapType)(0),                      // 3: rewards_tracker.pb.CardCapType
+	(CardType)(0),                         // 4: rewards_tracker.pb.CardType
+	(OrderBy)(0),                          // 5: rewards_tracker.pb.OrderBy
+	(ErrorCode)(0),                        // 6: rewards_tracker.pb.ErrorCode
+	(User_ErrorCode)(0),                   // 7: rewards_tracker.pb.User.ErrorCode
+	(UserCard_CardStatus)(0),              // 8: rewards_tracker.pb.UserCard.CardStatus
+	(PairUserCardRequest_ErrorCode)(0),    // 9: rewards_tracker.pb.PairUserCardRequest.ErrorCode
+	(GetUserCardsRequest_ErrorCode)(0),    // 10: rewards_tracker.pb.GetUserCardsRequest.ErrorCode
+	(GetUserCardsRequest_OrderByField)(0), // 11: rewards_tracker.pb.GetUserCardsRequest.OrderByField
+	(AddCardRequest_ErrorCode)(0),         // 12: rewards_tracker.pb.AddCardRequest.ErrorCode
+	(*RequestMeta)(nil),                   // 13: rewards_tracker.pb.RequestMeta
+	(*GenericResponse)(nil),               // 14: rewards_tracker.pb.GenericResponse
+	(*ResponseMeta)(nil),                  // 15: rewards_tracker.pb.ResponseMeta
+	(*User)(nil),                          // 16: rewards_tracker.pb.User
+	(*CardRules)(nil),                     // 17: rewards_tracker.pb.CardRules
+	(*CardDb)(nil),                        // 18: rewards_tracker.pb.CardDb
+	(*Card)(nil),                          // 19: rewards_tracker.pb.Card
+	(*UserCard)(nil),                      // 20: rewards_tracker.pb.UserCard
+	(*Transaction)(nil),                   // 21: rewards_tracker.pb.Transaction
+	(*CalculatedTransaction)(nil),         // 22: rewards_tracker.pb.CalculatedTransaction
+	(*AddTransactionRequest)(nil),         // 23: rewards_tracker.pb.AddTransactionRequest
+	(*AddTransactionResponse)(nil),        // 24: rewards_tracker.pb.AddTransactionResponse
+	(*CalculateTransactionRequest)(nil),   // 25: rewards_tracker.pb.CalculateTransactionRequest
+	(*CalculateTransactionResponse)(nil),  // 26: rewards_tracker.pb.CalculateTransactionResponse
+	(*PairUserCardRequest)(nil),           // 27: rewards_tracker.pb.PairUserCardRequest
+	(*PairUserCardResponse)(nil),          // 28: rewards_tracker.pb.PairUserCardResponse
+	(*GetUserCardsFilter)(nil),            // 29: rewards_tracker.pb.GetUserCardsFilter
+	(*GetUserCardsRequest)(nil),           // 30: rewards_tracker.pb.GetUserCardsRequest
+	(*GetUserCardsResponse)(nil),          // 31: rewards_tracker.pb.GetUserCardsResponse
+	(*AddCardRequest)(nil),                // 32: rewards_tracker.pb.AddCardRequest
+	(*AddCardResponse)(nil),               // 33: rewards_tracker.pb.AddCardResponse
 }
 var file_rewards_tracker_proto_depIdxs = []int32{
-	12, // 0: rewards_tracker.pb.GenericResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
-	14, // 1: rewards_tracker.pb.Card.local_base_card_rules:type_name -> rewards_tracker.pb.CardRules
-	14, // 2: rewards_tracker.pb.Card.local_bonus_card_rules:type_name -> rewards_tracker.pb.CardRules
-	14, // 3: rewards_tracker.pb.Card.fcy_base_card_rules:type_name -> rewards_tracker.pb.CardRules
-	14, // 4: rewards_tracker.pb.Card.fcy_bonus_card_rules:type_name -> rewards_tracker.pb.CardRules
-	10, // 5: rewards_tracker.pb.AddTransactionRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
-	18, // 6: rewards_tracker.pb.AddTransactionRequest.transaction_details:type_name -> rewards_tracker.pb.Transaction
-	12, // 7: rewards_tracker.pb.AddTransactionResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
-	10, // 8: rewards_tracker.pb.PairUserCardRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
-	12, // 9: rewards_tracker.pb.PairUserCardResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
-	17, // 10: rewards_tracker.pb.PairUserCardResponse.user_cards_list:type_name -> rewards_tracker.pb.UserCard
-	10, // 11: rewards_tracker.pb.GetAllUserCardsRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
-	12, // 12: rewards_tracker.pb.GetAllUserCardsResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
-	17, // 13: rewards_tracker.pb.GetAllUserCardsResponse.user_cards_list:type_name -> rewards_tracker.pb.UserCard
-	10, // 14: rewards_tracker.pb.AddCardRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
-	16, // 15: rewards_tracker.pb.AddCardRequest.card_details:type_name -> rewards_tracker.pb.Card
-	12, // 16: rewards_tracker.pb.AddCardResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
-	17, // [17:17] is the sub-list for method output_type
-	17, // [17:17] is the sub-list for method input_type
-	17, // [17:17] is the sub-list for extension type_name
-	17, // [17:17] is the sub-list for extension extendee
-	0,  // [0:17] is the sub-list for field type_name
+	15, // 0: rewards_tracker.pb.GenericResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
+	17, // 1: rewards_tracker.pb.Card.local_base_card_rules:type_name -> rewards_tracker.pb.CardRules
+	17, // 2: rewards_tracker.pb.Card.local_bonus_card_rules:type_name -> rewards_tracker.pb.CardRules
+	17, // 3: rewards_tracker.pb.Card.fcy_base_card_rules:type_name -> rewards_tracker.pb.CardRules
+	17, // 4: rewards_tracker.pb.Card.fcy_bonus_card_rules:type_name -> rewards_tracker.pb.CardRules
+	13, // 5: rewards_tracker.pb.AddTransactionRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
+	21, // 6: rewards_tracker.pb.AddTransactionRequest.transaction_details:type_name -> rewards_tracker.pb.Transaction
+	15, // 7: rewards_tracker.pb.AddTransactionResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
+	13, // 8: rewards_tracker.pb.CalculateTransactionRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
+	21, // 9: rewards_tracker.pb.CalculateTransactionRequest.transaction_details:type_name -> rewards_tracker.pb.Transaction
+	15, // 10: rewards_tracker.pb.CalculateTransactionResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
+	22, // 11: rewards_tracker.pb.CalculateTransactionResponse.calculated_transaction:type_name -> rewards_tracker.pb.CalculatedTransaction
+	13, // 12: rewards_tracker.pb.PairUserCardRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
+	15, // 13: rewards_tracker.pb.PairUserCardResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
+	20, // 14: rewards_tracker.pb.PairUserCardResponse.user_cards_list:type_name -> rewards_tracker.pb.UserCard
+	13, // 15: rewards_tracker.pb.GetUserCardsRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
+	29, // 16: rewards_tracker.pb.GetUserCardsRequest.filter:type_name -> rewards_tracker.pb.GetUserCardsFilter
+	15, // 17: rewards_tracker.pb.GetUserCardsResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
+	20, // 18: rewards_tracker.pb.GetUserCardsResponse.user_cards_list:type_name -> rewards_tracker.pb.UserCard
+	13, // 19: rewards_tracker.pb.AddCardRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
+	19, // 20: rewards_tracker.pb.AddCardRequest.card_details:type_name -> rewards_tracker.pb.Card
+	15, // 21: rewards_tracker.pb.AddCardResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
+	22, // [22:22] is the sub-list for method output_type
+	22, // [22:22] is the sub-list for method input_type
+	22, // [22:22] is the sub-list for extension type_name
+	22, // [22:22] is the sub-list for extension extendee
+	0,  // [0:22] is the sub-list for field type_name
 }
 
 func init() { file_rewards_tracker_proto_init() }
@@ -2642,7 +3195,7 @@ func file_rewards_tracker_proto_init() {
 			}
 		}
 		file_rewards_tracker_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AddTransactionRequest); i {
+			switch v := v.(*CalculatedTransaction); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2654,7 +3207,7 @@ func file_rewards_tracker_proto_init() {
 			}
 		}
 		file_rewards_tracker_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AddTransactionResponse); i {
+			switch v := v.(*AddTransactionRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2666,7 +3219,7 @@ func file_rewards_tracker_proto_init() {
 			}
 		}
 		file_rewards_tracker_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PairUserCardRequest); i {
+			switch v := v.(*AddTransactionResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2678,7 +3231,7 @@ func file_rewards_tracker_proto_init() {
 			}
 		}
 		file_rewards_tracker_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PairUserCardResponse); i {
+			switch v := v.(*CalculateTransactionRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2690,7 +3243,7 @@ func file_rewards_tracker_proto_init() {
 			}
 		}
 		file_rewards_tracker_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetAllUserCardsRequest); i {
+			switch v := v.(*CalculateTransactionResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2702,7 +3255,7 @@ func file_rewards_tracker_proto_init() {
 			}
 		}
 		file_rewards_tracker_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetAllUserCardsResponse); i {
+			switch v := v.(*PairUserCardRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2714,7 +3267,7 @@ func file_rewards_tracker_proto_init() {
 			}
 		}
 		file_rewards_tracker_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AddCardRequest); i {
+			switch v := v.(*PairUserCardResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2726,6 +3279,54 @@ func file_rewards_tracker_proto_init() {
 			}
 		}
 		file_rewards_tracker_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetUserCardsFilter); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rewards_tracker_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetUserCardsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rewards_tracker_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetUserCardsResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rewards_tracker_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AddCardRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rewards_tracker_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AddCardResponse); i {
 			case 0:
 				return &v.state
@@ -2754,13 +3355,17 @@ func file_rewards_tracker_proto_init() {
 	file_rewards_tracker_proto_msgTypes[14].OneofWrappers = []interface{}{}
 	file_rewards_tracker_proto_msgTypes[15].OneofWrappers = []interface{}{}
 	file_rewards_tracker_proto_msgTypes[16].OneofWrappers = []interface{}{}
+	file_rewards_tracker_proto_msgTypes[17].OneofWrappers = []interface{}{}
+	file_rewards_tracker_proto_msgTypes[18].OneofWrappers = []interface{}{}
+	file_rewards_tracker_proto_msgTypes[19].OneofWrappers = []interface{}{}
+	file_rewards_tracker_proto_msgTypes[20].OneofWrappers = []interface{}{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_rewards_tracker_proto_rawDesc,
-			NumEnums:      10,
-			NumMessages:   17,
+			NumEnums:      13,
+			NumMessages:   21,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -193,7 +193,7 @@ func calculateBaseLocal(t *pb.Transaction, c *pb.CardDb) *pb.CalculatedTransacti
 	log.Info(baseMiles, baseReward)
 
 	return &pb.CalculatedTransaction{
-		BaseMilesEarned:    proto.Float64(baseMiles),
+		BaseMilesEarned:    proto.Float64(math.Round(baseMiles*100) / 100),
 		BonusMilesEarned:   proto.Float64(0),
 		BaseRewardsEarned:  proto.Float64(baseReward),
 		BonusRewardsEarned: proto.Float64(0),
@@ -202,10 +202,12 @@ func calculateBaseLocal(t *pb.Transaction, c *pb.CardDb) *pb.CalculatedTransacti
 
 func calculateBonusLocal(t *pb.Transaction, c *pb.CardDb, current *pb.CurrentSpending) *pb.CalculatedTransaction {
 	var (
-		baseReward  float64
-		bonusReward float64
-		amount      float64
-		miles       float64
+		baseReward    float64
+		bonusReward   float64
+		amount        float64
+		miles         float64
+		willEarnBonus bool
+		bonusQuota    *pb.UserCardBonusQuota
 	)
 
 	log.Info("start calculateBonusLocal")
@@ -220,24 +222,29 @@ func calculateBonusLocal(t *pb.Transaction, c *pb.CardDb, current *pb.CurrentSpe
 	amount = float64(t.GetAmount()) / 100 / c.GetAmountBlock()
 
 	//calculate cap
-	if willEarnBonus, amountToEarnBonus := processCap(c, amount, float64(current.GetTotalSpending()/100)); willEarnBonus {
+	if willEarnBonus, bonusQuota = processCap(c, amount, float64(current.GetTotalSpending()/100)); willEarnBonus {
 		switch c.GetCardIssuer() {
 		//UOB has $5 block policy
 		case "UOB":
-			bonusReward = math.Floor(amountToEarnBonus) * float64(c.GetLocalBonusRewards())
+			bonusReward = math.Floor(bonusQuota.GetTotalQuota()-bonusQuota.GetRemainingQuota()) * float64(c.GetLocalBonusRewards())
 			break
 		default:
-			bonusReward = math.Floor(amountToEarnBonus * float64(c.GetLocalBonusRewards()))
+			bonusReward = math.Floor((bonusQuota.GetTotalQuota() - bonusQuota.GetRemainingQuota()) * float64(c.GetLocalBonusRewards()))
 		}
 	}
 
 	miles = bonusReward * c.GetLocalBaseMiles() * c.GetAmountBlock()
 
 	return &pb.CalculatedTransaction{
-		BaseMilesEarned:    proto.Float64(base.GetBaseMilesEarned()),
-		BonusMilesEarned:   proto.Float64(math.Round(miles*100) / 100),
-		BaseRewardsEarned:  proto.Float64(baseReward),
-		BonusRewardsEarned: proto.Float64(bonusReward),
+		BaseMilesEarned:        proto.Float64(math.Round(base.GetBaseMilesEarned()*100) / 100),
+		BonusMilesEarned:       proto.Float64(math.Round(miles*100) / 100),
+		BaseRewardsEarned:      proto.Float64(baseReward),
+		BonusRewardsEarned:     proto.Float64(bonusReward),
+		IsPromotion:            nil,
+		PromotionId:            nil,
+		PromotionMilesEarned:   nil,
+		PromotionRewardsEarned: nil,
+		UserCardBonusQuota:     bonusQuota,
 	}
 }
 
@@ -269,11 +276,15 @@ func calculateBaseFCY(t *pb.Transaction, c *pb.CardDb) *pb.CalculatedTransaction
 	}
 }
 
-func processCap(c *pb.CardDb, amount float64, current float64) (bool, float64) {
+func processCap(c *pb.CardDb, amount float64, current float64) (bool, *pb.UserCardBonusQuota) {
 	//Fully exceeded cap
 	if current >= c.GetCap() {
 		log.Info("processCap: Fully exceeded cap")
-		return false, 0
+		return false, &pb.UserCardBonusQuota{
+			CardId:         proto.Int64(c.GetCardId()),
+			TotalQuota:     proto.Float64(c.GetCap()),
+			RemainingQuota: proto.Float64(0),
+		}
 	}
 
 	//Partially exceeded
@@ -282,5 +293,9 @@ func processCap(c *pb.CardDb, amount float64, current float64) (bool, float64) {
 	finalAmount := utils.Min(amountToEarnBonus, amount)
 
 	log.Infof("processCap: Not exceeded cap, %v", finalAmount)
-	return true, finalAmount
+	return true, &pb.UserCardBonusQuota{
+		CardId:         proto.Int64(c.GetCardId()),
+		TotalQuota:     proto.Float64(c.GetCap()),
+		RemainingQuota: proto.Float64(c.GetCap() - finalAmount),
+	}
 }

@@ -147,6 +147,12 @@ message Card{
   optional double cap = 23;
 }
 
+message UserCardBonusQuota{
+  optional int64 card_id = 1;
+  optional double total_quota = 2;
+  optional double remaining_quota = 3;
+}
+
 message UserCard{
   enum CardStatus{
     CARD_ACTIVE = 0;
@@ -209,6 +215,7 @@ message CalculatedTransaction{
   optional int64 promotion_id = 6;
   optional int64 promotion_miles_earned = 7;
   optional int64 promotion_rewards_earned = 8;
+  optional UserCardBonusQuota user_card_bonus_quota = 9;
 }
 
 message AddTransactionRequest{

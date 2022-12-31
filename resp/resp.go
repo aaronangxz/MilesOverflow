@@ -62,3 +62,16 @@ func getCalculateTransactionResponse(trx *pb.CalculatedTransaction) pb.Calculate
 		CalculatedTransaction: trx,
 	}
 }
+
+func GetAddTransactionResponseJSON(c echo.Context) error {
+	return c.JSON(http.StatusOK, getAddTransactionResponse())
+}
+
+func getAddTransactionResponse() pb.AddTransactionResponse {
+	return pb.AddTransactionResponse{
+		ResponseMeta: &pb.ResponseMeta{
+			ErrorCode:    proto.Int64(int64(pb.AddTransactionRequest_ERROR_SUCCESS)),
+			ErrorMessage: proto.String("successfully added transaction."),
+		},
+	}
+}

@@ -147,6 +147,30 @@ message Card{
   optional double cap = 23;
 }
 
+message CardPromotionEligibleCards{
+  optional Lists eligible_cards = 1;
+  optional Lists ineligible_cards = 2;
+}
+
+message CardPromotionConditions{
+  optional CardRules card_rules = 1;
+  optional double min_amount = 2;
+  optional double max_amount = 3;
+  optional bool isSGDOnly = 4;
+  optional bool isRecurringOnly = 5;
+}
+
+message CardPromotion{
+  optional int64 promotion_id = 1;
+  optional string promotion_name = 2;
+  optional string promotion_description = 3;
+  optional CardPromotionEligibleCards eligible_card_ids = 4;
+  optional int64 promotion_type = 5;
+  optional int64 start_time = 6;
+  optional int64 end_time = 7;
+  optional CardPromotionConditions promotion_conditions = 8;
+}
+
 message UserCardBonusQuota{
   optional int64 card_id = 1;
   optional double total_quota = 2;
@@ -219,6 +243,10 @@ message CalculatedTransaction{
 }
 
 message AddTransactionRequest{
+  enum ErrorCode{
+    ERROR_SUCCESS = 0;
+    ERROR_FAILED = 2;
+  }
   optional RequestMeta request_meta = 1;
   optional int64 user_id = 2;
   optional Transaction transaction_details = 3;

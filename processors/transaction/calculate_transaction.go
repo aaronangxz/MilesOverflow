@@ -122,6 +122,7 @@ func calculateLocal(t *pb.Transaction, c *pb.CardDb, spending *pb.CurrentSpendin
 }
 
 func calculateFCY(t *pb.Transaction, c *pb.CardDb) *pb.CalculatedTransaction {
+	//TODO conversion
 	return calculateBaseFCY(t, c)
 }
 

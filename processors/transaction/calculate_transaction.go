@@ -27,6 +27,10 @@ func CalculateTransaction(c echo.Context) error {
 		return resp.JSONResp(c, int64(pb.User_ERROR_USER_NOT_EXISTS), err.Error())
 	}
 
+	if err := user.VerifyUserCard(req.GetUserId(), req.GetTransactionDetails().GetCardId()); err != nil {
+		return resp.JSONResp(c, int64(pb.User_ERROR_USER_CARD_PAIRING_NOT_EXISTS), err.Error())
+	}
+
 	if trx, err := calculate(req); err != nil {
 		return resp.JSONResp(c, int64(pb.CalculateTransactionRequest_ERROR_FAILED), err.Error())
 	} else {

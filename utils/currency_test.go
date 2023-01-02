@@ -1,10 +1,16 @@
 package utils
 
 import (
+	"github.com/joho/godotenv"
+	"github.com/labstack/gommon/log"
 	"testing"
 )
 
-func TestConversion(t *testing.T) {
+func TestCConvertFCYToSGD(t *testing.T) {
+	err := godotenv.Load()
+	if err != nil {
+		log.Error("Error loading .env file")
+	}
 	type args struct {
 		original float64
 		currency string
@@ -25,7 +31,7 @@ func TestConversion(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := Conversion(tt.args.original, tt.args.currency)
+			got, err := ConvertFCYToSGD(tt.args.original, tt.args.currency)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Conversion() error = %v, wantErr %v", err, tt.wantErr)
 				return

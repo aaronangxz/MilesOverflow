@@ -10,7 +10,7 @@ import (
 	"os"
 )
 
-func Conversion(original float64, currency string) (float64, error) {
+func ConvertFCYToSGD(original float64, currency string) (float64, error) {
 	err := godotenv.Load()
 	if err != nil {
 		log.Error("Error loading .env file")
@@ -18,6 +18,7 @@ func Conversion(original float64, currency string) (float64, error) {
 
 	key := os.Getenv("KEY")
 	url := fmt.Sprintf("https://api.freecurrencyapi.com/v1/latest?apikey=%v&currencies=SGD&base_currency=%v", key, currency)
+	log.Info(url)
 	method := "GET"
 
 	client := &http.Client{}

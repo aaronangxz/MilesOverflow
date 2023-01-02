@@ -96,7 +96,7 @@ func verifyAddTransactionFields(req *pb.AddTransactionRequest) error {
 
 func add(req *pb.AddTransactionRequest, t *pb.CalculatedTransaction) error {
 	//TODO currency conversion
-	expense := &pb.TransactionDb{
+	expense := pb.TransactionDb{
 		UserId:                 req.UserId,
 		Description:            req.TransactionDetails.Description,
 		Category:               req.TransactionDetails.Category,

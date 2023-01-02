@@ -20,9 +20,10 @@ func AddCard(c echo.Context) error {
 	}
 
 	if isExists, err := isCardNameExists(req.GetCardDetails().GetCardName()); err != nil {
+		if isExists {
+			return resp.JSONResp(c, int64(pb.AddCardRequest_ERROR_CARD_EXISTS), err.Error())
+		}
 		return resp.JSONResp(c, int64(pb.AddCardRequest_ERROR_FAILED), err.Error())
-	} else if isExists {
-		return resp.JSONResp(c, int64(pb.AddCardRequest_ERROR_CARD_EXISTS), err.Error())
 	}
 
 	if idx, err := createCard(req.GetCardDetails()); err != nil {

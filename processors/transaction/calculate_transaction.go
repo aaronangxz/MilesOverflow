@@ -119,20 +119,77 @@ func calculate(c *pb.CalculateTransactionRequest) (*pb.CalculatedTransaction, er
 }
 
 func calculateLocal(t *pb.Transaction, c *pb.CardDb, spending *pb.CurrentSpending) *pb.CalculatedTransaction {
-	if isEligibleCategory(pb.CurrencyType_LOCAL, c, t.GetCategory()) && isEligiblePaymentType(pb.CurrencyType_LOCAL, c, t.GetPaymentType()) {
+	if isEligibleBonusCategory(pb.CurrencyType_LOCAL, c, t.GetCategory()) && isEligibleBonusPaymentType(pb.CurrencyType_LOCAL, c, t.GetPaymentType()) {
 		return calculateBonusLocal(t, c, spending)
 	}
-	return calculateBaseLocal(t, c)
+
+	if isEligibleBaseCategory(pb.CurrencyType_LOCAL, c, t.GetCategory()) {
+		return calculateBaseLocal(t, c)
+	}
+
+	return nil
 }
 
 func calculateFCY(t *pb.Transaction, c *pb.CardDb, spending *pb.CurrentSpending) *pb.CalculatedTransaction {
-	if isEligibleCategory(pb.CurrencyType_FCY, c, t.GetCategory()) && isEligiblePaymentType(pb.CurrencyType_FCY, c, t.GetPaymentType()) {
+	if isEligibleBonusCategory(pb.CurrencyType_FCY, c, t.GetCategory()) && isEligibleBonusPaymentType(pb.CurrencyType_FCY, c, t.GetPaymentType()) {
 		return calculateBonusFCY(t, c, spending)
 	}
-	return calculateBaseFCY(t, c)
+
+	if isEligibleBaseCategory(pb.CurrencyType_FCY, c, t.GetCategory()) {
+		return calculateBaseFCY(t, c)
+	}
+
+	return nil
 }
 
-func isEligibleCategory(t pb.CurrencyType, c *pb.CardDb, cat int64) bool {
+func isEligibleBaseCategory(t pb.CurrencyType, c *pb.CardDb, cat int64) bool {
+	var baseWhitelistCategories pb.Lists
+	var baseBlacklistCategories pb.Lists
+
+	switch t {
+	case pb.CurrencyType_FCY:
+		if err := proto.Unmarshal(c.GetFcyBaseWhitelistCategory(), &baseWhitelistCategories); err != nil {
+			log.Error(err)
+		}
+		if err := proto.Unmarshal(c.GetFcyBaseBlacklistCategory(), &baseBlacklistCategories); err != nil {
+			log.Error(err)
+		}
+		break
+	case pb.CurrencyType_LOCAL:
+		fallthrough
+	default:
+		if err := proto.Unmarshal(c.GetLocalBaseWhitelistCategory(), &baseWhitelistCategories); err != nil {
+			log.Error(err)
+		}
+		if err := proto.Unmarshal(c.GetLocalBaseBlacklistCategory(), &baseBlacklistCategories); err != nil {
+			log.Error(err)
+		}
+		break
+	}
+
+	ineligibleCats := baseBlacklistCategories.GetList()
+	log.Info(ineligibleCats)
+	for _, ineligibleCat := range ineligibleCats {
+		if ineligibleCat == cat {
+			log.Infof("ineligibleCat:%v", cat)
+			return false
+		}
+	}
+
+	eligibleCats := baseWhitelistCategories.GetList()
+	log.Info(eligibleCats)
+	for _, eligibleCat := range eligibleCats {
+		if eligibleCat == cat {
+			log.Infof("eligibleCat:%v", cat)
+			return true
+		}
+	}
+
+	log.Info("isEligibleBaseCategory: false")
+	return false
+}
+
+func isEligibleBonusCategory(t pb.CurrencyType, c *pb.CardDb, cat int64) bool {
 	var bonusWhitelistCategories pb.Lists
 	var bonusBlacklistCategories pb.Lists
 
@@ -175,11 +232,11 @@ func isEligibleCategory(t pb.CurrencyType, c *pb.CardDb, cat int64) bool {
 		}
 	}
 
-	log.Info("isEligibleCategory: false")
+	log.Info("isEligibleBonusCategory: false")
 	return false
 }
 
-func isEligiblePaymentType(t pb.CurrencyType, c *pb.CardDb, paymentType int64) bool {
+func isEligibleBonusPaymentType(t pb.CurrencyType, c *pb.CardDb, paymentType int64) bool {
 	var bonusWhitelistPaymentTypes pb.Lists
 	//TODO blacklist payment types
 	var bonusBlacklistCategories pb.Lists
@@ -217,7 +274,7 @@ func isEligiblePaymentType(t pb.CurrencyType, c *pb.CardDb, paymentType int64) b
 		}
 	}
 
-	log.Info("isEligiblePaymentType: false")
+	log.Info("isEligibleBonusPaymentType: false")
 	return false
 }
 
@@ -365,6 +422,6 @@ func processCap(c *pb.CardDb, amount float64, current float64) (bool, *pb.UserCa
 	return true, &pb.UserCardBonusQuota{
 		CardId:         proto.Int64(c.GetCardId()),
 		TotalQuota:     proto.Float64(c.GetCap()),
-		RemainingQuota: proto.Float64(c.GetCap() - finalAmount),
+		RemainingQuota: proto.Float64(math.Round((c.GetCap()-finalAmount)*100) / 100),
 	}
 }

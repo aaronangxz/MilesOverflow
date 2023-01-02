@@ -14,7 +14,12 @@ func isCardNameExists(cardName string) (bool, error) {
 	if err := orm.DbInstance().Raw("SELECT * FROM milestracker_db.card_table WHERE card_name = ?", cardName).Scan(&hold).Error; err != nil {
 		return false, err
 	}
-	return hold != nil, nil
+
+	if hold != nil {
+		return true, errors.New("card name already exists")
+	}
+
+	return false, nil
 }
 
 func isCardIdExists(cardId int64) (bool, error) {

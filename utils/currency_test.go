@@ -1,16 +1,10 @@
 package utils
 
 import (
-	"github.com/joho/godotenv"
-	"github.com/labstack/gommon/log"
 	"testing"
 )
 
 func TestCConvertFCYToSGD(t *testing.T) {
-	err := godotenv.Load()
-	if err != nil {
-		log.Error("Error loading .env file")
-	}
 	type args struct {
 		original float64
 		currency string

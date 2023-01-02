@@ -396,6 +396,52 @@ func (ErrorCode) EnumDescriptor() ([]byte, []int) {
 	return file_rewards_tracker_proto_rawDescGZIP(), []int{6}
 }
 
+type CurrencyType int32
+
+const (
+	CurrencyType_LOCAL CurrencyType = 0
+	CurrencyType_FCY   CurrencyType = 1
+)
+
+// Enum value maps for CurrencyType.
+var (
+	CurrencyType_name = map[int32]string{
+		0: "LOCAL",
+		1: "FCY",
+	}
+	CurrencyType_value = map[string]int32{
+		"LOCAL": 0,
+		"FCY":   1,
+	}
+)
+
+func (x CurrencyType) Enum() *CurrencyType {
+	p := new(CurrencyType)
+	*p = x
+	return p
+}
+
+func (x CurrencyType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (CurrencyType) Descriptor() protoreflect.EnumDescriptor {
+	return file_rewards_tracker_proto_enumTypes[7].Descriptor()
+}
+
+func (CurrencyType) Type() protoreflect.EnumType {
+	return &file_rewards_tracker_proto_enumTypes[7]
+}
+
+func (x CurrencyType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use CurrencyType.Descriptor instead.
+func (CurrencyType) EnumDescriptor() ([]byte, []int) {
+	return file_rewards_tracker_proto_rawDescGZIP(), []int{7}
+}
+
 type User_ErrorCode int32
 
 const (
@@ -426,11 +472,11 @@ func (x User_ErrorCode) String() string {
 }
 
 func (User_ErrorCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_rewards_tracker_proto_enumTypes[7].Descriptor()
+	return file_rewards_tracker_proto_enumTypes[8].Descriptor()
 }
 
 func (User_ErrorCode) Type() protoreflect.EnumType {
-	return &file_rewards_tracker_proto_enumTypes[7]
+	return &file_rewards_tracker_proto_enumTypes[8]
 }
 
 func (x User_ErrorCode) Number() protoreflect.EnumNumber {
@@ -475,11 +521,11 @@ func (x UserCard_CardStatus) String() string {
 }
 
 func (UserCard_CardStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_rewards_tracker_proto_enumTypes[8].Descriptor()
+	return file_rewards_tracker_proto_enumTypes[9].Descriptor()
 }
 
 func (UserCard_CardStatus) Type() protoreflect.EnumType {
-	return &file_rewards_tracker_proto_enumTypes[8]
+	return &file_rewards_tracker_proto_enumTypes[9]
 }
 
 func (x UserCard_CardStatus) Number() protoreflect.EnumNumber {
@@ -521,11 +567,11 @@ func (x AddTransactionRequest_ErrorCode) String() string {
 }
 
 func (AddTransactionRequest_ErrorCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_rewards_tracker_proto_enumTypes[9].Descriptor()
+	return file_rewards_tracker_proto_enumTypes[10].Descriptor()
 }
 
 func (AddTransactionRequest_ErrorCode) Type() protoreflect.EnumType {
-	return &file_rewards_tracker_proto_enumTypes[9]
+	return &file_rewards_tracker_proto_enumTypes[10]
 }
 
 func (x AddTransactionRequest_ErrorCode) Number() protoreflect.EnumNumber {
@@ -567,11 +613,11 @@ func (x CalculateTransactionRequest_ErrorCode) String() string {
 }
 
 func (CalculateTransactionRequest_ErrorCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_rewards_tracker_proto_enumTypes[10].Descriptor()
+	return file_rewards_tracker_proto_enumTypes[11].Descriptor()
 }
 
 func (CalculateTransactionRequest_ErrorCode) Type() protoreflect.EnumType {
-	return &file_rewards_tracker_proto_enumTypes[10]
+	return &file_rewards_tracker_proto_enumTypes[11]
 }
 
 func (x CalculateTransactionRequest_ErrorCode) Number() protoreflect.EnumNumber {
@@ -619,11 +665,11 @@ func (x PairUserCardRequest_ErrorCode) String() string {
 }
 
 func (PairUserCardRequest_ErrorCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_rewards_tracker_proto_enumTypes[11].Descriptor()
+	return file_rewards_tracker_proto_enumTypes[12].Descriptor()
 }
 
 func (PairUserCardRequest_ErrorCode) Type() protoreflect.EnumType {
-	return &file_rewards_tracker_proto_enumTypes[11]
+	return &file_rewards_tracker_proto_enumTypes[12]
 }
 
 func (x PairUserCardRequest_ErrorCode) Number() protoreflect.EnumNumber {
@@ -665,11 +711,11 @@ func (x GetUserCardsRequest_ErrorCode) String() string {
 }
 
 func (GetUserCardsRequest_ErrorCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_rewards_tracker_proto_enumTypes[12].Descriptor()
+	return file_rewards_tracker_proto_enumTypes[13].Descriptor()
 }
 
 func (GetUserCardsRequest_ErrorCode) Type() protoreflect.EnumType {
-	return &file_rewards_tracker_proto_enumTypes[12]
+	return &file_rewards_tracker_proto_enumTypes[13]
 }
 
 func (x GetUserCardsRequest_ErrorCode) Number() protoreflect.EnumNumber {
@@ -714,11 +760,11 @@ func (x GetUserCardsRequest_OrderByField) String() string {
 }
 
 func (GetUserCardsRequest_OrderByField) Descriptor() protoreflect.EnumDescriptor {
-	return file_rewards_tracker_proto_enumTypes[13].Descriptor()
+	return file_rewards_tracker_proto_enumTypes[14].Descriptor()
 }
 
 func (GetUserCardsRequest_OrderByField) Type() protoreflect.EnumType {
-	return &file_rewards_tracker_proto_enumTypes[13]
+	return &file_rewards_tracker_proto_enumTypes[14]
 }
 
 func (x GetUserCardsRequest_OrderByField) Number() protoreflect.EnumNumber {
@@ -763,11 +809,11 @@ func (x AddCardRequest_ErrorCode) String() string {
 }
 
 func (AddCardRequest_ErrorCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_rewards_tracker_proto_enumTypes[14].Descriptor()
+	return file_rewards_tracker_proto_enumTypes[15].Descriptor()
 }
 
 func (AddCardRequest_ErrorCode) Type() protoreflect.EnumType {
-	return &file_rewards_tracker_proto_enumTypes[14]
+	return &file_rewards_tracker_proto_enumTypes[15]
 }
 
 func (x AddCardRequest_ErrorCode) Number() protoreflect.EnumNumber {
@@ -3901,9 +3947,11 @@ var file_rewards_tracker_proto_rawDesc = []byte{
 	0x72, 0x72, 0x6f, 0x72, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x0c, 0x0a, 0x08, 0x45, 0x52, 0x52, 0x4f,
 	0x52, 0x5f, 0x4f, 0x4b, 0x10, 0x00, 0x12, 0x10, 0x0a, 0x0c, 0x45, 0x52, 0x52, 0x4f, 0x52, 0x5f,
 	0x50, 0x41, 0x52, 0x41, 0x4d, 0x53, 0x10, 0x01, 0x12, 0x13, 0x0a, 0x0f, 0x45, 0x52, 0x52, 0x4f,
-	0x52, 0x5f, 0x4a, 0x53, 0x4f, 0x4e, 0x5f, 0x42, 0x49, 0x4e, 0x44, 0x10, 0x02, 0x42, 0x12, 0x5a,
-	0x10, 0x2f, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5f, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65,
-	0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x52, 0x5f, 0x4a, 0x53, 0x4f, 0x4e, 0x5f, 0x42, 0x49, 0x4e, 0x44, 0x10, 0x02, 0x2a, 0x22, 0x0a,
+	0x0c, 0x43, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x63, 0x79, 0x54, 0x79, 0x70, 0x65, 0x12, 0x09, 0x0a,
+	0x05, 0x4c, 0x4f, 0x43, 0x41, 0x4c, 0x10, 0x00, 0x12, 0x07, 0x0a, 0x03, 0x46, 0x43, 0x59, 0x10,
+	0x01, 0x42, 0x12, 0x5a, 0x10, 0x2f, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5f, 0x74, 0x72,
+	0x61, 0x63, 0x6b, 0x65, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -3918,7 +3966,7 @@ func file_rewards_tracker_proto_rawDescGZIP() []byte {
 	return file_rewards_tracker_proto_rawDescData
 }
 
-var file_rewards_tracker_proto_enumTypes = make([]protoimpl.EnumInfo, 15)
+var file_rewards_tracker_proto_enumTypes = make([]protoimpl.EnumInfo, 16)
 var file_rewards_tracker_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
 var file_rewards_tracker_proto_goTypes = []interface{}{
 	(CardCategory)(0),                          // 0: rewards_tracker.pb.CardCategory
@@ -3928,76 +3976,77 @@ var file_rewards_tracker_proto_goTypes = []interface{}{
 	(CardType)(0),                              // 4: rewards_tracker.pb.CardType
 	(OrderBy)(0),                               // 5: rewards_tracker.pb.OrderBy
 	(ErrorCode)(0),                             // 6: rewards_tracker.pb.ErrorCode
-	(User_ErrorCode)(0),                        // 7: rewards_tracker.pb.User.ErrorCode
-	(UserCard_CardStatus)(0),                   // 8: rewards_tracker.pb.UserCard.CardStatus
-	(AddTransactionRequest_ErrorCode)(0),       // 9: rewards_tracker.pb.AddTransactionRequest.ErrorCode
-	(CalculateTransactionRequest_ErrorCode)(0), // 10: rewards_tracker.pb.CalculateTransactionRequest.ErrorCode
-	(PairUserCardRequest_ErrorCode)(0),         // 11: rewards_tracker.pb.PairUserCardRequest.ErrorCode
-	(GetUserCardsRequest_ErrorCode)(0),         // 12: rewards_tracker.pb.GetUserCardsRequest.ErrorCode
-	(GetUserCardsRequest_OrderByField)(0),      // 13: rewards_tracker.pb.GetUserCardsRequest.OrderByField
-	(AddCardRequest_ErrorCode)(0),              // 14: rewards_tracker.pb.AddCardRequest.ErrorCode
-	(*RequestMeta)(nil),                        // 15: rewards_tracker.pb.RequestMeta
-	(*GenericResponse)(nil),                    // 16: rewards_tracker.pb.GenericResponse
-	(*ResponseMeta)(nil),                       // 17: rewards_tracker.pb.ResponseMeta
-	(*User)(nil),                               // 18: rewards_tracker.pb.User
-	(*Lists)(nil),                              // 19: rewards_tracker.pb.Lists
-	(*CardRules)(nil),                          // 20: rewards_tracker.pb.CardRules
-	(*CardDb)(nil),                             // 21: rewards_tracker.pb.CardDb
-	(*Card)(nil),                               // 22: rewards_tracker.pb.Card
-	(*CardPromotionEligibleCards)(nil),         // 23: rewards_tracker.pb.CardPromotionEligibleCards
-	(*CardPromotionConditions)(nil),            // 24: rewards_tracker.pb.CardPromotionConditions
-	(*CardPromotion)(nil),                      // 25: rewards_tracker.pb.CardPromotion
-	(*UserCardBonusQuota)(nil),                 // 26: rewards_tracker.pb.UserCardBonusQuota
-	(*UserCard)(nil),                           // 27: rewards_tracker.pb.UserCard
-	(*TransactionDb)(nil),                      // 28: rewards_tracker.pb.TransactionDb
-	(*Transaction)(nil),                        // 29: rewards_tracker.pb.Transaction
-	(*CurrentSpending)(nil),                    // 30: rewards_tracker.pb.CurrentSpending
-	(*CalculatedTransaction)(nil),              // 31: rewards_tracker.pb.CalculatedTransaction
-	(*AddTransactionRequest)(nil),              // 32: rewards_tracker.pb.AddTransactionRequest
-	(*AddTransactionResponse)(nil),             // 33: rewards_tracker.pb.AddTransactionResponse
-	(*CalculateTransactionRequest)(nil),        // 34: rewards_tracker.pb.CalculateTransactionRequest
-	(*CalculateTransactionResponse)(nil),       // 35: rewards_tracker.pb.CalculateTransactionResponse
-	(*PairUserCardRequest)(nil),                // 36: rewards_tracker.pb.PairUserCardRequest
-	(*PairUserCardResponse)(nil),               // 37: rewards_tracker.pb.PairUserCardResponse
-	(*GetUserCardsFilter)(nil),                 // 38: rewards_tracker.pb.GetUserCardsFilter
-	(*GetUserCardsRequest)(nil),                // 39: rewards_tracker.pb.GetUserCardsRequest
-	(*GetUserCardsResponse)(nil),               // 40: rewards_tracker.pb.GetUserCardsResponse
-	(*AddCardRequest)(nil),                     // 41: rewards_tracker.pb.AddCardRequest
-	(*AddCardResponse)(nil),                    // 42: rewards_tracker.pb.AddCardResponse
+	(CurrencyType)(0),                          // 7: rewards_tracker.pb.CurrencyType
+	(User_ErrorCode)(0),                        // 8: rewards_tracker.pb.User.ErrorCode
+	(UserCard_CardStatus)(0),                   // 9: rewards_tracker.pb.UserCard.CardStatus
+	(AddTransactionRequest_ErrorCode)(0),       // 10: rewards_tracker.pb.AddTransactionRequest.ErrorCode
+	(CalculateTransactionRequest_ErrorCode)(0), // 11: rewards_tracker.pb.CalculateTransactionRequest.ErrorCode
+	(PairUserCardRequest_ErrorCode)(0),         // 12: rewards_tracker.pb.PairUserCardRequest.ErrorCode
+	(GetUserCardsRequest_ErrorCode)(0),         // 13: rewards_tracker.pb.GetUserCardsRequest.ErrorCode
+	(GetUserCardsRequest_OrderByField)(0),      // 14: rewards_tracker.pb.GetUserCardsRequest.OrderByField
+	(AddCardRequest_ErrorCode)(0),              // 15: rewards_tracker.pb.AddCardRequest.ErrorCode
+	(*RequestMeta)(nil),                        // 16: rewards_tracker.pb.RequestMeta
+	(*GenericResponse)(nil),                    // 17: rewards_tracker.pb.GenericResponse
+	(*ResponseMeta)(nil),                       // 18: rewards_tracker.pb.ResponseMeta
+	(*User)(nil),                               // 19: rewards_tracker.pb.User
+	(*Lists)(nil),                              // 20: rewards_tracker.pb.Lists
+	(*CardRules)(nil),                          // 21: rewards_tracker.pb.CardRules
+	(*CardDb)(nil),                             // 22: rewards_tracker.pb.CardDb
+	(*Card)(nil),                               // 23: rewards_tracker.pb.Card
+	(*CardPromotionEligibleCards)(nil),         // 24: rewards_tracker.pb.CardPromotionEligibleCards
+	(*CardPromotionConditions)(nil),            // 25: rewards_tracker.pb.CardPromotionConditions
+	(*CardPromotion)(nil),                      // 26: rewards_tracker.pb.CardPromotion
+	(*UserCardBonusQuota)(nil),                 // 27: rewards_tracker.pb.UserCardBonusQuota
+	(*UserCard)(nil),                           // 28: rewards_tracker.pb.UserCard
+	(*TransactionDb)(nil),                      // 29: rewards_tracker.pb.TransactionDb
+	(*Transaction)(nil),                        // 30: rewards_tracker.pb.Transaction
+	(*CurrentSpending)(nil),                    // 31: rewards_tracker.pb.CurrentSpending
+	(*CalculatedTransaction)(nil),              // 32: rewards_tracker.pb.CalculatedTransaction
+	(*AddTransactionRequest)(nil),              // 33: rewards_tracker.pb.AddTransactionRequest
+	(*AddTransactionResponse)(nil),             // 34: rewards_tracker.pb.AddTransactionResponse
+	(*CalculateTransactionRequest)(nil),        // 35: rewards_tracker.pb.CalculateTransactionRequest
+	(*CalculateTransactionResponse)(nil),       // 36: rewards_tracker.pb.CalculateTransactionResponse
+	(*PairUserCardRequest)(nil),                // 37: rewards_tracker.pb.PairUserCardRequest
+	(*PairUserCardResponse)(nil),               // 38: rewards_tracker.pb.PairUserCardResponse
+	(*GetUserCardsFilter)(nil),                 // 39: rewards_tracker.pb.GetUserCardsFilter
+	(*GetUserCardsRequest)(nil),                // 40: rewards_tracker.pb.GetUserCardsRequest
+	(*GetUserCardsResponse)(nil),               // 41: rewards_tracker.pb.GetUserCardsResponse
+	(*AddCardRequest)(nil),                     // 42: rewards_tracker.pb.AddCardRequest
+	(*AddCardResponse)(nil),                    // 43: rewards_tracker.pb.AddCardResponse
 }
 var file_rewards_tracker_proto_depIdxs = []int32{
-	17, // 0: rewards_tracker.pb.GenericResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
-	19, // 1: rewards_tracker.pb.CardRules.whitelist_categories:type_name -> rewards_tracker.pb.Lists
-	19, // 2: rewards_tracker.pb.CardRules.blacklist_categories:type_name -> rewards_tracker.pb.Lists
-	19, // 3: rewards_tracker.pb.CardRules.whitelist_payment_types:type_name -> rewards_tracker.pb.Lists
-	19, // 4: rewards_tracker.pb.CardRules.blacklist_payment_types:type_name -> rewards_tracker.pb.Lists
-	20, // 5: rewards_tracker.pb.Card.local_base_card_rules:type_name -> rewards_tracker.pb.CardRules
-	20, // 6: rewards_tracker.pb.Card.local_bonus_card_rules:type_name -> rewards_tracker.pb.CardRules
-	20, // 7: rewards_tracker.pb.Card.fcy_base_card_rules:type_name -> rewards_tracker.pb.CardRules
-	20, // 8: rewards_tracker.pb.Card.fcy_bonus_card_rules:type_name -> rewards_tracker.pb.CardRules
-	19, // 9: rewards_tracker.pb.CardPromotionEligibleCards.eligible_cards:type_name -> rewards_tracker.pb.Lists
-	19, // 10: rewards_tracker.pb.CardPromotionEligibleCards.ineligible_cards:type_name -> rewards_tracker.pb.Lists
-	20, // 11: rewards_tracker.pb.CardPromotionConditions.card_rules:type_name -> rewards_tracker.pb.CardRules
-	23, // 12: rewards_tracker.pb.CardPromotion.eligible_card_ids:type_name -> rewards_tracker.pb.CardPromotionEligibleCards
-	24, // 13: rewards_tracker.pb.CardPromotion.promotion_conditions:type_name -> rewards_tracker.pb.CardPromotionConditions
-	26, // 14: rewards_tracker.pb.CalculatedTransaction.user_card_bonus_quota:type_name -> rewards_tracker.pb.UserCardBonusQuota
-	15, // 15: rewards_tracker.pb.AddTransactionRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
-	29, // 16: rewards_tracker.pb.AddTransactionRequest.transaction_details:type_name -> rewards_tracker.pb.Transaction
-	17, // 17: rewards_tracker.pb.AddTransactionResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
-	15, // 18: rewards_tracker.pb.CalculateTransactionRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
-	29, // 19: rewards_tracker.pb.CalculateTransactionRequest.transaction_details:type_name -> rewards_tracker.pb.Transaction
-	17, // 20: rewards_tracker.pb.CalculateTransactionResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
-	31, // 21: rewards_tracker.pb.CalculateTransactionResponse.calculated_transaction:type_name -> rewards_tracker.pb.CalculatedTransaction
-	15, // 22: rewards_tracker.pb.PairUserCardRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
-	17, // 23: rewards_tracker.pb.PairUserCardResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
-	27, // 24: rewards_tracker.pb.PairUserCardResponse.user_cards_list:type_name -> rewards_tracker.pb.UserCard
-	15, // 25: rewards_tracker.pb.GetUserCardsRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
-	38, // 26: rewards_tracker.pb.GetUserCardsRequest.filter:type_name -> rewards_tracker.pb.GetUserCardsFilter
-	17, // 27: rewards_tracker.pb.GetUserCardsResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
-	27, // 28: rewards_tracker.pb.GetUserCardsResponse.user_cards_list:type_name -> rewards_tracker.pb.UserCard
-	15, // 29: rewards_tracker.pb.AddCardRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
-	22, // 30: rewards_tracker.pb.AddCardRequest.card_details:type_name -> rewards_tracker.pb.Card
-	17, // 31: rewards_tracker.pb.AddCardResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
+	18, // 0: rewards_tracker.pb.GenericResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
+	20, // 1: rewards_tracker.pb.CardRules.whitelist_categories:type_name -> rewards_tracker.pb.Lists
+	20, // 2: rewards_tracker.pb.CardRules.blacklist_categories:type_name -> rewards_tracker.pb.Lists
+	20, // 3: rewards_tracker.pb.CardRules.whitelist_payment_types:type_name -> rewards_tracker.pb.Lists
+	20, // 4: rewards_tracker.pb.CardRules.blacklist_payment_types:type_name -> rewards_tracker.pb.Lists
+	21, // 5: rewards_tracker.pb.Card.local_base_card_rules:type_name -> rewards_tracker.pb.CardRules
+	21, // 6: rewards_tracker.pb.Card.local_bonus_card_rules:type_name -> rewards_tracker.pb.CardRules
+	21, // 7: rewards_tracker.pb.Card.fcy_base_card_rules:type_name -> rewards_tracker.pb.CardRules
+	21, // 8: rewards_tracker.pb.Card.fcy_bonus_card_rules:type_name -> rewards_tracker.pb.CardRules
+	20, // 9: rewards_tracker.pb.CardPromotionEligibleCards.eligible_cards:type_name -> rewards_tracker.pb.Lists
+	20, // 10: rewards_tracker.pb.CardPromotionEligibleCards.ineligible_cards:type_name -> rewards_tracker.pb.Lists
+	21, // 11: rewards_tracker.pb.CardPromotionConditions.card_rules:type_name -> rewards_tracker.pb.CardRules
+	24, // 12: rewards_tracker.pb.CardPromotion.eligible_card_ids:type_name -> rewards_tracker.pb.CardPromotionEligibleCards
+	25, // 13: rewards_tracker.pb.CardPromotion.promotion_conditions:type_name -> rewards_tracker.pb.CardPromotionConditions
+	27, // 14: rewards_tracker.pb.CalculatedTransaction.user_card_bonus_quota:type_name -> rewards_tracker.pb.UserCardBonusQuota
+	16, // 15: rewards_tracker.pb.AddTransactionRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
+	30, // 16: rewards_tracker.pb.AddTransactionRequest.transaction_details:type_name -> rewards_tracker.pb.Transaction
+	18, // 17: rewards_tracker.pb.AddTransactionResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
+	16, // 18: rewards_tracker.pb.CalculateTransactionRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
+	30, // 19: rewards_tracker.pb.CalculateTransactionRequest.transaction_details:type_name -> rewards_tracker.pb.Transaction
+	18, // 20: rewards_tracker.pb.CalculateTransactionResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
+	32, // 21: rewards_tracker.pb.CalculateTransactionResponse.calculated_transaction:type_name -> rewards_tracker.pb.CalculatedTransaction
+	16, // 22: rewards_tracker.pb.PairUserCardRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
+	18, // 23: rewards_tracker.pb.PairUserCardResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
+	28, // 24: rewards_tracker.pb.PairUserCardResponse.user_cards_list:type_name -> rewards_tracker.pb.UserCard
+	16, // 25: rewards_tracker.pb.GetUserCardsRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
+	39, // 26: rewards_tracker.pb.GetUserCardsRequest.filter:type_name -> rewards_tracker.pb.GetUserCardsFilter
+	18, // 27: rewards_tracker.pb.GetUserCardsResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
+	28, // 28: rewards_tracker.pb.GetUserCardsResponse.user_cards_list:type_name -> rewards_tracker.pb.UserCard
+	16, // 29: rewards_tracker.pb.AddCardRequest.request_meta:type_name -> rewards_tracker.pb.RequestMeta
+	23, // 30: rewards_tracker.pb.AddCardRequest.card_details:type_name -> rewards_tracker.pb.Card
+	18, // 31: rewards_tracker.pb.AddCardResponse.response_meta:type_name -> rewards_tracker.pb.ResponseMeta
 	32, // [32:32] is the sub-list for method output_type
 	32, // [32:32] is the sub-list for method input_type
 	32, // [32:32] is the sub-list for extension type_name
@@ -4380,7 +4429,7 @@ func file_rewards_tracker_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_rewards_tracker_proto_rawDesc,
-			NumEnums:      15,
+			NumEnums:      16,
 			NumMessages:   28,
 			NumExtensions: 0,
 			NumServices:   0,

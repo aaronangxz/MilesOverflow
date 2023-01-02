@@ -55,6 +55,11 @@ enum ErrorCode{
   ERROR_JSON_BIND = 2;
 }
 
+enum CurrencyType{
+  LOCAL = 0;
+  FCY = 1;
+}
+
 message RequestMeta{
   optional string token = 1;
 }

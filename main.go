@@ -6,16 +6,17 @@ import (
 	"github.com/aaronangxz/RewardTracker/processors/transaction"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/gommon/log"
 	"net/http"
 )
 
 func main() {
-	orm.ConnectMySQL()
-	e := echo.New()
 	err := godotenv.Load()
 	if err != nil {
-		e.Logger.Fatal("Error loading .env file")
+		log.Error("Error loading .env file")
 	}
+	orm.ConnectMySQL()
+	e := echo.New()
 
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")

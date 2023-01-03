@@ -70,44 +70,48 @@ func fillCardToCardDb(c *pb.Card) *pb.CardDb {
 	LocalBaseBlacklistCategory, _ := proto.Marshal(c.LocalBaseCardRules.BlacklistCategories)
 	LocalBonusWhitelistCategory, _ := proto.Marshal(c.LocalBonusCardRules.WhitelistCategories)
 	LocalBonusBlacklistCategory, _ := proto.Marshal(c.LocalBonusCardRules.BlacklistCategories)
-	LocalBonusPaymentTypes, _ := proto.Marshal(c.LocalBonusCardRules.WhitelistPaymentTypes)
+	LocalBonusWhitelistPaymentTypes, _ := proto.Marshal(c.LocalBonusCardRules.WhitelistPaymentTypes)
+	LocalBonusBlacklistPaymentTypes, _ := proto.Marshal(c.LocalBonusCardRules.BlacklistPaymentTypes)
 
 	FcyBaseWhitelistCategory, _ := proto.Marshal(c.FcyBaseCardRules.WhitelistCategories)
 	FcyBaseBlacklistCategory, _ := proto.Marshal(c.FcyBaseCardRules.BlacklistCategories)
 	FcyBonusWhitelistCategory, _ := proto.Marshal(c.FcyBonusCardRules.WhitelistCategories)
 	FcyBonusBlacklistCategory, _ := proto.Marshal(c.FcyBonusCardRules.BlacklistCategories)
-	FcyBonusPaymentTypes, _ := proto.Marshal(c.FcyBonusCardRules.WhitelistPaymentTypes)
+	FcyBonusWhitelistPaymentTypes, _ := proto.Marshal(c.FcyBonusCardRules.WhitelistPaymentTypes)
+	FcyBonusBlacklistPaymentTypes, _ := proto.Marshal(c.FcyBonusCardRules.BlacklistPaymentTypes)
 
 	cc := &pb.CardDb{
-		CardId:                      nil,
-		CardName:                    c.CardName,
-		ShortCardName:               c.ShortCardName,
-		CardType:                    c.CardType,
-		CardImage:                   c.CardImage,
-		CardIssuer:                  c.CardIssuer,
-		LocalBaseRewards:            c.LocalBaseRewards,
-		LocalBaseMiles:              c.LocalBaseMiles,
-		LocalBaseWhitelistCategory:  LocalBaseWhitelistCategory,
-		LocalBaseBlacklistCategory:  LocalBaseBlacklistCategory,
-		LocalBonusRewards:           c.LocalBonusRewards,
-		LocalBonusMiles:             c.LocalBonusMiles,
-		LocalBonusWhitelistCategory: LocalBonusWhitelistCategory,
-		LocalBonusBlacklistCategory: LocalBonusBlacklistCategory,
-		LocalBonusPaymentTypes:      LocalBonusPaymentTypes,
-		FcyBaseRewards:              c.FcyBaseRewards,
-		FcyBaseMiles:                c.FcyBaseMiles,
-		FcyBaseWhitelistCategory:    FcyBaseWhitelistCategory,
-		FcyBaseBlacklistCategory:    FcyBaseBlacklistCategory,
-		FcyBonusRewards:             c.FcyBonusRewards,
-		FcyBonusMiles:               c.FcyBonusMiles,
-		FcyBonusWhitelistCategory:   FcyBonusWhitelistCategory,
-		FcyBonusBlacklistCategory:   FcyBonusBlacklistCategory,
-		FcyBonusPaymentTypes:        FcyBonusPaymentTypes,
-		Rounding:                    c.Rounding,
-		AmountBlock:                 c.AmountBlock,
-		RewardCurrency:              c.RewardCurrency,
-		CapType:                     c.CapType,
-		Cap:                         c.Cap,
+		CardId:                          nil,
+		CardName:                        c.CardName,
+		ShortCardName:                   c.ShortCardName,
+		CardType:                        c.CardType,
+		CardImage:                       c.CardImage,
+		CardIssuer:                      c.CardIssuer,
+		LocalBaseRewards:                c.LocalBaseRewards,
+		LocalBaseMiles:                  c.LocalBaseMiles,
+		LocalBaseWhitelistCategory:      LocalBaseWhitelistCategory,
+		LocalBaseBlacklistCategory:      LocalBaseBlacklistCategory,
+		LocalBonusRewards:               c.LocalBonusRewards,
+		LocalBonusMiles:                 c.LocalBonusMiles,
+		LocalBonusWhitelistCategory:     LocalBonusWhitelistCategory,
+		LocalBonusBlacklistCategory:     LocalBonusBlacklistCategory,
+		LocalBonusWhitelistPaymentTypes: LocalBonusWhitelistPaymentTypes,
+		LocalBonusBlacklistPaymentTypes: LocalBonusBlacklistPaymentTypes,
+		FcyBaseRewards:                  c.FcyBaseRewards,
+		FcyBaseMiles:                    c.FcyBaseMiles,
+		FcyBaseWhitelistCategory:        FcyBaseWhitelistCategory,
+		FcyBaseBlacklistCategory:        FcyBaseBlacklistCategory,
+		FcyBonusRewards:                 c.FcyBonusRewards,
+		FcyBonusMiles:                   c.FcyBonusMiles,
+		FcyBonusWhitelistCategory:       FcyBonusWhitelistCategory,
+		FcyBonusBlacklistCategory:       FcyBonusBlacklistCategory,
+		FcyBonusWhitelistPaymentTypes:   FcyBonusWhitelistPaymentTypes,
+		FcyBonusBlacklistPaymentTypes:   FcyBonusBlacklistPaymentTypes,
+		Rounding:                        c.Rounding,
+		AmountBlock:                     c.AmountBlock,
+		RewardCurrency:                  c.RewardCurrency,
+		CapType:                         c.CapType,
+		Cap:                             c.Cap,
 	}
 	return cc
 }

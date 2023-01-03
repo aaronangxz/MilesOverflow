@@ -110,21 +110,23 @@ message CardDb{
   optional double local_bonus_miles = 12;
   optional bytes local_bonus_whitelist_category = 13;
   optional bytes local_bonus_blacklist_category = 14;
-  optional bytes local_bonus_payment_types = 15;
-  optional int64 fcy_base_rewards = 16;
-  optional double fcy_base_miles = 17;
-  optional bytes fcy_base_whitelist_category = 18;
-  optional bytes fcy_base_blacklist_category = 19;
-  optional int64 fcy_bonus_rewards = 20;
-  optional double fcy_bonus_miles = 21;
-  optional bytes fcy_bonus_whitelist_category = 22;
-  optional bytes fcy_bonus_blacklist_category = 23;
-  optional bytes fcy_bonus_payment_types = 24;
-  optional int64 rounding = 25;
-  optional double amount_block = 26;
-  optional string reward_currency = 27;
-  optional int64 cap_type = 28;
-  optional double cap = 29;
+  optional bytes local_bonus_whitelist_payment_types = 15;
+  optional bytes local_bonus_blacklist_payment_types = 16;
+  optional int64 fcy_base_rewards = 17;
+  optional double fcy_base_miles = 18;
+  optional bytes fcy_base_whitelist_category = 19;
+  optional bytes fcy_base_blacklist_category = 20;
+  optional int64 fcy_bonus_rewards = 21;
+  optional double fcy_bonus_miles = 22;
+  optional bytes fcy_bonus_whitelist_category = 23;
+  optional bytes fcy_bonus_blacklist_category = 24;
+  optional bytes fcy_bonus_whitelist_payment_types = 25;
+  optional bytes fcy_bonus_blacklist_payment_types = 26;
+  optional int64 rounding = 27;
+  optional double amount_block = 28;
+  optional string reward_currency = 29;
+  optional int64 cap_type = 30;
+  optional double cap = 31;
 }
 
 message Card{
@@ -237,15 +239,16 @@ message CurrentSpending{
 }
 
 message CalculatedTransaction{
-  optional double base_miles_earned = 1;
-  optional double bonus_miles_earned = 2;
-  optional double base_rewards_earned = 3;
-  optional double bonus_rewards_earned = 4;
-  optional bool is_promotion = 5;
-  optional int64 promotion_id = 6;
-  optional int64 promotion_miles_earned = 7;
-  optional int64 promotion_rewards_earned = 8;
-  optional UserCardBonusQuota user_card_bonus_quota = 9;
+  optional double actual_amount = 1;
+  optional double base_miles_earned = 2;
+  optional double bonus_miles_earned = 3;
+  optional double base_rewards_earned = 4;
+  optional double bonus_rewards_earned = 5;
+  optional bool is_promotion = 6;
+  optional int64 promotion_id = 7;
+  optional int64 promotion_miles_earned = 8;
+  optional int64 promotion_rewards_earned = 9;
+  optional UserCardBonusQuota user_card_bonus_quota = 10;
 }
 
 message AddTransactionRequest{

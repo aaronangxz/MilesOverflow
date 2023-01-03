@@ -102,7 +102,7 @@ func add(req *pb.AddTransactionRequest, t *pb.CalculatedTransaction) error {
 		Category:               req.TransactionDetails.Category,
 		PaymentType:            req.TransactionDetails.PaymentType,
 		Amount:                 req.TransactionDetails.Amount,
-		AmountConverted:        nil,
+		AmountConverted:        proto.Int64(int64(t.GetActualAmount() * float64(100))),
 		Currency:               req.TransactionDetails.Currency,
 		TransactionTimestamp:   req.TransactionDetails.Time,
 		CreateTimestamp:        proto.Int64(time.Now().Unix()),

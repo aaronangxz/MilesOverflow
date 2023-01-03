@@ -4,6 +4,7 @@ import (
 	"github.com/aaronangxz/RewardTracker/orm"
 	pb "github.com/aaronangxz/RewardTracker/rewards_tracker.pb/rewards_tracker"
 	"github.com/aaronangxz/RewardTracker/utils"
+	"github.com/labstack/gommon/log"
 	"google.golang.org/protobuf/proto"
 	"time"
 )
@@ -27,5 +28,6 @@ func GetCurrentSpendingByCard(userId, cardId int64) (*pb.CurrentSpending, error)
 			TransactionCount: proto.Int64(0),
 		}, nil
 	}
+	log.Info(cardDetails)
 	return cardDetails, nil
 }

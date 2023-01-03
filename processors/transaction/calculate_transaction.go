@@ -232,31 +232,36 @@ func isEligibleBonusCategory(t pb.CurrencyType, c *pb.CardDb, cat int64) bool {
 		}
 	}
 
-	log.Info("isEligibleBonusCategory: false")
-	return false
+	log.Info("isEligibleBonusCategory: true")
+	return true
 }
 
 func isEligibleBonusPaymentType(t pb.CurrencyType, c *pb.CardDb, paymentType int64) bool {
 	var bonusWhitelistPaymentTypes pb.Lists
-	//TODO blacklist payment types
-	var bonusBlacklistCategories pb.Lists
+	var bonusBlacklistPaymentTypes pb.Lists
 
 	switch t {
 	case pb.CurrencyType_FCY:
-		if err := proto.Unmarshal(c.GetFcyBonusPaymentTypes(), &bonusWhitelistPaymentTypes); err != nil {
+		if err := proto.Unmarshal(c.GetFcyBonusWhitelistPaymentTypes(), &bonusWhitelistPaymentTypes); err != nil {
+			log.Error(err)
+		}
+		if err := proto.Unmarshal(c.GetFcyBonusBlacklistPaymentTypes(), &bonusBlacklistPaymentTypes); err != nil {
 			log.Error(err)
 		}
 		break
 	case pb.CurrencyType_LOCAL:
 		fallthrough
 	default:
-		if err := proto.Unmarshal(c.GetLocalBonusPaymentTypes(), &bonusWhitelistPaymentTypes); err != nil {
+		if err := proto.Unmarshal(c.GetLocalBonusWhitelistPaymentTypes(), &bonusWhitelistPaymentTypes); err != nil {
+			log.Error(err)
+		}
+		if err := proto.Unmarshal(c.GetLocalBonusBlacklistPaymentTypes(), &bonusBlacklistPaymentTypes); err != nil {
 			log.Error(err)
 		}
 		break
 	}
 
-	ineligiblePaymentTypes := bonusBlacklistCategories.GetList()
+	ineligiblePaymentTypes := bonusBlacklistPaymentTypes.GetList()
 	log.Info(ineligiblePaymentTypes)
 	for _, ineligiblePaymentType := range ineligiblePaymentTypes {
 		if ineligiblePaymentType == paymentType {
@@ -274,8 +279,8 @@ func isEligibleBonusPaymentType(t pb.CurrencyType, c *pb.CardDb, paymentType int
 		}
 	}
 
-	log.Info("isEligibleBonusPaymentType: false")
-	return false
+	log.Info("isEligibleBonusPaymentType: true")
+	return true
 }
 
 func calculateBaseLocal(t *pb.Transaction, c *pb.CardDb) *pb.CalculatedTransaction {
@@ -303,6 +308,7 @@ func calculateBaseLocal(t *pb.Transaction, c *pb.CardDb) *pb.CalculatedTransacti
 	log.Info(baseMiles, baseReward)
 
 	return &pb.CalculatedTransaction{
+		ActualAmount:       proto.Float64(amount),
 		BaseMilesEarned:    proto.Float64(math.Round(baseMiles*100) / 100),
 		BonusMilesEarned:   proto.Float64(0),
 		BaseRewardsEarned:  proto.Float64(baseReward),
@@ -346,6 +352,7 @@ func calculateBonusLocal(t *pb.Transaction, c *pb.CardDb, current *pb.CurrentSpe
 	miles = bonusReward * c.GetLocalBaseMiles() * c.GetAmountBlock()
 
 	return &pb.CalculatedTransaction{
+		ActualAmount:           proto.Float64(amount),
 		BaseMilesEarned:        proto.Float64(math.Round(base.GetBaseMilesEarned()*100) / 100),
 		BonusMilesEarned:       proto.Float64(math.Round(miles*100) / 100),
 		BaseRewardsEarned:      proto.Float64(baseReward),
@@ -380,6 +387,7 @@ func calculateBaseFCY(t *pb.Transaction, c *pb.CardDb) *pb.CalculatedTransaction
 	baseMiles = baseReward * c.GetFcyBaseMiles()
 
 	return &pb.CalculatedTransaction{
+		ActualAmount:       proto.Float64(convertedAmount),
 		BaseMilesEarned:    proto.Float64(baseMiles),
 		BonusMilesEarned:   nil,
 		BaseRewardsEarned:  proto.Float64(baseReward),
@@ -390,6 +398,7 @@ func calculateBaseFCY(t *pb.Transaction, c *pb.CardDb) *pb.CalculatedTransaction
 func calculateBonusFCY(t *pb.Transaction, c *pb.CardDb, current *pb.CurrentSpending) *pb.CalculatedTransaction {
 	base := calculateBaseFCY(t, c)
 	return &pb.CalculatedTransaction{
+		ActualAmount:           proto.Float64(base.GetActualAmount()),
 		BaseMilesEarned:        proto.Float64(math.Round(base.GetBaseMilesEarned()*100) / 100),
 		BonusMilesEarned:       nil,
 		BaseRewardsEarned:      proto.Float64(base.GetBaseRewardsEarned()),

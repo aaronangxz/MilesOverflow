@@ -63,15 +63,43 @@ func getCalculateTransactionResponse(trx *pb.CalculatedTransaction) pb.Calculate
 	}
 }
 
-func GetAddTransactionResponseJSON(c echo.Context) error {
-	return c.JSON(http.StatusOK, getAddTransactionResponse())
+func AddTransactionResponseJSON(c echo.Context) error {
+	return c.JSON(http.StatusOK, addTransactionResponse())
 }
 
-func getAddTransactionResponse() pb.AddTransactionResponse {
+func addTransactionResponse() pb.AddTransactionResponse {
 	return pb.AddTransactionResponse{
 		ResponseMeta: &pb.ResponseMeta{
 			ErrorCode:    proto.Int64(int64(pb.AddTransactionRequest_ERROR_SUCCESS)),
 			ErrorMessage: proto.String("successfully added transaction."),
 		},
+	}
+}
+
+func GetUserTransactionsResponseJSON(c echo.Context, trx []*pb.TransactionBasic) error {
+	return c.JSON(http.StatusOK, getUserTransactionsResponse(trx))
+}
+
+func getUserTransactionsResponse(trx []*pb.TransactionBasic) pb.GetUserTransactionsResponse {
+	return pb.GetUserTransactionsResponse{
+		ResponseMeta: &pb.ResponseMeta{
+			ErrorCode:    proto.Int64(int64(pb.GetUserTransactionsRequest_ERROR_SUCCESS)),
+			ErrorMessage: proto.String("successfully retrieved transactions."),
+		},
+		TransactionList: trx,
+	}
+}
+
+func GetUserTransactionByTrxIdResponseJSON(c echo.Context, trx *pb.TransactionDb) error {
+	return c.JSON(http.StatusOK, getUserTransactionByTrxIdResponse(trx))
+}
+
+func getUserTransactionByTrxIdResponse(trx *pb.TransactionDb) pb.GetUserTransactionByTrxIdResponse {
+	return pb.GetUserTransactionByTrxIdResponse{
+		ResponseMeta: &pb.ResponseMeta{
+			ErrorCode:    proto.Int64(int64(pb.GetUserTransactionByTrxIdRequest_ERROR_SUCCESS)),
+			ErrorMessage: proto.String("successfully retrieved transaction."),
+		},
+		TransactionDetails: trx,
 	}
 }

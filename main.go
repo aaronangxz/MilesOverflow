@@ -7,7 +7,6 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
-	"net/http"
 )
 
 func main() {
@@ -18,17 +17,22 @@ func main() {
 	orm.ConnectMySQL()
 	e := echo.New()
 
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
-	})
-	e.POST("add_card", card.AddCard)
-	e.POST("pair_user_card", card.PairUserCard)
-	//unpair_user_card
-	e.POST("get_user_cards", card.GetUserCards)
-	e.POST("calculate_transaction", transaction.CalculateTransaction)
-	e.POST("add_transaction", transaction.AddTransaction)
-	//get_all_transactions
-	//get_all_transactions_by_card
+	//Admin
+	e.POST("card/add", card.AddCard)
+	//card/delete/:id - DeleteCard
+	//card/update/:id - UpdateCard
+
+	//FE
+	e.POST("transaction/calculate", transaction.CalculateTransaction)
+	e.POST("transaction/add", transaction.AddTransaction)
+
+	e.POST("user/card/pair", card.PairUserCard)
+	//user/card/unpair - UnpairUserCard
+	e.POST("user/card", card.GetUserCards)
+	//user/card/:id - GetUserCardByCardId
+
+	e.POST("user/transaction", transaction.GetUserTransactions)
+	e.POST("user/transaction/:id", transaction.GetUserTransactionByTrxId)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

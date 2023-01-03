@@ -17,6 +17,13 @@ func Sql4() string {
 }
 
 func Sql5() string {
-	return "SELECT SUM(amount_converted) AS total_spending, COUNT(*) FROM milestracker_db.expense_table " +
-		"WHERE user_id = ? AND card_id = ? AND transaction_timestamp >= ? AND transaction_timestamp <= ? AND is_cancel = 0"
+	return "SELECT SUM(amount_converted) AS total_spending, COUNT(*) FROM milestracker_db.expense_table WHERE user_id = ? AND card_id = ? AND transaction_timestamp >= ? AND transaction_timestamp <= ? AND is_cancel = 0"
+}
+
+func Sql6() string {
+	return "SELECT * FROM milestracker_db.expense_table WHERE user_id = ? AND is_cancel = 0 AND transaction_timestamp >= ? AND transaction_timestamp <= ? ORDER BY transaction_timestamp DESC"
+}
+
+func Sql7() string {
+	return "SELECT * FROM milestracker_db.expense_table WHERE user_id = ? AND trx_id = ?"
 }

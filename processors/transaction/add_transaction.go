@@ -36,7 +36,7 @@ func AddTransaction(c echo.Context) error {
 		if addErr := add(req, trx); addErr != nil {
 			return resp.JSONResp(c, int64(pb.AddTransactionRequest_ERROR_FAILED), addErr.Error())
 		}
-		return resp.GetAddTransactionResponseJSON(c)
+		return resp.AddTransactionResponseJSON(c)
 	}
 }
 
@@ -95,7 +95,10 @@ func verifyAddTransactionFields(req *pb.AddTransactionRequest) error {
 }
 
 func add(req *pb.AddTransactionRequest, t *pb.CalculatedTransaction) error {
-	//TODO currency conversion
+	ts := req.GetTransactionDetails().GetTime()
+	if ts == 0 {
+		ts = time.Now().Unix()
+	}
 	expense := pb.TransactionDb{
 		UserId:                 req.UserId,
 		Description:            req.TransactionDetails.Description,
@@ -104,7 +107,7 @@ func add(req *pb.AddTransactionRequest, t *pb.CalculatedTransaction) error {
 		Amount:                 req.TransactionDetails.Amount,
 		AmountConverted:        proto.Int64(int64(t.GetActualAmount() * float64(100))),
 		Currency:               req.TransactionDetails.Currency,
-		TransactionTimestamp:   req.TransactionDetails.Time,
+		TransactionTimestamp:   proto.Int64(ts),
 		CreateTimestamp:        proto.Int64(time.Now().Unix()),
 		UpdateTimestamp:        proto.Int64(time.Now().Unix()),
 		CardId:                 req.TransactionDetails.CardId,

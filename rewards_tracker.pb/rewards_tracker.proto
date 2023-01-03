@@ -201,26 +201,27 @@ message UserCard{
 }
 
 message TransactionDb{
-  optional int64 user_id = 1;
-  optional string description = 2;
-  optional int64 category = 3;
-  optional int64 payment_type = 4;
-  optional int64 amount = 5;
-  optional int64 amount_converted = 6;
-  optional string currency = 7;
-  optional int64 transaction_timestamp = 8;
-  optional int64 create_timestamp = 9;
-  optional int64 update_timestamp = 10;
-  optional int64 card_id = 11;
-  optional int64 is_cancel = 12;
-  optional int64 base_miles_earned = 13;
-  optional int64 bonus_miles_earned = 14;
-  optional int64 base_rewards_earned = 15;
-  optional int64 bonus_rewards_earned = 16;
-  optional int64 is_promotion = 17;
-  optional int64 promotion_id = 18;
-  optional int64 promotion_miles_earned = 19;
-  optional int64 promotion_rewards_earned = 20;
+  optional int64 trx_id = 1;
+  optional int64 user_id = 2;
+  optional string description = 3;
+  optional int64 category = 4;
+  optional int64 payment_type = 5;
+  optional int64 amount = 6;
+  optional int64 amount_converted = 7;
+  optional string currency = 8;
+  optional int64 transaction_timestamp = 9;
+  optional int64 create_timestamp = 10;
+  optional int64 update_timestamp = 11;
+  optional int64 card_id = 12;
+  optional int64 is_cancel = 13;
+  optional int64 base_miles_earned = 14;
+  optional int64 bonus_miles_earned = 15;
+  optional int64 base_rewards_earned = 16;
+  optional int64 bonus_rewards_earned = 17;
+  optional int64 is_promotion = 18;
+  optional int64 promotion_id = 20;
+  optional int64 promotion_miles_earned = 21;
+  optional int64 promotion_rewards_earned = 22;
 }
 
 message Transaction{
@@ -231,6 +232,17 @@ message Transaction{
   optional string currency = 5;
   optional int64 time = 6;
   optional int64 card_id = 7;
+}
+
+message TransactionBasic{
+  optional int64 trx_id = 1;
+  optional string description = 2;
+  optional int64 category = 3;
+  optional int64 amount = 4;
+  optional string currency = 5;
+  optional int64 transaction_timestamp = 6;
+  optional int64 card_id = 7;
+  optional double total_miles_earned = 8;
 }
 
 message CurrentSpending{
@@ -342,4 +354,33 @@ message AddCardRequest{
 message AddCardResponse{
   optional ResponseMeta response_meta = 1;
   optional int64 card_id = 2;
+}
+
+message GetUserTransactionsRequest{
+  enum ErrorCode{
+    ERROR_SUCCESS = 0;
+    ERROR_FAILED = 1;
+  }
+  optional RequestMeta request_meta = 1;
+  optional int64 user_id = 2;
+}
+
+message GetUserTransactionsResponse{
+  optional ResponseMeta response_meta = 1;
+  repeated TransactionBasic transaction_list = 2;
+}
+
+message GetUserTransactionByTrxIdRequest{
+  enum ErrorCode{
+    ERROR_SUCCESS = 0;
+    ERROR_FAILED = 1;
+    ERROR_TRX_NOT_FOUND = 2;
+  }
+  optional RequestMeta request_meta = 1;
+  optional int64 user_id = 2;
+}
+
+message GetUserTransactionByTrxIdResponse{
+  optional ResponseMeta response_meta = 1;
+  optional TransactionDb transaction_details = 2;
 }

@@ -23,9 +23,12 @@ func main() {
 	})
 	e.POST("add_card", card.AddCard)
 	e.POST("pair_user_card", card.PairUserCard)
+	//unpair_user_card
 	e.POST("get_user_cards", card.GetUserCards)
 	e.POST("calculate_transaction", transaction.CalculateTransaction)
 	e.POST("add_transaction", transaction.AddTransaction)
+	//get_all_transactions
+	//get_all_transactions_by_card
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

@@ -10,7 +10,7 @@ func GetCardDetails(cardId int64) (*pb.CardDb, error) {
 		cardDetails *pb.CardDb
 	)
 
-	if err := orm.DbInstance().Raw("SELECT * FROM milestracker_db.card_table WHERE card_id = ?", cardId).Scan(&cardDetails).Error; err != nil {
+	if err := orm.DbInstance().Raw(orm.Sql2(), cardId).Scan(&cardDetails).Error; err != nil {
 		return nil, err
 	}
 

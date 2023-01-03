@@ -17,8 +17,7 @@ func GetCurrentSpendingByCard(userId, cardId int64) (*pb.CurrentSpending, error)
 	start, end := utils.MonthStartEndDate(time.Now().Unix())
 
 	if err := orm.DbInstance().
-		Raw("SELECT SUM(amount_converted) AS total_spending, COUNT(*) FROM milestracker_db.expense_table "+
-			"WHERE user_id = ? AND card_id = ? AND transaction_timestamp >= ? AND transaction_timestamp <= ? AND is_cancel = 0", userId, cardId, start, end).Scan(&cardDetails).Error; err != nil {
+		Raw(orm.Sql5(), userId, cardId, start, end).Scan(&cardDetails).Error; err != nil {
 		return nil, err
 	}
 

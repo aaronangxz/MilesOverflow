@@ -122,7 +122,7 @@ func createCard(c *pb.Card) (int64, error) {
 		return -1, err
 	}
 
-	if err := orm.DbInstance().Raw("SELECT * FROM milestracker_db.card_table WHERE card_name = ?", c.GetCardName()).Scan(&cDb).Error; err != nil {
+	if err := orm.DbInstance().Raw(orm.Sql1(), c.GetCardName()).Scan(&cDb).Error; err != nil {
 		return -1, err
 	}
 	return cDb.GetCardId(), nil

@@ -11,7 +11,7 @@ func VerifyUser(userId int64) error {
 		hold *pb.User
 	)
 
-	if err := orm.DbInstance().Raw("SELECT * FROM milestracker_db.user_table WHERE user_id = ?", userId).Scan(&hold).Error; err != nil {
+	if err := orm.DbInstance().Raw(orm.Sql3(), userId).Scan(&hold).Error; err != nil {
 		return err
 	}
 
@@ -27,7 +27,7 @@ func VerifyUserCard(userId int64, cardId int64) error {
 		hold *pb.UserCard
 	)
 
-	if err := orm.DbInstance().Raw("SELECT * FROM milestracker_db.user_card_table WHERE user_id = ? AND card_id = ?", userId, cardId).Scan(&hold).Error; err != nil {
+	if err := orm.DbInstance().Raw(orm.Sql4(), userId, cardId).Scan(&hold).Error; err != nil {
 		return err
 	}
 

@@ -292,7 +292,7 @@ message PairUserCardRequest{
   optional int64 user_id = 2;
   optional int64 card_id = 3;
   optional string card_nickname = 4;
-  optional int64 card_expiry = 5;
+  optional string card_expiry = 5;
 }
 
 message PairUserCardResponse{

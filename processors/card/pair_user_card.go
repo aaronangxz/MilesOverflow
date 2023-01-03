@@ -6,6 +6,7 @@ import (
 	"github.com/aaronangxz/RewardTracker/processors/user"
 	"github.com/aaronangxz/RewardTracker/resp"
 	pb "github.com/aaronangxz/RewardTracker/rewards_tracker.pb/rewards_tracker"
+	"github.com/aaronangxz/RewardTracker/utils"
 	"github.com/labstack/echo/v4"
 	"google.golang.org/protobuf/proto"
 	"time"
@@ -52,10 +53,6 @@ func verifyPairUserCardFields(req *pb.PairUserCardRequest) error {
 		return errors.New("card nickname must not exceed 50 characters")
 	}
 
-	if req.CardExpiry != nil && req.GetCardExpiry() < 0 {
-		return errors.New("card expiry cannot be negative")
-	}
-
 	return nil
 }
 
@@ -64,12 +61,18 @@ func pairCard(c *pb.PairUserCardRequest) ([]*pb.UserCard, error) {
 		hold []*pb.UserCard
 	)
 
+	timeStamp, err := time.Parse("1/2006", c.GetCardExpiry())
+	if err != nil {
+		return nil, err
+	}
+	_, end := utils.MonthStartEndDate(timeStamp.Unix())
+
 	userCard := &pb.UserCard{
 		UserId:           c.UserId,
 		CardId:           c.CardId,
 		CardNickname:     c.CardNickname,
 		CardStatus:       proto.Int64(int64(pb.UserCard_CARD_ACTIVE)),
-		CardExpiry:       c.CardExpiry,
+		CardExpiry:       proto.Int64(end),
 		AddedTimestamp:   proto.Int64(time.Now().Unix()),
 		UpdatedTimestamp: proto.Int64(time.Now().Unix()),
 	}
@@ -82,7 +85,7 @@ func pairCard(c *pb.PairUserCardRequest) ([]*pb.UserCard, error) {
 		return nil, err
 	}
 
-	if err := orm.DbInstance().Raw("SELECT * FROM milestracker_db.user_card_table WHERE user_id = ?", c.GetUserId()).Scan(&hold).Error; err != nil {
+	if err := orm.DbInstance().Raw("SELECT * FROM milestracker_db.user_card_table WHERE user_id = ? ORDER BY added_timestamp DESC", c.GetUserId()).Scan(&hold).Error; err != nil {
 		return nil, err
 	}
 
@@ -94,7 +97,7 @@ func checkPairedCards(c *pb.UserCard) error {
 		hold []*pb.UserCard
 	)
 
-	if err := orm.DbInstance().Raw("SELECT * FROM milestracker_db.user_card_table WHERE user_id = ? AND card_id = ? AND card_nickname = ?", c.GetUserId(), c.GetCardId(), c.GetCardNickname()).Scan(&hold).Error; err != nil {
+	if err := orm.DbInstance().Raw("SELECT * FROM milestracker_db.user_card_table WHERE user_id = ? AND card_id = ? AND card_nickname = ? AND card_expiry = ?", c.GetUserId(), c.GetCardId(), c.GetCardNickname(), c.GetCardExpiry()).Scan(&hold).Error; err != nil {
 		return err
 	}
 

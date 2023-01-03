@@ -11,7 +11,7 @@ func isCardNameExists(cardName string) (bool, error) {
 		hold []pb.CardDb
 	)
 
-	if err := orm.DbInstance().Raw("SELECT * FROM milestracker_db.card_table WHERE card_name = ?", cardName).Scan(&hold).Error; err != nil {
+	if err := orm.DbInstance().Raw(orm.Sql1(), cardName).Scan(&hold).Error; err != nil {
 		return false, err
 	}
 
@@ -27,7 +27,7 @@ func isCardIdExists(cardId int64) (bool, error) {
 		hold *pb.CardDb
 	)
 
-	if err := orm.DbInstance().Raw("SELECT * FROM milestracker_db.card_table WHERE card_id = ?", cardId).Scan(&hold).Error; err != nil {
+	if err := orm.DbInstance().Raw(orm.Sql2(), cardId).Scan(&hold).Error; err != nil {
 		return false, err
 	}
 

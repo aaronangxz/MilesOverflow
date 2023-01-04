@@ -83,12 +83,12 @@ func verifyAddTransactionFields(req *pb.AddTransactionRequest) error {
 		return errors.New("time is required")
 	}
 
-	if trx.CardId == nil {
-		return errors.New("card_id is required")
+	if trx.UserCardId == nil {
+		return errors.New("user_card_id is required")
 	}
 
-	if trx.GetCardId() < 0 {
-		return errors.New("invalid card_id")
+	if trx.GetUserCardId() < 0 {
+		return errors.New("invalid user_card_id")
 	}
 
 	return nil
@@ -110,7 +110,7 @@ func add(req *pb.AddTransactionRequest, t *pb.CalculatedTransaction) error {
 		TransactionTimestamp:   proto.Int64(ts),
 		CreateTimestamp:        proto.Int64(time.Now().Unix()),
 		UpdateTimestamp:        proto.Int64(time.Now().Unix()),
-		CardId:                 req.TransactionDetails.CardId,
+		UserCardId:             req.TransactionDetails.UserCardId,
 		IsCancel:               proto.Int64(0),
 		BaseMilesEarned:        proto.Int64(int64(t.GetBaseMilesEarned() * float64(100))),
 		BonusMilesEarned:       proto.Int64(int64(t.GetBonusMilesEarned() * float64(100))),

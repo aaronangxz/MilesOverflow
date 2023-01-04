@@ -76,11 +76,11 @@ func addTransactionResponse() pb.AddTransactionResponse {
 	}
 }
 
-func GetUserTransactionsResponseJSON(c echo.Context, trx []*pb.TransactionBasic) error {
+func GetUserTransactionsResponseJSON(c echo.Context, trx []*pb.TransactionBasicWithCardInfo) error {
 	return c.JSON(http.StatusOK, getUserTransactionsResponse(trx))
 }
 
-func getUserTransactionsResponse(trx []*pb.TransactionBasic) pb.GetUserTransactionsResponse {
+func getUserTransactionsResponse(trx []*pb.TransactionBasicWithCardInfo) pb.GetUserTransactionsResponse {
 	return pb.GetUserTransactionsResponse{
 		ResponseMeta: &pb.ResponseMeta{
 			ErrorCode:    proto.Int64(int64(pb.GetUserTransactionsRequest_ERROR_SUCCESS)),
@@ -90,16 +90,31 @@ func getUserTransactionsResponse(trx []*pb.TransactionBasic) pb.GetUserTransacti
 	}
 }
 
-func GetUserTransactionByTrxIdResponseJSON(c echo.Context, trx *pb.TransactionDb) error {
+func GetUserTransactionByTrxIdResponseJSON(c echo.Context, trx *pb.TransactionDbWithCardInfo) error {
 	return c.JSON(http.StatusOK, getUserTransactionByTrxIdResponse(trx))
 }
 
-func getUserTransactionByTrxIdResponse(trx *pb.TransactionDb) pb.GetUserTransactionByTrxIdResponse {
+func getUserTransactionByTrxIdResponse(trx *pb.TransactionDbWithCardInfo) pb.GetUserTransactionByTrxIdResponse {
 	return pb.GetUserTransactionByTrxIdResponse{
 		ResponseMeta: &pb.ResponseMeta{
 			ErrorCode:    proto.Int64(int64(pb.GetUserTransactionByTrxIdRequest_ERROR_SUCCESS)),
 			ErrorMessage: proto.String("successfully retrieved transaction."),
 		},
-		TransactionDetails: trx,
+		TransactionInfo: trx,
+	}
+}
+
+func GetUserCardByCardIdResponseJSON(c echo.Context, cardInfo *pb.UserCardWithInfo, trx []*pb.TransactionBasic) error {
+	return c.JSON(http.StatusOK, getUserCardByCardIdResponse(cardInfo, trx))
+}
+
+func getUserCardByCardIdResponse(cardInfo *pb.UserCardWithInfo, trx []*pb.TransactionBasic) pb.GetUserCardByUserCardIdResponse {
+	return pb.GetUserCardByUserCardIdResponse{
+		ResponseMeta: &pb.ResponseMeta{
+			ErrorCode:    proto.Int64(int64(pb.GetUserTransactionByTrxIdRequest_ERROR_SUCCESS)),
+			ErrorMessage: proto.String("successfully retrieved user card."),
+		},
+		UserCardInfo: cardInfo,
+		Transactions: trx,
 	}
 }

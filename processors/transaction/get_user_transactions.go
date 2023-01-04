@@ -39,9 +39,9 @@ func verifyGetUserTransactionsFields(req *pb.GetUserTransactionsRequest) error {
 	return nil
 }
 
-func getUserTrx(req *pb.GetUserTransactionsRequest) ([]*pb.TransactionBasic, error) {
+func getUserTrx(req *pb.GetUserTransactionsRequest) ([]*pb.TransactionBasicWithCardInfo, error) {
 	var (
-		trx []*pb.TransactionBasic
+		trx []*pb.TransactionBasicWithCardInfoDb
 	)
 
 	start, end := utils.MonthStartEndDate(time.Now().Unix())
@@ -49,5 +49,27 @@ func getUserTrx(req *pb.GetUserTransactionsRequest) ([]*pb.TransactionBasic, err
 		return nil, err
 	}
 
-	return trx, nil
+	var trxWithInfo []*pb.TransactionBasicWithCardInfo
+
+	for i, t := range trx {
+		trxWithInfo = append(trxWithInfo, new(pb.TransactionBasicWithCardInfo))
+		trxWithInfo[i].Transaction = &pb.TransactionBasic{
+			TrxId:                t.TrxId,
+			Description:          t.Description,
+			Category:             t.Category,
+			Amount:               t.Amount,
+			Currency:             t.Currency,
+			TransactionTimestamp: t.TransactionTimestamp,
+			UserCardId:           t.UserCardId,
+			TotalMilesEarned:     t.TotalMilesEarned,
+		}
+		trxWithInfo[i].CardInfo = &pb.CardBasicInfo{
+			CardName:      t.CardName,
+			ShortCardName: t.ShortCardName,
+			CardType:      t.CardType,
+			CardImage:     t.CardImage,
+			CardIssuer:    t.CardIssuer,
+		}
+	}
+	return trxWithInfo, nil
 }

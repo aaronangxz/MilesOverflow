@@ -29,8 +29,9 @@ func main() {
 	e.POST("user/card/pair", card.PairUserCard)
 	//user/card/unpair - UnpairUserCard
 	e.POST("user/card", card.GetUserCards)
-	//user/card/:id - GetUserCardByCardId
+	e.POST("user/card/:id", card.GetUserCardByUserCardId)
 
+	//WIP return card info
 	e.POST("user/transaction", transaction.GetUserTransactions)
 	e.POST("user/transaction/:id", transaction.GetUserTransactionByTrxId)
 	//user/transaction/delete/:id

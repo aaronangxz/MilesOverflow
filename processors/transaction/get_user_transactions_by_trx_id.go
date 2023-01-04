@@ -42,17 +42,52 @@ func verifyGetUserTransactionByTrxIdFields(req *pb.GetUserTransactionByTrxIdRequ
 	return nil
 }
 
-func getUserTrxById(req *pb.GetUserTransactionByTrxIdRequest, trxId string) (*pb.TransactionDb, error) {
+func getUserTrxById(req *pb.GetUserTransactionByTrxIdRequest, trxId string) (*pb.TransactionDbWithCardInfo, error) {
 	var (
-		trx *pb.TransactionDb
+		trxWithInfoDb *pb.TransactionDbWithCardInfoDb
 	)
 
-	if err := orm.DbInstance().Raw(orm.Sql7(), req.GetUserId(), trxId).Scan(&trx).Error; err != nil {
+	if err := orm.DbInstance().Raw(orm.Sql7(), req.GetUserId(), trxId).Scan(&trxWithInfoDb).Error; err != nil {
 		return nil, err
 	}
 
-	if trx == nil {
+	if trxWithInfoDb == nil {
 		return nil, errors.New("transaction not found")
 	}
-	return trx, nil
+
+	trxWithInfo := new(pb.TransactionDbWithCardInfo)
+	trxWithInfo.Transaction = new(pb.TransactionDb)
+	trxWithInfo.CardInfo = new(pb.CardBasicInfo)
+
+	trxWithInfo.Transaction = &pb.TransactionDb{
+		TrxId:                  trxWithInfoDb.TrxId,
+		UserId:                 trxWithInfoDb.UserId,
+		Description:            trxWithInfoDb.Description,
+		Category:               trxWithInfoDb.Category,
+		PaymentType:            trxWithInfoDb.PaymentType,
+		Amount:                 trxWithInfoDb.Amount,
+		AmountConverted:        trxWithInfoDb.AmountConverted,
+		Currency:               trxWithInfoDb.Currency,
+		TransactionTimestamp:   trxWithInfoDb.TransactionTimestamp,
+		CreateTimestamp:        trxWithInfoDb.CreateTimestamp,
+		UpdateTimestamp:        trxWithInfoDb.UpdateTimestamp,
+		UserCardId:             trxWithInfoDb.UserCardId,
+		IsCancel:               trxWithInfoDb.IsCancel,
+		BaseMilesEarned:        trxWithInfoDb.BaseMilesEarned,
+		BonusMilesEarned:       trxWithInfoDb.BonusMilesEarned,
+		BaseRewardsEarned:      trxWithInfoDb.BaseRewardsEarned,
+		BonusRewardsEarned:     trxWithInfoDb.BonusRewardsEarned,
+		IsPromotion:            trxWithInfoDb.IsPromotion,
+		PromotionId:            trxWithInfoDb.PromotionId,
+		PromotionMilesEarned:   trxWithInfoDb.PromotionMilesEarned,
+		PromotionRewardsEarned: trxWithInfoDb.PromotionRewardsEarned,
+	}
+	trxWithInfo.CardInfo = &pb.CardBasicInfo{
+		CardName:      trxWithInfoDb.CardName,
+		ShortCardName: trxWithInfoDb.ShortCardName,
+		CardType:      trxWithInfoDb.CardType,
+		CardImage:     trxWithInfoDb.CardImage,
+		CardIssuer:    trxWithInfoDb.CardIssuer,
+	}
+	return trxWithInfo, nil
 }

@@ -27,7 +27,7 @@ func CalculateTransaction(c echo.Context) error {
 		return resp.JSONResp(c, int64(pb.User_ERROR_USER_NOT_EXISTS), err.Error())
 	}
 
-	if err := user.VerifyUserCard(req.GetUserId(), req.GetTransactionDetails().GetCardId()); err != nil {
+	if err := user.VerifyUserCard(req.GetUserId(), req.GetTransactionDetails().GetUserCardId()); err != nil {
 		return resp.JSONResp(c, int64(pb.User_ERROR_USER_CARD_PAIRING_NOT_EXISTS), err.Error())
 	}
 
@@ -81,12 +81,12 @@ func verifyCalculateTransactionFields(req *pb.CalculateTransactionRequest) error
 		return errors.New("time is required")
 	}
 
-	if trx.CardId == nil {
-		return errors.New("card_id is required")
+	if trx.UserCardId == nil {
+		return errors.New("user_card_id is required")
 	}
 
-	if trx.GetCardId() < 0 {
-		return errors.New("invalid card_id")
+	if trx.GetUserCardId() < 0 {
+		return errors.New("invalid user_card_id")
 	}
 
 	return nil
@@ -94,18 +94,23 @@ func verifyCalculateTransactionFields(req *pb.CalculateTransactionRequest) error
 
 func calculate(c *pb.CalculateTransactionRequest) (*pb.CalculatedTransaction, error) {
 	var (
+		cardId      int64
 		spending    *pb.CurrentSpending
 		cardDetails *pb.CardDb
 		err         error
 	)
 
-	if spending, err = user.GetCurrentSpendingByCard(c.GetUserId(), c.GetTransactionDetails().GetCardId()); err != nil {
+	if cardId, err = card.GetCardIdByUserCardId(c.GetTransactionDetails().GetUserCardId()); err != nil {
+		return nil, err
+	}
+
+	if spending, err = user.GetCurrentSpendingByCard(c.GetUserId(), cardId); err != nil {
 		return nil, err
 	}
 
 	log.Infof("GetCurrentSpendingByCard: %v", spending.GetTotalSpending())
 
-	if cardDetails, err = card.GetCardDetails(c.GetTransactionDetails().GetCardId()); err != nil {
+	if cardDetails, err = card.GetCardDetails(cardId); err != nil {
 		return nil, err
 	}
 

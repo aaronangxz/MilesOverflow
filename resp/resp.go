@@ -21,25 +21,25 @@ func addCardResponse(id int64) pb.AddCardResponse {
 	}
 }
 
-func PairUserCardResponseJSON(c echo.Context, cards []*pb.UserCard) error {
-	return c.JSON(http.StatusOK, pairUserCardResponse(cards))
+func PairUserCardResponseJSON(c echo.Context, card *pb.UserCardWithInfo) error {
+	return c.JSON(http.StatusOK, pairUserCardResponse(card))
 }
 
-func pairUserCardResponse(cards []*pb.UserCard) pb.PairUserCardResponse {
+func pairUserCardResponse(card *pb.UserCardWithInfo) pb.PairUserCardResponse {
 	return pb.PairUserCardResponse{
 		ResponseMeta: &pb.ResponseMeta{
 			ErrorCode:    proto.Int64(int64(pb.PairUserCardRequest_ERROR_SUCCESS)),
 			ErrorMessage: proto.String("successfully paired card."),
 		},
-		UserCardsList: cards,
+		UserCardWithInfo: card,
 	}
 }
 
-func GetUserCardsResponseJSON(c echo.Context, cards []*pb.UserCard) error {
+func GetUserCardsResponseJSON(c echo.Context, cards []*pb.UserCardWithInfo) error {
 	return c.JSON(http.StatusOK, getUserCardsResponse(cards))
 }
 
-func getUserCardsResponse(cards []*pb.UserCard) pb.GetUserCardsResponse {
+func getUserCardsResponse(cards []*pb.UserCardWithInfo) pb.GetUserCardsResponse {
 	return pb.GetUserCardsResponse{
 		ResponseMeta: &pb.ResponseMeta{
 			ErrorCode:    proto.Int64(int64(pb.GetUserCardsRequest_ERROR_SUCCESS)),

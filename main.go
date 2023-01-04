@@ -33,6 +33,7 @@ func main() {
 
 	e.POST("user/transaction", transaction.GetUserTransactions)
 	e.POST("user/transaction/:id", transaction.GetUserTransactionByTrxId)
+	//user/transaction/delete/:id
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

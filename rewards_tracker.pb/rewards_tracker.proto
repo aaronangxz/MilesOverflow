@@ -155,6 +155,15 @@ message Card{
   optional double cap = 23;
 }
 
+message CardBasicInfo{
+  optional int64 card_id = 1;
+  optional string card_name = 2;
+  optional string short_card_name= 3;
+  optional int64 card_type = 4;
+  optional string card_image = 5;
+  optional string card_issuer = 6;
+}
+
 message CardPromotionEligibleCards{
   optional Lists eligible_cards = 1;
   optional Lists ineligible_cards = 2;
@@ -191,13 +200,35 @@ message UserCard{
     CARD_INACTIVE = 1;
     CARD_UNKNOWN = 3;
   }
-  optional int64 user_id = 1;
-  optional int64 card_id = 2;
-  optional string card_nickname = 3;
-  optional int64 card_status = 4;
-  optional int64 card_expiry = 5;
-  optional int64 added_timestamp = 6;
-  optional int64 updated_timestamp = 7;
+  optional int64 id = 1;
+  optional int64 user_id = 2;
+  optional int64 card_id = 3;
+  optional string card_nickname = 4;
+  optional int64 card_status = 5;
+  optional int64 card_expiry = 6;
+  optional int64 added_timestamp = 7;
+  optional int64 updated_timestamp = 8;
+}
+
+message UserCardWithInfo{
+  optional UserCard user_card = 1;
+  optional CardBasicInfo card_info = 9;
+}
+
+message UserCardWithInfoDb{
+  optional int64 id = 1;
+  optional int64 user_id = 2;
+  optional int64 card_id = 3;
+  optional string card_nickname = 4;
+  optional int64 card_status = 5;
+  optional int64 card_expiry = 6;
+  optional int64 added_timestamp = 7;
+  optional int64 updated_timestamp = 8;
+  optional string card_name = 9;
+  optional string short_card_name= 10;
+  optional int64 card_type = 11;
+  optional string card_image = 12;
+  optional string card_issuer = 13;
 }
 
 message TransactionDb{
@@ -309,7 +340,7 @@ message PairUserCardRequest{
 
 message PairUserCardResponse{
   optional ResponseMeta response_meta = 1;
-  repeated UserCard user_cards_list = 2;
+  optional UserCardWithInfo user_card_with_info = 2;
 }
 
 message GetUserCardsFilter{
@@ -338,7 +369,7 @@ message GetUserCardsRequest{
 
 message GetUserCardsResponse{
   optional ResponseMeta response_meta = 1;
-  repeated UserCard user_cards_list = 2;
+  repeated UserCardWithInfo user_cards_list = 2;
 }
 
 message AddCardRequest{

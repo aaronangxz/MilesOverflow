@@ -56,17 +56,16 @@ func verifyGetUserCardFields(req *pb.GetUserCardsRequest) error {
 	return nil
 }
 
-func getCards(c *pb.GetUserCardsRequest) ([]*pb.UserCard, error) {
+func getCards(c *pb.GetUserCardsRequest) ([]*pb.UserCardWithInfo, error) {
 	var (
-		cards                 []*pb.UserCard
+		hold                  []*pb.UserCardWithInfoDb
 		cardStatusFilterQuery string
 		cardExpiryFilterQuery string
 		orderByDirection      string
 		orderByQuery          string
 	)
 
-	query := fmt.Sprintf("SELECT * FROM milestracker_db.user_card_table WHERE user_id = %v", c.GetUserId())
-
+	query := orm.Sql9(c.GetUserId())
 	if c.Filter != nil && c.Filter.CardStatuses != nil && len(c.GetFilter().GetCardStatuses()) > 0 {
 		cardStatusFilter := ""
 		statuses := c.Filter.GetCardStatuses()
@@ -112,8 +111,31 @@ func getCards(c *pb.GetUserCardsRequest) ([]*pb.UserCard, error) {
 
 	finalQuery := query + cardStatusFilterQuery + cardExpiryFilterQuery + orderByQuery
 	log.Info(finalQuery)
-	if err := orm.DbInstance().Raw(finalQuery).Scan(&cards).Error; err != nil {
+	if err := orm.DbInstance().Raw(finalQuery).Scan(&hold).Error; err != nil {
 		return nil, err
+	}
+
+	var cards []*pb.UserCardWithInfo
+
+	for i, h := range hold {
+		cards = append(cards, new(pb.UserCardWithInfo))
+		cards[i].UserCard = &pb.UserCard{
+			Id:               h.Id,
+			UserId:           h.UserId,
+			CardId:           h.CardId,
+			CardNickname:     h.CardNickname,
+			CardStatus:       h.CardStatus,
+			CardExpiry:       h.CardExpiry,
+			AddedTimestamp:   h.AddedTimestamp,
+			UpdatedTimestamp: h.UpdatedTimestamp,
+		}
+		cards[i].CardInfo = &pb.CardBasicInfo{
+			CardName:      h.CardName,
+			ShortCardName: h.ShortCardName,
+			CardType:      h.CardType,
+			CardImage:     h.CardImage,
+			CardIssuer:    h.CardIssuer,
+		}
 	}
 	return cards, nil
 }

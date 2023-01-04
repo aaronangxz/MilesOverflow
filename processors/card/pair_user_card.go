@@ -33,10 +33,10 @@ func PairUserCard(c echo.Context) error {
 		return resp.JSONResp(c, int64(pb.PairUserCardRequest_ERROR_FAILED), err.Error())
 	}
 
-	if cards, err := pairCard(req); err != nil {
+	if card, err := pairCard(req); err != nil {
 		return resp.JSONResp(c, int64(pb.PairUserCardRequest_ERROR_FAILED), err.Error())
 	} else {
-		return resp.PairUserCardResponseJSON(c, cards)
+		return resp.PairUserCardResponseJSON(c, card)
 	}
 }
 
@@ -56,14 +56,14 @@ func verifyPairUserCardFields(req *pb.PairUserCardRequest) error {
 	return nil
 }
 
-func pairCard(c *pb.PairUserCardRequest) ([]*pb.UserCard, error) {
+func pairCard(c *pb.PairUserCardRequest) (*pb.UserCardWithInfo, error) {
 	var (
-		hold []*pb.UserCard
+		timeStamp  time.Time
+		parseError error
 	)
 
-	timeStamp, err := time.Parse("1/2006", c.GetCardExpiry())
-	if err != nil {
-		return nil, err
+	if timeStamp, parseError = time.Parse("1/2006", c.GetCardExpiry()); parseError != nil {
+		return nil, parseError
 	}
 	_, end := utils.MonthStartEndDate(timeStamp.Unix())
 
@@ -85,11 +85,13 @@ func pairCard(c *pb.PairUserCardRequest) ([]*pb.UserCard, error) {
 		return nil, err
 	}
 
-	if err := orm.DbInstance().Raw("SELECT * FROM milestracker_db.user_card_table WHERE user_id = ? ORDER BY added_timestamp DESC", c.GetUserId()).Scan(&hold).Error; err != nil {
+	cardWithInfo := new(pb.UserCardWithInfo)
+	cardWithInfo.CardInfo = new(pb.CardBasicInfo)
+	if err := orm.DbInstance().Raw(orm.Sql2(), c.GetCardId()).Scan(&cardWithInfo.CardInfo).Error; err != nil {
 		return nil, err
 	}
-
-	return hold, nil
+	cardWithInfo.UserCard = userCard
+	return cardWithInfo, nil
 }
 
 func checkPairedCards(c *pb.UserCard) error {
@@ -97,7 +99,7 @@ func checkPairedCards(c *pb.UserCard) error {
 		hold []*pb.UserCard
 	)
 
-	if err := orm.DbInstance().Raw("SELECT * FROM milestracker_db.user_card_table WHERE user_id = ? AND card_id = ? AND card_nickname = ? AND card_expiry = ?", c.GetUserId(), c.GetCardId(), c.GetCardNickname(), c.GetCardExpiry()).Scan(&hold).Error; err != nil {
+	if err := orm.DbInstance().Raw(orm.Sql8(), c.GetUserId(), c.GetCardId(), c.GetCardNickname(), c.GetCardExpiry()).Scan(&hold).Error; err != nil {
 		return err
 	}
 

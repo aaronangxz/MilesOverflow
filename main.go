@@ -19,12 +19,12 @@ func main() {
 
 	//Admin
 	e.POST("card/add", card.AddCard)
-	//card/ - GetCards
+	//card/list - GetCards
 	//card/delete/:id - DeleteCard
 	//card/update/:id - UpdateCard
 
 	//card/promotion/add - AddCardPromotion
-	//card/promotion/ - GetCardPromotions
+	//card/promotion/list - GetCardPromotions
 	//card/promotion/delete/:id - DeleteCardPromotion
 	//card/promotion/update/:id - UpdateCardPromotion
 
@@ -34,10 +34,10 @@ func main() {
 
 	e.POST("user/card/pair", card.PairUserCard)
 	//user/card/unpair - UnpairUserCard
-	e.POST("user/card", card.GetUserCards)
+	e.POST("user/card/list", card.GetUserCards)
 	e.POST("user/card/:id", card.GetUserCardByUserCardId)
 
-	e.POST("user/transaction", transaction.GetUserTransactions)
+	e.POST("user/transaction/list", transaction.GetUserTransactions)
 	e.POST("user/transaction/:id", transaction.GetUserTransactionByTrxId)
 	//user/transaction/delete/:id - DeleteUserTransaction
 

@@ -2,8 +2,8 @@ package transaction
 
 import (
 	"errors"
-	"github.com/aaronangxz/RewardTracker/processors/card"
-	"github.com/aaronangxz/RewardTracker/processors/user"
+	"github.com/aaronangxz/RewardTracker/impl/card"
+	"github.com/aaronangxz/RewardTracker/impl/user"
 	"github.com/aaronangxz/RewardTracker/resp"
 	pb "github.com/aaronangxz/RewardTracker/rewards_tracker.pb/rewards_tracker"
 	"github.com/aaronangxz/RewardTracker/utils"

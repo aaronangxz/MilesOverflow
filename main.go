@@ -1,9 +1,9 @@
 package main
 
 import (
+	"github.com/aaronangxz/RewardTracker/impl/card"
+	"github.com/aaronangxz/RewardTracker/impl/transaction"
 	"github.com/aaronangxz/RewardTracker/orm"
-	"github.com/aaronangxz/RewardTracker/processors/card"
-	"github.com/aaronangxz/RewardTracker/processors/transaction"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
@@ -19,8 +19,14 @@ func main() {
 
 	//Admin
 	e.POST("card/add", card.AddCard)
+	//card/ - GetCards
 	//card/delete/:id - DeleteCard
 	//card/update/:id - UpdateCard
+
+	//card/promotion/add - AddCardPromotion
+	//card/promotion/ - GetCardPromotions
+	//card/promotion/delete/:id - DeleteCardPromotion
+	//card/promotion/update/:id - UpdateCardPromotion
 
 	//FE
 	e.POST("transaction/calculate", transaction.CalculateTransaction)
@@ -33,7 +39,7 @@ func main() {
 
 	e.POST("user/transaction", transaction.GetUserTransactions)
 	e.POST("user/transaction/:id", transaction.GetUserTransactionByTrxId)
-	//user/transaction/delete/:id
+	//user/transaction/delete/:id - DeleteUserTransaction
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

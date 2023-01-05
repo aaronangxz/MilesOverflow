@@ -177,15 +177,24 @@ message CardPromotionConditions{
   optional bool isRecurringOnly = 5;
 }
 
+message CardPromotionRewards{
+  optional int64  local_bonus_rewards = 1;
+  optional double local_bonus_miles = 2;
+  optional int64 fcy_bonus_rewards = 3;
+  optional double fcy_bonus_miles = 4;
+}
+
 message CardPromotion{
   optional int64 promotion_id = 1;
   optional string promotion_name = 2;
   optional string promotion_description = 3;
   optional CardPromotionEligibleCards eligible_card_ids = 4;
   optional int64 promotion_type = 5;
-  optional int64 start_time = 6;
-  optional int64 end_time = 7;
-  optional CardPromotionConditions promotion_conditions = 8;
+  optional int64 create_time = 6;
+  optional int64 start_time = 7;
+  optional int64 end_time = 8;
+  optional CardPromotionConditions promotion_conditions = 9;
+  optional CardPromotionRewards promotion_rewards = 10;
 }
 
 message UserCardBonusQuota{
@@ -487,4 +496,20 @@ message GetUserCardByUserCardIdResponse{
   optional ResponseMeta response_meta = 1;
   optional UserCardWithInfo user_card_info = 2;
   repeated TransactionBasic transactions = 3;
+}
+
+message AddCardPromotionRequest{
+  enum ErrorCode{
+    ERROR_SUCCESS = 0;
+    ERROR_FAILED = 1;
+    ERROR_CARD_NOT_EXIST = 2;
+    ERROR_CATEGORY_NOT_EXIST = 3;
+    ERROR_PAYMENT_TYPE_NOT_EXIST = 4;
+  }
+  optional RequestMeta request_meta = 1;
+  optional CardPromotion card_promotion = 2;
+}
+
+message AddCardPromotionResponse{
+  optional ResponseMeta response_meta = 1;
 }

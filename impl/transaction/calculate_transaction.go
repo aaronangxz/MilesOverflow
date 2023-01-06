@@ -104,7 +104,7 @@ func calculate(c *pb.CalculateTransactionRequest) (*pb.CalculatedTransaction, er
 		return nil, err
 	}
 
-	if spending, err = user.GetCurrentSpendingByCard(c.GetUserId(), cardId); err != nil {
+	if spending, err = user.GetCurrentSpendingByCard(c.GetUserId(), c.GetTransactionDetails().GetUserCardId()); err != nil {
 		return nil, err
 	}
 

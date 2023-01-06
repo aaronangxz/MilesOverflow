@@ -15,7 +15,7 @@ func Sql3() string {
 }
 
 func Sql4() string {
-	return "SELECT * FROM milestracker_db.user_card_table WHERE user_id = ? AND card_id = ?"
+	return "SELECT * FROM milestracker_db.user_card_table WHERE user_id = ? AND id = ?"
 }
 
 func Sql5() string {

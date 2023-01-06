@@ -29,16 +29,16 @@ func main() {
 	//card/promotion/update/:id - UpdateCardPromotion
 
 	//FE
-	e.POST("transaction/calculate", transaction.CalculateTransaction)
+	e.POST("transaction/calculate", transaction.CalculateTransaction) //return card info for FE
 	e.POST("transaction/add", transaction.AddTransaction)
 
 	e.POST("user/card/pair", card.PairUserCard)
 	//user/card/unpair - UnpairUserCard
-	e.POST("user/card/list", card.GetUserCards)
-	e.POST("user/card/:id", card.GetUserCardByUserCardId)
+	e.POST("user/card/list", card.GetUserCards)           //return user_card_id for FE to call GetUserCardByUserCardId
+	e.POST("user/card/:id", card.GetUserCardByUserCardId) //return total monthly transaction amount on this card
 
 	e.POST("user/transaction/list", transaction.GetUserTransactions)
-	e.POST("user/transaction/:id", transaction.GetUserTransactionByTrxId)
+	e.POST("user/transaction/:id", transaction.GetUserTransactionByTrxId) //return total monthly transaction amount on this card
 	//user/transaction/delete/:id - DeleteUserTransaction
 
 	e.Logger.Fatal(e.Start(":1323"))

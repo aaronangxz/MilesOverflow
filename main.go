@@ -18,28 +18,28 @@ func main() {
 	e := echo.New()
 
 	//Admin
-	e.POST("card/add", card.AddCard)
-	//card/list - GetCards
-	//card/delete/:id - DeleteCard
-	//card/update/:id - UpdateCard
+	e.POST("api/v1/card/add", card.AddCard)
+	//api/v1/card/list - GetCards
+	//api/v1/card/delete/:id - DeleteCard
+	//api/v1/card/update/:id - UpdateCard
 
-	//card/promotion/add - AddCardPromotion
-	//card/promotion/list - GetCardPromotions
-	//card/promotion/delete/:id - DeleteCardPromotion
-	//card/promotion/update/:id - UpdateCardPromotion
+	//api/v1/card/promotion/add - AddCardPromotion
+	//api/v1/card/promotion/list - GetCardPromotions
+	//api/v1/card/promotion/delete/:id - DeleteCardPromotion
+	//api/v1/card/promotion/update/:id - UpdateCardPromotion
 
 	//FE
-	e.POST("transaction/calculate", transaction.CalculateTransaction) //return card info for FE
-	e.POST("transaction/add", transaction.AddTransaction)
+	e.POST("api/v1/transaction/calculate", transaction.CalculateTransaction) //return card info for FE
+	e.POST("api/v1/transaction/add", transaction.AddTransaction)
 
-	e.POST("user/card/pair", card.PairUserCard)
-	//user/card/unpair - UnpairUserCard
-	e.POST("user/card/list", card.GetUserCards)           //return user_card_id for FE to call GetUserCardByUserCardId
-	e.POST("user/card/:id", card.GetUserCardByUserCardId) //return total monthly transaction amount on this card
+	e.POST("api/v1/user/card/pair", card.PairUserCard)
+	//api/v1/user/card/unpair - UnpairUserCard
+	e.POST("api/v1/user/card/list", card.GetUserCards)           //return user_card_id for FE to call GetUserCardByUserCardId
+	e.POST("api/v1/user/card/:id", card.GetUserCardByUserCardId) //return total monthly transaction amount on this card
 
-	e.POST("user/transaction/list", transaction.GetUserTransactions)
-	e.POST("user/transaction/:id", transaction.GetUserTransactionByTrxId) //return total monthly transaction amount on this card
-	//user/transaction/delete/:id - DeleteUserTransaction
+	e.POST("api/v1/user/transaction/list", transaction.GetUserTransactions)
+	e.POST("api/v1/user/transaction/:id", transaction.GetUserTransactionByTrxId) //return total monthly transaction amount on this card
+	//api/v1/user/transaction/delete/:id - DeleteUserTransaction
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

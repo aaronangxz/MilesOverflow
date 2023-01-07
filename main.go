@@ -6,7 +6,9 @@ import (
 	"github.com/aaronangxz/RewardTracker/orm"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
+	"net/http"
 )
 
 func main() {
@@ -16,7 +18,11 @@ func main() {
 	}
 	orm.ConnectMySQL()
 	e := echo.New()
-
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+		AllowMethods: []string{http.MethodGet, http.MethodHead, http.MethodPut, http.MethodPatch, http.MethodPost, http.MethodDelete},
+	}))
 	//Admin
 	e.POST("api/v1/card/add", card.AddCard)
 	//api/v1/card/list - GetCards
@@ -41,5 +47,5 @@ func main() {
 	e.POST("api/v1/user/transaction/:id", transaction.GetUserTransactionByTrxId) //return total monthly transaction amount on this card
 	//api/v1/user/transaction/delete/:id - DeleteUserTransaction
 
-	e.Logger.Fatal(e.Start(":1323"))
+	e.Logger.Fatal(e.Start(":4000"))
 }

@@ -512,4 +512,5 @@ message AddCardPromotionRequest{
 
 message AddCardPromotionResponse{
   optional ResponseMeta response_meta = 1;
+  optional int64 card_promotion_id = 2;
 }

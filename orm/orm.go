@@ -13,10 +13,11 @@ import (
 )
 
 const (
-	CardTable     = "milestracker_db.card_table"
-	UserTable     = "milestracker_db.user_table"
-	UserCardTable = "milestracker_db.user_card_table"
-	ExpenseTable  = "milestracker_db.expense_table"
+	CardTable          = "milestracker_db.card_table"
+	UserTable          = "milestracker_db.user_table"
+	UserCardTable      = "milestracker_db.user_card_table"
+	ExpenseTable       = "milestracker_db.expense_table"
+	CardPromotionTable = "milestracker_db.card_promotion_table"
 )
 
 var (

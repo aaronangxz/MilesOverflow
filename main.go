@@ -30,6 +30,8 @@ func main() {
 	//api/v1/card/update/:id - UpdateCard
 
 	//api/v1/card/promotion/add - AddCardPromotion
+	e.POST("api/v1/card/promotion/add", card.AddCardPromotion)
+
 	//api/v1/card/promotion/list - GetCardPromotions
 	//api/v1/card/promotion/delete/:id - DeleteCardPromotion
 	//api/v1/card/promotion/update/:id - UpdateCardPromotion
